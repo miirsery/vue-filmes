@@ -33,7 +33,6 @@ CREATE TABLE user_favorite_images
     user_image          INT REFERENCES user_image(id),
     person_id           INT REFERENCES person(id)
 );
-
 CREATE TABLE cinemas
 (
     id                  SERIAL PRIMARY KEY NOT NULL,
@@ -41,3 +40,4 @@ CREATE TABLE cinemas
     address             TEXT NOT NULL,
     position            TEXT
 );
+
