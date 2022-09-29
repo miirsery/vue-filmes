@@ -41,3 +41,36 @@ CREATE TABLE cinemas
     position            TEXT
 );
 
+CREATE TABLE halls
+(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    title               TEXT NOT NULL,
+    seats_count         TEXT,
+    cinema_id           INT REFERENCES cinemas(id)
+);
+
+CREATE TABLE movies
+(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    title               TEXT NOT NULL,
+    description         TEXT,
+    date                DATE,
+    genre               TEXT,
+    image               TEXT
+);
+
+CREATE TABLE session
+(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    date                DATE,
+    time                TEXT
+);
+
+CREATE TABLE tickets
+(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    purchase_date       DATE,
+    place_number        TEXT,
+    session_id          INT REFERENCES session(id),
+    user_id             INT REFERENCES users(id)
+);
