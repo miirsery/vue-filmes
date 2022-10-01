@@ -11,7 +11,7 @@ CREATE TABLE users
     email             TEXT UNIQUE NOT NULL,
     login             TEXT UNIQUE NOT NULL,
     password          TEXT NOT NULL,
-    register_date     DATE NOT NULL,
+    register_date     TIMESTAMP NOT NULL,
     avatar            TEXT
 );
 

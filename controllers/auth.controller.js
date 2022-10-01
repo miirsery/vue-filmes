@@ -1,6 +1,5 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs')
-const passport = require('passport')
 const moment = require('moment')
 
 function checkAuthenticated(req, res, next) {
@@ -34,19 +33,20 @@ class AuthController {
             }
 
             const hashedPassword = await bcrypt.hash(password, 10)
-            const registrationDate = moment(new Date()).format('DD-MM-YYYY')
+            const registrationDate = moment(new Date()).format('DD-MM-YYYY hh:mm:ss')
+            console.log(registrationDate)
 
-            await db
-                .query('INSERT INTO users' +
-                    ' (name,' +
-                    ' surname,' +
-                    ' patronymic,' +
-                    ' role, email,' +
-                    ' password,' +
-                    ' login, ' +
-                    'register_date' +
-                    ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-                [name, surname, patronymic, role, email, hashedPassword, login, registrationDate])
+            // await db
+            //     .query('INSERT INTO users' +
+            //         ' (name,' +
+            //         ' surname,' +
+            //         ' patronymic,' +
+            //         ' role, email,' +
+            //         ' password,' +
+            //         ' login, ' +
+            //         'register_date' +
+            //         ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+            //     [name, surname, patronymic, role, email, hashedPassword, login, registrationDate])
 
             return res
                 .status(201)
@@ -59,29 +59,6 @@ class AuthController {
             res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')
-                .json({
-                    message: 'Что-то пошло не так :)'
-                })
-        }
-    }
-
-    async login(req, res) {
-        try {
-            passport.authenticate('local', {
-                successRedirect: '/',
-                failureRedirect: '/api/v1/login',
-                failureFlash: true
-            })
-
-            return res
-                .status(200)
-                .setHeader('Content-Type', 'application/json')
-                .json({
-                    message: 'Успешный вход'
-                })
-        } catch (error) {
-            res
-                .status(500)
                 .json({
                     message: 'Что-то пошло не так :)'
                 })

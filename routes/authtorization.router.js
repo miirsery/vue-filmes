@@ -4,6 +4,7 @@ const authController = require('../controllers/auth.controller')
 const initialPassport = require('../passport-config')
 const passport = require('passport')
 const db = require("../db");
+const jwt = require("jsonwebtoken");
 
 initialPassport(
     passport,
@@ -17,9 +18,18 @@ initialPassport(
     }
 )
 
+genToken = user => {
+    return jwt.sign({
+        iss: 'secretKey',
+        sub: user.id,
+        iat: new Date().getTime(),
+        exp: new Date().setDate(new Date().getDate() + 1)
+    }, 'secretKey');
+}
+
 router
-    .post('/login', authController.checkNotAuthenticated, passport.authenticate('local', {
-        successRedirect: '/api/v1/login/success',
+    .post('/get-token', authController.checkNotAuthenticated, passport.authenticate('get-token', {
+        successRedirect: '/api/v1/token',
         failureRedirect: '/api/v1/login/failure',
         failureFlash: true
     }))
@@ -29,11 +39,40 @@ router
             message: 'Fail while auth'
         })
     })
-    .get('/login/success', function (res, req) {
-        req.send({
-            message: 'Успешный вход'
-        })
+    .get('/token', async function (res, req) {
+        const user = await res.user
+        const token = genToken(user)
+
+        await req
+            .status(200)
+            .setHeader('Content-Type', 'application/json')
+            .json({ token })
     })
+    .post('/login',
+        authController.checkNotAuthenticated,
+        passport.authenticate(
+            'jwt',
+            { session: false }),
+        (req, res, next) => {
+            res
+                .status(200)
+                .setHeader('Content-Type', 'application/json')
+                .json({
+                    message: 'Успешный вход',
+                })
+    })
+    .get('/self', authController.checkAuthenticated,  passport.authenticate(
+        'jwt',
+        { session: false }),
+        async (req, res, next) => {
+        const user = await req.user
+        delete user.password
+        res
+            .status(200)
+            .setHeader('Content-Type', 'application/json')
+            .json(user)
+        }
+        )
     .post('/register', authController.register)
 
 
