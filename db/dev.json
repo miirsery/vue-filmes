@@ -1,12 +1,10 @@
 {
   "dev": {
+    "driver": "pg",
     "user": "socialUser",
     "password": "socialPassword",
-    "host": "localhost",
+    "host": "db",
     "port": 5432,
-    "database": "social_db",
-    "driver": "pg",
-    "multipleStatement": true
-  },
-  "sql-file": true
+    "database": "social_db"
+  }
 }

@@ -8,9 +8,11 @@ ENV NODE_ENV=development
 COPY package*.json ./
 
 RUN npm install
+USER node
 COPY --chown=node:node . .
 
-USER node
 EXPOSE 3030
 
-CMD [ "node", "app.js" ]
+#CMD [ "npm", "run", "dev" ]
+
+ENTRYPOINT ["/app/wait-for-db.sh"]
