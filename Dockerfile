@@ -13,6 +13,4 @@ COPY --chown=node:node . .
 
 EXPOSE 3030
 
-#CMD [ "npm", "run", "dev" ]
-
 ENTRYPOINT ["/app/wait-for-db.sh"]

@@ -1,19 +1,19 @@
 const db = require('../db')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
-const { format } = require("date-fns");
+const moment = require('moment')
 
 function checkAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next()
     }
 
-    res.redirect('/api/login')
+    res.redirect('/api/v1/login')
 }
 
 function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        res.redirect('/api')
+        res.redirect('/api/v1')
     }
 
     next()
@@ -22,26 +22,43 @@ function checkNotAuthenticated(req, res, next) {
 class AuthController {
     async register(req, res) {
         try {
-            const { name, email, password, login } = req.body
+            const { name, surname, patronymic, role, email, password, login } = req.body
+
+            if (!password || !login) {
+                return res
+                    .status(500)
+                    .setHeader('Content-Type', 'application/json')
+                    .json({
+                        message: `Поле ${(!login && 'Логин') || ''} ${(!password && 'Пароль') || ''} обязательно для заполнения`
+                    })
+            }
+
             const hashedPassword = await bcrypt.hash(password, 10)
-            const registrationDate = format(new Date(), 'dd-mm-yyyy')
+            const registrationDate = moment(new Date()).format('DD-MM-YYYY')
 
             await db
-                .query('INSERT INTO person (name, email, login, register_date, password) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-                [name, email, login, registrationDate, hashedPassword])
+                .query('INSERT INTO users' +
+                    ' (name,' +
+                    ' surname,' +
+                    ' patronymic,' +
+                    ' role, email,' +
+                    ' password,' +
+                    ' login, ' +
+                    'register_date' +
+                    ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
+                [name, surname, patronymic, role, email, hashedPassword, login, registrationDate])
 
             return res
-                .status(200)
+                .status(201)
                 .setHeader('Content-Type', 'application/json')
                 .json({
                     message: `Пользователь ${name} успешно добавлен`
                 })
 
         } catch (error) {
-            console.log(error)
-
             res
                 .status(500)
+                .setHeader('Content-Type', 'application/json')
                 .json({
                     message: 'Что-то пошло не так :)'
                 })
@@ -52,7 +69,7 @@ class AuthController {
         try {
             passport.authenticate('local', {
                 successRedirect: '/',
-                failureRedirect: '/api/login',
+                failureRedirect: '/api/v1/login',
                 failureFlash: true
             })
 
@@ -63,8 +80,6 @@ class AuthController {
                     message: 'Успешный вход'
                 })
         } catch (error) {
-            console.log(error)
-
             res
                 .status(500)
                 .json({

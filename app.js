@@ -30,7 +30,7 @@ app.use(passport.session())
 
 app.set('view engine', 'ejs')
 
-app.use('/api', authRouter)
+app.use('/api/v1', authRouter)
 app.get('/', (res, req) => {
     req.send({
         status: 'Ok',
