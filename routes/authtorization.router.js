@@ -9,12 +9,14 @@ const jwt = require("jsonwebtoken");
 initialPassport(
     passport,
     async (email) => {
-        const data = await db.query(`SELECT * FROM users`)
-        return data.rows.find(user => user.email === email)
+        return await db.query(`SELECT * FROM users
+                                     WHERE email = $1`,
+            [email]).then(r => r.rows[0])
     },
     async (id) => {
-        const data = await db.query(`SELECT * FROM users`)
-        return data.rows.find(user => user.id === id)
+        return await db.query(`SELECT * FROM users
+                                WHERE id=$1`, [id])
+            .then(r => r.rows[0])
     }
 )
 
