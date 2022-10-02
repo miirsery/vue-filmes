@@ -10,8 +10,8 @@ initialPassport(
     passport,
     async (email) => {
         return await db.query(`SELECT * FROM users
-                                     WHERE email = $1`,
-            [email]).then(r => r.rows[0])
+                                     WHERE email=$1`, [email])
+            .then(r => r.rows[0])
     },
     async (id) => {
         return await db.query(`SELECT * FROM users
@@ -36,43 +36,50 @@ router
         failureFlash: true
     }))
     .get('/login/failure', function (res, req) {
-        req.send({
-            status: 'Fail',
-            message: 'Fail while auth'
-        })
+        return req
+            .sendStatus(500)
+            .setHeader('Content-Type', 'application/json')
+            .json({
+                status: 'Fail',
+                message: 'Fail while auth'
+            })
     })
     .get('/token', async function (res, req) {
         const user = await res.user
         const token = genToken(user)
 
-        await req
+        return req
             .status(200)
             .setHeader('Content-Type', 'application/json')
-            .json({ token })
+            .json({token})
     })
     .post('/login',
-        authController.checkNotAuthenticated,
         passport.authenticate(
             'jwt',
             { session: false }),
         (req, res, next) => {
-            res
+            return res
                 .status(200)
                 .setHeader('Content-Type', 'application/json')
                 .json({
                     message: 'Успешный вход',
                 })
     })
-    .get('/self', authController.checkAuthenticated,  passport.authenticate(
+    .get('/self',  passport.authenticate(
         'jwt',
         { session: false }),
         async (req, res, next) => {
-        const user = await req.user
-        delete user.password
-        res
-            .status(200)
-            .setHeader('Content-Type', 'application/json')
-            .json(user)
+            const user = await req.user
+
+            const registerDate = new Date(user.register_date).toISOString().slice(0, 19).replace('T', ' ');
+
+            delete user.register_date
+            delete user.password
+
+            return res
+                .status(200)
+                .setHeader('Content-Type', 'application/json')
+                .json(Object.assign(user, { register_date: registerDate }))
         }
         )
     .post('/register', authController.register)

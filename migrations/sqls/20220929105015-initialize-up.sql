@@ -7,7 +7,7 @@ CREATE TABLE users
     name              TEXT,
     surname           TEXT,
     patronymic        TEXT,
-    role              TEXT DEFAULT 'user' NOT NULL,
+    role              TEXT NOT NULL DEFAULT 'user',
     email             TEXT UNIQUE NOT NULL,
     login             TEXT UNIQUE NOT NULL,
     password          TEXT NOT NULL,

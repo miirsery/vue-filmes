@@ -1,21 +1,40 @@
 const db = require('../db')
-const bcrypt = require('bcryptjs')
 
 class UserController {
-    async getSelf(req, res) {
+    async deleteUser(req, res) {
         try {
-            const { id } = req.body
-
-            const user = await db.query(`SELECT * FROM users
-                            WHERE id=${id}
-                            `)
-            console.log(user.rows)
-        } catch (e) {
+            const id = req.params.id
+           // const candidate = await db.query('DELETE FROM users WHERE id=$1', [id]).rows
+            // TODO: Доделать вывод удаляемого имени
             return res
+                .status(200)
+                .setHeader('Content-Type', 'application/json')
+                .json({
+                    message: `Пользователь ${id} успешно удалён`
+                })
+
+            // TODO: не выводится успешное сообщение
+
+        } catch (e) {
+            res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')
                 .json({
-                    message: 'Что-то пошло не так :с'
+                    message: e.detail
+                })
+        }
+    }
+
+    async updateUser(req, res) {
+        try {
+            const id = req.params.id
+            // TODO: Заврешить потом
+        } catch (e) {
+            res
+                .status(500)
+                .setHeader('Content-Type', 'application/json')
+                .json({
+                    message: e.detail
                 })
         }
     }

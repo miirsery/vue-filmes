@@ -13,6 +13,7 @@ const passport = require('passport')
 const bodyParser = require('body-parser')
 
 const authRouter = require('./routes/authtorization.router')
+const usersRouter = require('./routes/users.router')
 
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
@@ -31,6 +32,7 @@ app.use(passport.session())
 app.set('view engine', 'ejs')
 
 app.use('/api/v1', authRouter)
+app.use('/api/v1/users', usersRouter)
 app.get('/', (res, req) => {
     req.send({
         status: 'Ok',
