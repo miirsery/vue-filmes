@@ -4,13 +4,14 @@ class UserController {
     async deleteUser(req, res) {
         try {
             const id = req.params.id
-           // const candidate = await db.query('DELETE FROM users WHERE id=$1', [id]).rows
+            const candidate = await db.query('DELETE FROM users WHERE id=$1 RETURNING *', [id])
+
             // TODO: Доделать вывод удаляемого имени
             return res
                 .status(200)
                 .setHeader('Content-Type', 'application/json')
                 .json({
-                    message: `Пользователь ${id} успешно удалён`
+                    message: `Пользователь ${candidate.rows[0].name} успешно удалён`
                 })
 
             // TODO: не выводится успешное сообщение

@@ -31,13 +31,22 @@ CREATE TABLE cinemas
     location        TEXT
 );
 
-CREATE TABLE session
+CREATE TABLE halls
+(
+    id              SERIAL PRIMARY KEY NOT NULL,
+    title           INT DEFAULT 0,
+    seats_count     INT DEFAULT 1,
+    cinema_id       INT,
+    CONSTRAINT      cinema_id  FOREIGN KEY(cinema_id) REFERENCES cinemas(id) ON DELETE CASCADE
+);
+
+CREATE TABLE sessions
 (
     id              SERIAL PRIMARY KEY NOT NULL,
     time            TEXT,
-    date            DATE,
-    movie_id        INT REFERENCES movies(id) ON DELETE CASCADE,
-    cinema_id       INT REFERENCES cinemas(id) ON DELETE CASCADE
+    date            TIMESTAMP NOT NULL,
+    price           INT NOT NULL,
+    hall_id         INT REFERENCES halls(id) ON DELETE CASCADE
 );
 
 COMMIT;
