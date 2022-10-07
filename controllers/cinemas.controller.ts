@@ -7,7 +7,7 @@ class HallsController {
         try {
             const { street, location } = req.body
 
-            const data = await db.query('INSERT INTO cinemas (street, location ) VALUES ($1, $2) RETURNING *', [street, location])
+            const data = await db.query('INSERT INTO cinemas (street, location) VALUES ($1, $2) RETURNING *', [street, location])
 
             console.log(data)
 

@@ -27,6 +27,7 @@ CREATE TABLE movies
 CREATE TABLE cinemas
 (
     id              SERIAL PRIMARY KEY NOT NULL,
+    title           TEXT,
     street          TEXT,
     location        TEXT
 );
@@ -34,7 +35,7 @@ CREATE TABLE cinemas
 CREATE TABLE halls
 (
     id              SERIAL PRIMARY KEY NOT NULL,
-    title           INT DEFAULT 0,
+    title           INT DEFAULT 0 UNIQUE,
     seats_count     INT DEFAULT 1,
     cinema_id       INT,
     CONSTRAINT      cinema_id  FOREIGN KEY(cinema_id) REFERENCES cinemas(id) ON DELETE CASCADE
@@ -43,10 +44,12 @@ CREATE TABLE halls
 CREATE TABLE sessions
 (
     id              SERIAL PRIMARY KEY NOT NULL,
-    time            TEXT,
     date            TIMESTAMP NOT NULL,
     price           INT NOT NULL,
-    hall_id         INT REFERENCES halls(id) ON DELETE CASCADE
+    hall_id         INT,
+    movie_id        INT,
+    CONSTRAINT      hall_id FOREIGN KEY(hall_id) REFERENCES halls(id) ON DELETE CASCADE,
+    CONSTRAINT      movie_id FOREIGN KEY(movie_id) REFERENCES movies(id) ON DELETE CASCADE
 );
 
 COMMIT;

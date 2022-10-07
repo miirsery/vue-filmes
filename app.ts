@@ -15,7 +15,8 @@ const app: Application = express(),
     usersRouter = require('./routes/users.router'),
     moviesRouter = require('./routes/movies.router'),
     hallsRouter = require('./routes/halls.router'),
-    cinemasRouter = require('./routes/cinemas.router')
+    cinemasRouter = require('./routes/cinemas.router'),
+    sessionsRouter = require('./routes/sessions.router')
 
 app.use(express.static('public'))
 app.use('/media', express.static(__dirname + '/media'))
@@ -39,6 +40,7 @@ app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/movies', moviesRouter)
 app.use('/api/v1/halls', hallsRouter)
 app.use('/api/v1/cinemas', cinemasRouter)
+app.use('/api/v1/sessions', sessionsRouter)
 
 app.get('/', (req: Request, res: Response) => {
     res.send({
