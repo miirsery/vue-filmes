@@ -1,7 +1,12 @@
 <template>
   <div class="default-layout">
-    <the-header />
-    <router-view />
+    <div class="container">
+      <div class="hero">
+        <the-header />
+        <router-view />
+      </div>
+      <the-footer />
+    </div>
   </div>
 </template>
 

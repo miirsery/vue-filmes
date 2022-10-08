@@ -1,0 +1,12 @@
+.el-input {
+  &.the-search {
+    .el-input {
+      &__wrapper {
+        outline: none;
+        border: none;
+        box-shadow: none;
+        background: none;
+      }
+    }
+  }
+}

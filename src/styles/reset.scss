@@ -80,11 +80,11 @@ mark,
 audio,
 video {
   vertical-align: baseline;
-  margin: 0;
   border: 0;
-  padding: 0;
   font: inherit;
   font-size: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 article,
@@ -155,9 +155,10 @@ q::after {
 
 button, select {
   border: 0;
-  background-color: transparent;
   text-transform: none;
+  background-color: transparent;
 }
+
 pre {
   font-family: monospace;
   font-size: 1em;
@@ -169,15 +170,10 @@ hr {
   overflow: visible;
 }
 
-pre {
-  font-family: monospace;
-  font-size: 1em;
-}
-
 a {
   text-decoration: none;
-  background-color: transparent;
   color: #000;
+  background-color: transparent;
 }
 
 img {
@@ -275,8 +271,8 @@ template {
 
 
 *, *::before, *::after {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 

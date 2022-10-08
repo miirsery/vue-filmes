@@ -1,5 +1,5 @@
 {
-  "name": "dc-vue-preset",
+  "name": "vue-movies",
   "version": "0.0.0",
   "scripts": {
     "prepare": "husky install",
@@ -54,6 +54,7 @@
     "unplugin-auto-import": "^0.11.2",
     "unplugin-vue-components": "^0.22.7",
     "vite": "^3.0.9",
+    "vite-plugin-svg-icons": "^2.0.1",
     "vue-style-loader": "4.1.3",
     "vue-tsc": "^0.40.7"
   },
