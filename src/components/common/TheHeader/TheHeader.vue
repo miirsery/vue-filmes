@@ -23,6 +23,10 @@
   </header>
 </template>
 
+<script lang="ts" setup>
+import { headerItems } from '@/constants/header'
+</script>
+
 <style lang="scss" scoped>
 .the-header {
   padding-top: $size--16;
