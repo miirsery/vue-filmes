@@ -1,5 +1,18 @@
+@use '@/styles/resources/variables' as *;
+
 .el-button {
-  &.the-header__button {
-    font-size: 24px;
+  border: none !important;
+  color: $color--white !important;
+
+  &.the-registration__button {
+    border-radius: 8px !important;
+    font-size: 16px;
+    line-height: 18px;
+    letter-spacing: 0.05rem;
+    padding: 10px 60px;
+  }
+
+  &--primary {
+    background-color: $color--accent !important;
   }
 }

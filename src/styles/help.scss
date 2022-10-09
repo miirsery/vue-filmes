@@ -1,3 +1,5 @@
+@use '@/styles/resources/variables' as *;
+
 .d-flex {
   display: flex !important;
 }
@@ -10,12 +12,24 @@
   justify-content: space-between !important;
 }
 
+.jc-center {
+  justify-content: center !important;
+}
+
+.fd-column {
+  flex-direction: column !important;
+}
+
 .w-100 {
   width: 100% !important;
 }
 
 .mb-4 {
   margin-bottom: 4px !important;
+}
+
+.mb-16 {
+  margin-bottom: $size--16 !important;
 }
 
 

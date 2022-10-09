@@ -1,5 +1,8 @@
 <template>
   <div class="authorization-layout">
-    <router-view />
+    <div class="container">
+      <h1>Фильмы</h1>
+      <router-view />
+    </div>
   </div>
 </template>

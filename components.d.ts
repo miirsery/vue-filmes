@@ -13,6 +13,7 @@ declare module '@vue/runtime-core' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElRow: typeof import('element-plus/es')['ElRow']
     IconTemplate: typeof import('./src/components/common/IconTemplate.vue')['default']
+    InputCommon: typeof import('./src/components/common/InputCommon/InputCommon.vue')['default']
     LatestMovie: typeof import('./src/components/home/LatestMovie/LatestMovie.vue')['default']
     LatestMovies: typeof import('./src/components/home/LatestMovies/LatestMovies.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
