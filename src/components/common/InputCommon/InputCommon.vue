@@ -1,5 +1,6 @@
 <template>
   <el-input
+    v-bind="$attrs"
     :model-value="props.value"
     :placeholder="props.placeholder"
     :label="props.label"
@@ -11,7 +12,7 @@
 interface IProps {
   label?: string
   placeholder?: string
-  value: string | number
+  value?: string | number
 }
 
 const props = withDefaults(defineProps<IProps>(), {})

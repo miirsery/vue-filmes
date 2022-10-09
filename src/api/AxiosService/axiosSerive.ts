@@ -12,19 +12,30 @@ export class AxiosService {
 
     this.axiosInstance.interceptors.request.use((config: any) => {
       // const token = Cookies.get('token_for_admin_panel')
+      const token = localStorage.getItem('token') || ''
       //
       // config.xsrfCookieName = 'XSRF-TOKEN'
       // config.xsrfHeaderName = 'X-XSRF-TOKEN'
 
-      // config.headers = {
-      //   Authorization: `Bearer ${token}`,
-      // }
+      config.headers = {
+        Authorization: `Bearer ${token}`,
+      }
 
       return config
     })
 
     this.axiosInstance.interceptors.response.use(
       (response: any) => {
+        const status = response?.status
+
+        switch (status) {
+          case 201:
+            ElMessage({
+              type: 'success',
+              message: response?.data?.message,
+            })
+        }
+
         return response
       },
       (error: any) => {
@@ -39,6 +50,11 @@ export class AxiosService {
             break
           case 422:
             break
+          case 500:
+            ElMessage({
+              type: 'error',
+              message: response.message,
+            })
 
           default:
             break

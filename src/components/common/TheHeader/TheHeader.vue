@@ -15,7 +15,11 @@
         <el-col :span="5">
           <the-search />
         </el-col>
-        <el-col :span="2">
+        <el-col v-if="isAuth" :span="2">
+          <icon-template class="mr-8" name="favorite" width="32" height="32" />
+          <icon-template name="user" width="32" height="32" @click="handleClickLogout" />
+        </el-col>
+        <el-col v-else :span="2">
           <router-link class="the-header__login" to="/authorization/login"> Вход </router-link>
         </el-col>
       </nav>
@@ -25,6 +29,16 @@
 
 <script lang="ts" setup>
 import { headerItems } from '@/constants/header'
+import { ref } from 'vue'
+const isToken = localStorage.getItem('token')
+
+const isAuth = ref<boolean>(isToken ? true : false)
+
+const handleClickLogout = (): void => {
+  localStorage.clear()
+
+  location.reload()
+}
 </script>
 
 <style lang="scss" scoped>

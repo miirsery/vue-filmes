@@ -23,6 +23,15 @@ const eslintConfig = EslintPlugin({
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'http://localhost:3030',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
   plugins: [
     vue(),
     styleLintConfig,
