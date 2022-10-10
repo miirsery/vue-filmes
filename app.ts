@@ -11,6 +11,8 @@ const app: Application = express(),
     session = require('express-session'),
     passport = require('passport'),
     bodyParser = require('body-parser'),
+    swaggerJsdoc = require("swagger-jsdoc"),
+    swaggerUi = require("swagger-ui-express"),
     authRouter = require('./routes/authtorization.router'),
     usersRouter = require('./routes/users.router'),
     moviesRouter = require('./routes/movies.router'),
@@ -48,6 +50,31 @@ app.get('/', (req: Request, res: Response) => {
         message: 'Success'
     })
 })
+
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Library API",
+            version: "1.0.0",
+            description: "A simple Express Library API",
+        },
+        servers: [
+            {
+                url: "http://localhost:3030",
+            },
+        ],
+    },
+    apis: ["./routes/*.js"],
+}
+
+const specs = swaggerJsdoc(options)
+
+app.use(
+    "/swagger",
+    swaggerUi.serve,
+    swaggerUi.setup(specs, { explorer: true })
+)
 
 const PORT = process.env.PORT || 3030
 

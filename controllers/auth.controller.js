@@ -75,7 +75,7 @@ class AuthController {
             //             message: `Пользователь ${email} уже зарегистрирован`
             //         })
             // }
-            res
+            return res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')
                 .json({

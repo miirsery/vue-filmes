@@ -25,7 +25,9 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.8.0",
-    "sql-migrations": "^1.0.7"
+    "sql-migrations": "^1.0.7",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.14",
