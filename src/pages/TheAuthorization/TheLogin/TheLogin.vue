@@ -1,7 +1,7 @@
 <template>
   <div class="the-login">
     <div class="d-flex ai-center fd-column">
-      <h1 class="the-registration__title">Зарегистироваться</h1>
+      <h1 class="the-registration__title">Авторизоваться</h1>
       <el-form :model="loginForm">
         <el-form-item prop="email">
           <input-common v-model="loginForm.email" class="mb-16" placeholder="Email" />

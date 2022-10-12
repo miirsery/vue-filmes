@@ -54,7 +54,7 @@ const handleAccountCreate = async (): Promise<void> => {
   if (!error && data) {
     console.log(data)
 
-    await router.push({ name: 'TheLogin' })
+    await router.push('/authorization/login')
   }
 }
 </script>
