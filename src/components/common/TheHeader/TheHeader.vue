@@ -30,8 +30,16 @@
 <script lang="ts" setup>
 import { headerItems } from '@/constants/header'
 import { ref } from 'vue'
-const isToken = localStorage.getItem('token')
+import { MovieType } from '@/components/common/TheHeader/TheSearchDropdown/TheSearchDropdownItem.types'
 
+const movies = ref<MovieType[]>([
+  {
+    title: '',
+    id: '',
+  },
+])
+
+const isToken = localStorage.getItem('token')
 const isAuth = ref<boolean>(isToken ? true : false)
 
 const handleClickLogout = (): void => {

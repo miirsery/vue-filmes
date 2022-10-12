@@ -1,3 +1,5 @@
+@use '@/styles/resources/variables' as *;
+
 .el-input {
   &.the-search {
     .el-input {
@@ -5,7 +7,36 @@
         outline: none;
         border: none;
         box-shadow: none;
-        background: none;
+        background: none !important;
+
+        &::after {
+          content: '';
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 0;
+          height: 2px;
+          position: absolute;
+          display: block;
+          background: $color--accent;
+          transition: width .3s;
+        }
+
+        &:hover::after {
+          width: 100%;
+        }
+      }
+
+      &__inner {
+        color: $color--white;
+
+        &::placeholder {
+          color: $color--white;
+        }
+      }
+
+      &__suffix {
+        color: $color--white;
       }
     }
   }

@@ -15,7 +15,9 @@ interface IProps {
   value?: string | number
 }
 
-const props = withDefaults(defineProps<IProps>(), {})
+const props = withDefaults(defineProps<IProps>(), {
+  value: '',
+})
 
 const emit = defineEmits<{
   (e: 'change', value: string | number): string | number
