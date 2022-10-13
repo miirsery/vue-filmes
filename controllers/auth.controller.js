@@ -21,7 +21,7 @@ function checkNotAuthenticated(req, res, next) {
 class AuthController {
     async register(req, res) {
         try {
-            const { name, surname, patronymic, role, email, password, login } = req.body
+            const { name = null, surname = null, patronymic = null, role, email, password, login } = req.body
 
             if (!password || !login) {
                 return res

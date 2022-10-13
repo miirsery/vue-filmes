@@ -3,8 +3,10 @@
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
-import { Application, Request, Response} from "express";
-import express from 'express'
+import { Application, Request, Response } from "express";
+
+const express = require('express')
+
 const app: Application = express(),
     cors = require('cors'),
     flash = require('express-flash'),
@@ -37,7 +39,7 @@ app.use(passport.session())
 
 app.set('view engine', 'ejs')
 
-app.use('/api/v1', authRouter)
+app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/movies', moviesRouter)
 app.use('/api/v1/halls', hallsRouter)

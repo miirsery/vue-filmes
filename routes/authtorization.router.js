@@ -28,7 +28,6 @@ genToken = user => {
         exp: new Date().setDate(new Date().getDate() + 1)
     }, 'secretKey');
 }
-
 router
     .post('/get-token', authController.checkNotAuthenticated, passport.authenticate('get-token', {
         successRedirect: '/api/v1/token',

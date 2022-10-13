@@ -19,6 +19,7 @@ function initialize(passport, getUserByEmail, getUserById) {
         }
 
         try {
+            console.log(password)
             if (await bcrypt.compare(password, user.password)) {
                 return done(null, user)
             } else {
