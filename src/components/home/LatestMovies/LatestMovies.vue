@@ -1,5 +1,5 @@
 <template>
-  <div class="latest-movies">
+  <div class="latest-movies d-flex">
     <latest-movie v-for="movie in movies" :key="movie.id" :movie="movie" />
   </div>
 </template>
@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 import moviesApi from '@/api/movies/movies.api'
-import { MovieType } from '@/components/home/LatestMovie/LatestMovie.types'
+import { MovieType } from '@/types/movies.types'
 
 const movies = ref<MovieType[]>([])
 

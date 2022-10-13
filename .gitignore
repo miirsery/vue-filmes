@@ -27,6 +27,7 @@ yarn-error.log*
 # IDE
 .idea
 .vscode
+.flet
 
 # MacOS
 .DS_Store

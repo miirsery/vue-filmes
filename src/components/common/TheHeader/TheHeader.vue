@@ -30,12 +30,15 @@
 <script lang="ts" setup>
 import { headerItems } from '@/constants/header'
 import { ref } from 'vue'
-import { MovieType } from '@/components/common/TheHeader/TheSearchDropdown/TheSearchDropdownItem.types'
+import { MovieType } from '@/types/movies.types'
 
 const movies = ref<MovieType[]>([
   {
+    id: 0,
     title: '',
-    id: '',
+    description: '',
+    release_date: '',
+    preview: '',
   },
 ])
 

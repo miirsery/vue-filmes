@@ -1,5 +1,6 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
+import { MovieType } from '@/types/movies.types'
 
 class MoviesApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -7,7 +8,7 @@ class MoviesApi extends AxiosService {
   }
 
   public getMovies() {
-    return this.axiosCall({
+    return this.axiosCall<MovieType[]>({
       method: 'get',
       url: '',
     })
