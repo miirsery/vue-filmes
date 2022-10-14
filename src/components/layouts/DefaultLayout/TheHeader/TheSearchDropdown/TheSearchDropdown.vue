@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MovieType } from '@/components/common/TheHeader/TheSearchDropdown/TheSearchDropdownItem.types'
+import { MovieType } from '@/components/layouts/DefaultLayout/TheHeader/TheSearchDropdown/TheSearchDropdownItem.types'
 
 interface IMovie {
   movies: MovieType[]

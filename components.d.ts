@@ -22,10 +22,10 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./src/components/common/TheFooter.vue')['default']
-    TheHeader: typeof import('./src/components/common/TheHeader/TheHeader.vue')['default']
-    TheSearch: typeof import('./src/components/common/TheHeader/TheSearch/TheSearch.vue')['default']
-    TheSearchDropdown: typeof import('./src/components/common/TheHeader/TheSearchDropdown/TheSearchDropdown.vue')['default']
-    TheSearchDropdownItem: typeof import('./src/components/common/TheHeader/TheSearchDropdown/TheSearchDropdownItem.vue')['default']
+    TheHeader: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheHeader.vue')['default']
+    TheSearch: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearch/TheSearch.vue')['default']
+    TheSearchDropdown: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearchDropdown/TheSearchDropdown.vue')['default']
+    TheSearchDropdownItem: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearchDropdown/TheSearchDropdownItem.vue')['default']
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
   export interface ComponentCustomProperties {
