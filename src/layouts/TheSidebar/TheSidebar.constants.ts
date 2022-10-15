@@ -7,4 +7,8 @@ export const sidebarMenuItems = [
     name: 'Пользователи',
     url: '/users',
   },
+  {
+    name: 'Фильмы',
+    url: '/movies',
+  },
 ]

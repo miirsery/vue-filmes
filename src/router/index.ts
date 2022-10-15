@@ -19,6 +19,11 @@ const router = createRouter({
           name: 'UsersPage',
           component: () => import('@/pages/Users/UsersPage.vue'),
         },
+        {
+          path: 'movies',
+          name: 'MoviesPage',
+          component: () => import('@/pages/Movies/MoviesPage.vue'),
+        },
       ],
     },
   ],
