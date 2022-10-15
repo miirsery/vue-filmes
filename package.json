@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --legacy-watch app.ts",
-    "migrate": "db-migrate up initialize"
+    "migrate": "db-migrate up all",
+    "migrate:create": "db-migrate create insert-tables --sql-file"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

@@ -23,5 +23,7 @@ const upload = multer({ storage })
 
 router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
 router.get('/', movieController.getMovies)
+router.get('/:id', movieController.getMovie)
+router.patch('/', movieController.updateMovie)
 
 module.exports = router

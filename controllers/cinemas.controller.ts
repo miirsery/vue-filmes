@@ -51,12 +51,12 @@ class HallsController {
 
     async getCinemas (req: Request, res: Response) {
         try {
-            const cinemas = await db.query('SELECT id, street, location FROM cinemas')
+            const cinemas = await db.query('SELECT id, title, address, location, phone FROM cinema')
 
             const newCinemas: any = []
 
             for (const cinema of cinemas.rows) {
-                const halls = await db.query('SELECT title, seats_count FROM halls WHERE cinema_id=$1', [cinema.id])
+                const halls = await db.query('SELECT title, seats_count FROM hall WHERE cinema_id=$1', [cinema.id])
 
                 newCinemas.push(cinema)
 
@@ -68,6 +68,7 @@ class HallsController {
                 .setHeader('Content-Type', 'application/json')
                 .json(newCinemas)
         } catch (error: any) {
+            console.log(error)
             res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')
