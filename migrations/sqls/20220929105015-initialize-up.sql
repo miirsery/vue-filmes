@@ -43,11 +43,11 @@ CREATE TABLE employee
     surname		    TEXT,
     patronymic	    TEXT,
     birthdate	    DATE,
-    cinema_id		INT NOT NULL,
+    cinema_id		SERIAL,
     rate			INT,
     position		TEXT,
 
-    CONSTRAINT      cinema_id  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT      fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE hall
@@ -55,9 +55,9 @@ CREATE TABLE hall
     id              SERIAL PRIMARY KEY NOT NULL,
     title           INT,
     seats_count     INT,
-    cinema_id       INT,
+    cinema_id       SERIAL,
 
-    CONSTRAINT      cinema_id  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT      fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE session
@@ -65,26 +65,26 @@ CREATE TABLE session
     id              SERIAL PRIMARY KEY NOT NULL,
     date            DATE NOT NULL,
     time            TIME,
-    hall_id         INT,
-    movie_id        INT,
+    hall_id         SERIAL,
+    movie_id        SERIAL,
 
-    CONSTRAINT      hall_id FOREIGN KEY(hall_id) REFERENCES hall(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT      movie_id FOREIGN KEY(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT      fk_hall FOREIGN KEY(hall_id) REFERENCES hall(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT      fk_movie FOREIGN KEY(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE ticket
 (
     id              SERIAL PRIMARY KEY NOT NULL,
-    session_id		INT,
     seat			INT,
-    user_id		    INT,
     price			INT,
-    seller_id		INT,
     buy_date		TIMESTAMP NOT NULL DEFAULT now(),
+    session_id		SERIAL,
+    seller_id		SERIAL,
+    user_id		    SERIAL,
 
-    FOREIGN KEY (session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (seller_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT      fk_session FOREIGN KEY (session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT      fk_user FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT      fk_seller FOREIGN KEY (seller_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 COMMIT;

@@ -43,7 +43,6 @@ INSERT INTO person
       ('The best surname#3', 'The best name#3', 'The best patronymic#3', '2006-02-02', 'user', 'email2@mail.ru', 'login2', 'password', ''),
       ('The best surname#4', 'The best name#4', 'The best patronymic#4', '1991-06-12', 'user', 'email3@mail.ru', 'login3', 'password', '');
 
-
 INSERT INTO hall
 (
     title,
@@ -73,7 +72,6 @@ INSERT INTO session
 	('2022-11-17', '09:35:00', 1, 3),
 	('2022-12-18', '01:25:00', 2, 1);
 
-
 INSERT INTO employee
 (
     surname,
@@ -88,30 +86,30 @@ INSERT INTO employee
 	('The best surname#6', 'The best name#5', 'The best patronymic#6', '1992-09-12', 2, 1, 'cashier'),
 	('The best surname#7', 'The best name#6', 'The best patronymic#7', '1993-08-12', 2, 1, 'cashier'),
 	('The best surname#8', 'The best name#7', 'The best patronymic#8', '1994-07-12', 1, 0.5, 'cashier');
-
-INSERT INTO ticket
-(
-    session_id,
-    seat,
-    user_id,
-    price,
-    seller_id
-) VALUES
-    (1, 1, 0, 250, 1),
-    (1, 3, 1, 250, 2),
-    (1, 5, 2, 250, 3),
-    (1, 7, 3, 250, 4),
-    (2, 1, 0, 350, 1),
-    (2, 2, 1, 350, 2),
-    (2, 3, 2, 350, 3),
-    (2, 4, 3, 350, 4),
-    (3, 10, 0, 350, 1),
-    (3, 11, 1, 350, 2),
-    (3, 12, 2, 350, 3),
-    (3, 13, 3, 350, 4),
-    (4, 23, 0, 5000, 1),
-    (4, 22, 1, 5000, 2),
-    (4, 21, 2, 5000, 3),
-    (5, 20, 3, 5000, 4);
+--
+-- INSERT INTO ticket
+-- (
+--     session_id,
+--     seat,
+--     user_id,
+--     price,
+--     seller_id
+-- ) VALUES
+--     (1, 1, 0, 250, 1),
+--     (1, 3, 1, 250, 2),
+--     (1, 5, 2, 250, 3),
+--     (1, 7, 3, 250, 4),
+--     (2, 1, 0, 350, 1),
+--     (2, 2, 1, 350, 2),
+--     (2, 3, 2, 350, 3),
+--     (2, 4, 3, 350, 4),
+--     (3, 10, 0, 350, 1),
+--     (3, 11, 1, 350, 2),
+--     (3, 12, 2, 350, 3),
+--     (3, 13, 3, 350, 4),
+--     (4, 23, 0, 5000, 1),
+--     (4, 22, 1, 5000, 2),
+--     (4, 21, 2, 5000, 3),
+--     (5, 20, 3, 5000, 4);
 
 COMMIT;
