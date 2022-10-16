@@ -1,14 +1,18 @@
 export const sidebarMenuItems = [
   {
-    name: 'Главная',
+    name: 'Main',
     url: '/',
   },
   {
-    name: 'Пользователи',
+    name: 'Users',
     url: '/users',
   },
   {
-    name: 'Фильмы',
+    name: 'Movies',
     url: '/movies',
+  },
+  {
+    name: 'Tickets',
+    url: '/tickets',
   },
 ]

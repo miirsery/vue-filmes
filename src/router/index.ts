@@ -24,6 +24,11 @@ const router = createRouter({
           name: 'MoviesPage',
           component: () => import('@/pages/Movies/MoviesPage.vue'),
         },
+        {
+          path: 'tickets',
+          name: 'TicketsPage',
+          component: () => import('@/pages/Tickets/TicketsPage.vue'),
+        },
       ],
     },
   ],

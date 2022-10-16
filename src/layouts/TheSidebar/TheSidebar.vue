@@ -3,7 +3,7 @@
     <nav>
       <ul class="the-sidebar__menu">
         <li v-for="item in sidebarMenuItems" :key="item.name" class="the-sidebar__menu-item">
-          <router-link :to="item.url">{{ item.name }}</router-link>
+          <router-link class="the-sidebar__menu-link" :to="item.url">{{ item.name }}</router-link>
         </li>
       </ul>
     </nav>
@@ -22,10 +22,14 @@ import { sidebarMenuItems } from '@/layouts/TheSidebar/TheSidebar.constants'
   &__menu {
     width: 300px;
 
+    &-link {
+      display: block;
+      padding: 8px 12px;
+    }
+
     &-item {
       width: 100%;
       background-color: #707070;
-      padding: 8px 12px;
 
       &:hover {
         background-color: #4b4b4b;

@@ -18,6 +18,8 @@
     "prettier:fix": "prettier --write ."
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^1.1.3",
     "element-plus": "^2.2.18",
     "pinia": "^2.0.21",
     "postcss-html": "^1.5.0",
