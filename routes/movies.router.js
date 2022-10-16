@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const router = Router.Router()
 const movieController = require('../controllers/movies.controller')
+
 let pathToFile = ''
 
 const storage = multer.diskStorage({
@@ -24,6 +25,6 @@ const upload = multer({ storage })
 router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
 router.get('/', movieController.getMovies)
 router.get('/:id', movieController.getMovie)
-router.patch('/', movieController.updateMovie)
+router.patch('/', upload.any(), (req, res) => movieController.updateMovie(req, res, pathToFile))
 
 module.exports = router

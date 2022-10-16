@@ -68,7 +68,6 @@ class HallsController {
                 .setHeader('Content-Type', 'application/json')
                 .json(newCinemas)
         } catch (error: any) {
-            console.log(error)
             res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')

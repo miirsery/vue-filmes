@@ -2,22 +2,23 @@ import {Request, Response} from "express";
 
 const db = require('../db')
 const moment = require("moment");
-const { findOne, findAll, updateOne} = require("../repositories/movies.repository");
+const { findOne, findAll, updateOne} = require("../repositories/movies.repository.js");
 
 class MoviesController {
     async addMovie(req: Request, res: Response, path='') {
         try {
-            const { title, description, release_date } = req.body
+            const { title, studio, genre, description, release_date } = req.body
             const pathToFile = path.replace('/app', 'http://localhost:3030/')
-            const registrationDate = moment(release_date).format('DD-MM-YYYY hh:mm:ss')
 
             await db.query('INSERT INTO movie' +
                 ' (title,' +
                 ' description,' +
+                ' studio,' +
+                ' genre,' +
                 ' release_date,' +
                 ' preview' +
-                ') VALUES ($1, $2, $3, $4)',
-                [title, description, registrationDate, pathToFile])
+                ') VALUES ($1, $2, $3, $4, $5, $6)',
+                [title, description, studio, genre, release_date, pathToFile])
 
             return res
                 .status(201)
@@ -26,6 +27,7 @@ class MoviesController {
                     message: `Фильм ${title} успешно добавлен`
                 })
         } catch (error: any) {
+            console.log(error)
             res
                 .status(500)
                 .setHeader('Content-Type', 'application/json')
@@ -39,13 +41,12 @@ class MoviesController {
         try {
             await findAll().then((r: any) => {
                 const movies = r.rows.map((movie: any) => {
-                    const registerDate = moment(movie.release_date).format('DD-MM-YYYY')
+                    const releaseDate = moment(movie.release_date).format('DD-MM-YYYY')
 
                     delete movie.release_date
 
-                    return Object.assign(movie, {release_date: registerDate})
+                    return Object.assign(movie, {release_date: releaseDate})
                 })
-
 
                 return res
                     .status(200)
@@ -81,14 +82,16 @@ class MoviesController {
         }
     }
 
-    async updateMovie(req: Request, res: Response) {
+    async updateMovie(req: Request, res: Response, path = '') {
         try {
             const body = req.body
+            const pathToFile = path.replace('/app', 'http://localhost:3030/')
 
             if (body) {
                 await updateOne({
                     id: body.id,
-                    title: body.title
+                    title: body.title,
+                    preview: pathToFile
                 })
             }
 

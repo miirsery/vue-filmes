@@ -81,7 +81,6 @@ router
                 .json(Object.assign(user, { register_date: registerDate }))
         }
         )
-    .post('/register', authController.register)
 
 
 module.exports = router
