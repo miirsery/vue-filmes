@@ -58,6 +58,15 @@
       </template>
     </el-table-column>
     <el-table-column label="Seller Id" prop="seller_id">
+      <template #header>
+        <el-tooltip>
+          <span>Seller id</span>
+          <template #content>
+            <input-common v-model="filters.seller_id" placeholder="Enter a seller id" />
+            <el-button type="success" @click="handleFilterApply">Submit</el-button>
+          </template>
+        </el-tooltip>
+      </template>
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
           {{ row.seller_id }}
@@ -77,6 +86,22 @@
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
           {{ row.user_id }}
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column label="Movie Id" prop="movie_id">
+      <template #header>
+        <el-tooltip>
+          <span>Movie id</span>
+          <template #content>
+            <input-common v-model="filters.movie_id" placeholder="Enter a user id" />
+            <el-button type="success" @click="handleFilterApply">Submit</el-button>
+          </template>
+        </el-tooltip>
+      </template>
+      <template #default="{ row }">
+        <div v-if="checkSelectedRow(row.id)">
+          {{ row.movie_id }}
         </div>
       </template>
     </el-table-column>

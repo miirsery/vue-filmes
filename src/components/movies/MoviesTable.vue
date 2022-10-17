@@ -3,7 +3,7 @@
     <el-table-column type="selection" />
     <el-table-column label="ID" prop="id">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
+        <div v-if="checkSelectedRow(row.ticket_id)">
           {{ row.id }}
         </div>
         <el-button v-else @click="handleEditModalOpen(row.id)">edit</el-button>
@@ -11,35 +11,42 @@
     </el-table-column>
     <el-table-column label="Title" prop="title">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
+        <div v-if="checkSelectedRow(row.ticket_id)">
           {{ row.title }}
+        </div>
+      </template>
+    </el-table-column>
+    <el-table-column label="Ticket Id" prop="ticket_id">
+      <template #default="{ row }">
+        <div v-if="checkSelectedRow(row.ticket_id)">
+          {{ row.ticket_id }}
         </div>
       </template>
     </el-table-column>
     <el-table-column label="Studio" prop="studio">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
+        <div v-if="checkSelectedRow(row.ticket_id)">
           {{ row.studio }}
         </div>
       </template>
     </el-table-column>
     <el-table-column label="Genre" prop="genre">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
+        <div v-if="checkSelectedRow(row.ticket_id)">
           {{ row.genre }}
         </div>
       </template>
     </el-table-column>
     <el-table-column label="Release_date" prop="release_date">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
+        <div v-if="checkSelectedRow(row.ticket_id)">
           {{ row.release_date }}
         </div>
       </template>
     </el-table-column>
     <el-table-column label="Preview" prop="preview">
       <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id) && row.preview" class="movies-table__preview">
+        <div v-if="checkSelectedRow(row.ticket_id) && row.preview" class="movies-table__preview">
           <img :src="row.preview" />
         </div>
         <div v-else />
@@ -80,7 +87,7 @@ const handleRowSelect = (rows: any[]): void => {
 }
 
 const checkSelectedRow = (id: number): boolean => {
-  const account = selectRows.value.find((row: any) => row.id === +id)
+  const account = selectRows.value.find((row: any) => row.ticket_id === +id)
 
   if (account) {
     return selectRows.value.length > 1
