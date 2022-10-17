@@ -32,7 +32,7 @@ import HallDeleteDialog from '@/components/hall/HallDelete/HallDeleteDialog.vue'
 const isCreateDialogVisible = ref(false)
 const isRemoveDialogVisible = ref(false)
 const tableLoading = ref(false)
-const halls = ref<any>()
+const halls = ref<any>([])
 
 const handleDeleteModalVisibleChange = (): void => {
   isRemoveDialogVisible.value = !isRemoveDialogVisible.value

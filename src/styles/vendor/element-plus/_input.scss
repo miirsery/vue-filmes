@@ -1,0 +1,10 @@
+@use '@/styles/resources/variables' as *;
+
+.dark {
+  .el-input {
+    &__inner {
+      color: #f90;
+    }
+  }
+}
+

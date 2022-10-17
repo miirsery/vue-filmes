@@ -35,9 +35,9 @@ const router = createRouter({
           component: () => import('@/pages/Halls/HallsPage.vue'),
         },
         {
-          path: 'table',
-          name: 'UsersTablePage',
-          component: () => import('@/pages/UsersTable/UsersTablePage.vue'),
+          path: 'employees',
+          name: 'EmployeesPage',
+          component: () => import('@/pages/Employees/EmployeesPage.vue'),
         },
       ],
     },

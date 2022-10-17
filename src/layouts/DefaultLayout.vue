@@ -9,5 +9,5 @@
 </template>
 
 <script lang="ts" setup>
-import TheSidebar from '@/layouts/TheSidebar/TheSidebar.vue'
+import TheSidebar from '@/components/layouts/DefaultLayout/TheSidebar/TheSidebar.vue'
 </script>

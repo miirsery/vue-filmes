@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { sidebarMenuItems } from '@/layouts/TheSidebar/TheSidebar.constants'
+import { sidebarMenuItems } from '@/components/layouts/DefaultLayout/TheSidebar/TheSidebar.constants'
 </script>
 
 <style lang="scss" scoped>

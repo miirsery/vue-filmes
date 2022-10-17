@@ -19,4 +19,8 @@ export const sidebarMenuItems = [
     name: 'Halls',
     url: '/halls',
   },
+  {
+    name: 'Employees',
+    url: '/employees',
+  },
 ]
