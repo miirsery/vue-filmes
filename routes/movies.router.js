@@ -22,9 +22,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
 router.get('/', movieController.getMovies)
 router.get('/:id', movieController.getMovie)
+router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
 router.patch('/', upload.any(), (req, res) => movieController.updateMovie(req, res, pathToFile))
 
 module.exports = router

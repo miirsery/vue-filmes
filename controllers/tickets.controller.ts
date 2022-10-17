@@ -7,6 +7,7 @@ const {
   getEqualsTickets,
   getFilteredOnSessionTickets,
   addTicket,
+  getComparisonTicketsWithSeller
 } = require('../repositories/tickets.repository.js')
 
 const getAllTickets = (response: any): Promise<any> => {
@@ -43,6 +44,15 @@ class TicketsController {
         await getComparisonTickets(filter.comparison).then(async (response: any) => {
           const tickets = await getAllTickets(response)
 
+          return res.setHeader('Content-Type', 'application/json').status(200).json(tickets)
+        })
+      }
+
+      if (filter.comparison && filter.seller_id) {
+        console.log(filter)
+        await getComparisonTicketsWithSeller(filter.comparison, filter.seller_id).then(async (response: any) => {
+          const tickets = await getAllTickets(response)
+
           return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
         })
       }
@@ -61,6 +71,7 @@ class TicketsController {
         })
       }
     } catch (error: any) {
+      console.log(error, '2')
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })

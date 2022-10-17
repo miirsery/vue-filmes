@@ -27,3 +27,13 @@ docker exec -t db pg_dump --no-owner -U socialUser social_db > dump.sql
 ```
 cat dump.sql | docker exec -i db psql -U socialUser -d social_db
 ```
+
+
+## change columns
+```
+docker-compose exec db bash
+psql socialUser -U social_db
+\dt
+ALTER TABLE person ADD phone TEXT;
+ALTER TABLE person DROP column phone;
+```

@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 
 const db = require('../db')
 const moment = require('moment')
-const { findOne, findAll, updateOne } = require('../repositories/movies.repository.js')
+const { findOne, findAll, updateOne, getMostPopularMovie } = require('../repositories/movies.repository.ts')
 
 class MoviesController {
   async addMovie(req: Request, res: Response, path = '') {
@@ -38,6 +38,15 @@ class MoviesController {
 
   async getMovies(req: Request, res: Response) {
     try {
+      const mostPopular = req.query.most_popular
+
+      if (mostPopular) {
+        const data = await getMostPopularMovie()
+        // console.log('123')
+
+        return res.status(200).setHeader('Content-Type', 'application/json').send(data.rows)
+      }
+
       await findAll().then((r: any) => {
         const movies = r.rows.map((movie: any) => {
           const releaseDate = moment(movie.release_date).format('DD-MM-YYYY')
@@ -50,6 +59,7 @@ class MoviesController {
         return res.status(200).setHeader('Content-Type', 'application/json').send(movies)
       })
     } catch (error: any) {
+      console.log(error)
       res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
