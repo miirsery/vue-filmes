@@ -54,7 +54,7 @@ class HallsController {
         cinema.halls = halls.rows
       }
 
-      return res.status(201).setHeader('Content-Type', 'application/json').json(newCinemas)
+      return res.status(200).setHeader('Content-Type', 'application/json').json(newCinemas)
     } catch (error: any) {
       res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,

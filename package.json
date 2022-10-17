@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon --legacy-watch app.ts",
     "migrate": "db-migrate up all",
+    "migrate:down": "db-migrate down all",
     "migrate:create": "db-migrate create insert-tables --sql-file",
     "format:check": "prettier --check .",
     "format:write": "prettier --write .",
