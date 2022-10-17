@@ -1,5 +1,5 @@
 <template>
-  <el-form class="movie-create-form">
+  <el-form :model="form" class="movie-create-form">
     <el-form-item prop="title">
       <input-common v-model="form.title" placeholder="Enter a title" />
     </el-form-item>

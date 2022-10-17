@@ -41,13 +41,12 @@ export class AxiosService {
             }
 
             break
-          case 201:
-            ElMessage({
-              type: 'success',
-              message: response?.data?.message,
-            })
+          // case 201:
+          //   ElMessage({
+          //     type: 'success',
+          //     message: response?.data?.message,
+          //   })
 
-            break
           default:
             break
         }
