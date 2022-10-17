@@ -1,23 +1,23 @@
 const Router = require('express')
-const multer = require("multer");
-const path = require("path");
+const multer = require('multer')
+const path = require('path')
 const router = Router.Router()
 const movieController = require('../controllers/movies.controller')
 
 let pathToFile = ''
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'media')
-    },
-    filename: (req, file, cb) => {
-        const filename = file.originalname.split('.').slice(0, -1).join('.')
-        const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
+  destination: (req, file, cb) => {
+    cb(null, 'media')
+  },
+  filename: (req, file, cb) => {
+    const filename = file.originalname.split('.').slice(0, -1).join('.')
+    const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
 
-        pathToFile = path.resolve('./')+'media/' + formattedFilename
+    pathToFile = path.resolve('./') + 'media/' + formattedFilename
 
-        cb(null, formattedFilename)
-    }
+    cb(null, formattedFilename)
+  },
 })
 
 const upload = multer({ storage })

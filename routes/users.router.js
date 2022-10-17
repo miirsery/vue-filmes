@@ -84,7 +84,7 @@ router.get('/', userController.getUsers)
 
 router.post('/', userController.registerUser)
 
-router.delete(`/:id`, userController.deleteUser)
+router.delete('/:id', userController.deleteUser)
 router.patch('/:id', userController.updateUser)
 
 module.exports = router
