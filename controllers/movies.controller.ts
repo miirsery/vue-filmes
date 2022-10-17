@@ -46,17 +46,17 @@ class MoviesController {
         return res.status(200).setHeader('Content-Type', 'application/json').send(data.rows)
       }
 
-      await findAll().then((r: any) => {
-        const movies = r.rows.map((movie: any) => {
+      const moviesData = await findAll().then((r: any) => {
+        return r.rows.map((movie: any) => {
           const releaseDate = moment(movie.release_date).format('DD-MM-YYYY')
 
           delete movie.release_date
 
           return Object.assign(movie, { release_date: releaseDate })
         })
-
-        return res.status(200).setHeader('Content-Type', 'application/json').send(movies)
       })
+
+      return res.status(200).setHeader('Content-Type', 'application/json').send(moviesData)
     } catch (error: any) {
       console.log(error)
       res.status(500).setHeader('Content-Type', 'application/json').json({

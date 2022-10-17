@@ -32,7 +32,7 @@ cat dump.sql | docker exec -i db psql -U socialUser -d social_db
 ## change columns
 ```
 docker-compose exec db bash
-psql socialUser -U social_db
+psql social_db -U socialUser;
 \dt
 ALTER TABLE person ADD phone TEXT;
 ALTER TABLE person DROP column phone;

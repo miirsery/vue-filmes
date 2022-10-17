@@ -21,7 +21,8 @@ const app: Application = express(),
   hallsRouter = require('./routes/halls.router'),
   cinemasRouter = require('./routes/cinemas.router'),
   sessionsRouter = require('./routes/sessions.router'),
-  ticketsRouter = require('./routes/tickets.router')
+  ticketsRouter = require('./routes/tickets.router'),
+  employeesRouter = require('./routes/employees.router')
 
 app.use(express.static('public'))
 app.use('/media', express.static(__dirname + '/media'))
@@ -35,7 +36,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 )
 app.use(passport.initialize())
 app.use(passport.session())
@@ -49,6 +50,7 @@ app.use('/api/v1/halls', hallsRouter)
 app.use('/api/v1/cinemas', cinemasRouter)
 app.use('/api/v1/sessions', sessionsRouter)
 app.use('/api/v1/tickets', ticketsRouter)
+app.use('/api/v1/employees', employeesRouter)
 
 app.get('/', (req: Request, res: Response) => {
   res.send({

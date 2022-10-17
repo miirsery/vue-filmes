@@ -7,7 +7,8 @@ const {
   getEqualsTickets,
   getFilteredOnSessionTickets,
   addTicket,
-  getComparisonTicketsWithSeller
+  getComparisonTicketsWithSeller,
+  getTicketsWithSeller,
 } = require('../repositories/tickets.repository.js')
 
 const getAllTickets = (response: any): Promise<any> => {
@@ -24,44 +25,52 @@ class TicketsController {
   async getTickets(req: Request, res: Response) {
     try {
       const filter = req.query
+      console.log(filter)
 
       if (filter.user_id) {
-        await getFilteredTickets(filter.user_id).then(async (response: any) => {
-          const tickets = await getAllTickets(response)
-
-          return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
-        })
+        const ticketsData = await getFilteredTickets(filter.user_id).then(
+          async (response: any) => await getAllTickets(response)
+        )
+        return res.status(200).setHeader('Content-Type', 'application/json').json(ticketsData)
       }
+
       if (filter.session_id) {
-        await getFilteredOnSessionTickets(filter.session_id).then(async (response: any) => {
-          const tickets = await getAllTickets(response)
-
-          return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
-        })
-      }
-
-      if (filter.comparison) {
-        await getComparisonTickets(filter.comparison).then(async (response: any) => {
-          const tickets = await getAllTickets(response)
-
-          return res.setHeader('Content-Type', 'application/json').status(200).json(tickets)
-        })
+        const ticketsData = await getFilteredOnSessionTickets(filter.session_id).then(
+          async (response: any) => await getAllTickets(response)
+        )
+        return res.status(200).setHeader('Content-Type', 'application/json').json(ticketsData)
       }
 
       if (filter.comparison && filter.seller_id) {
-        await getComparisonTicketsWithSeller(filter.comparison, filter.seller_id).then(async (response: any) => {
-          const tickets = await getAllTickets(response)
+        const ticketsData = await getComparisonTicketsWithSeller(+filter.comparison, +filter.seller_id).then(
+          async (response: any) => await getAllTickets(response)
+        )
 
-          return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
-        })
+        return res.status(200).setHeader('Content-Type', 'application/json').json(ticketsData)
+      }
+
+      if (filter.comparison) {
+        const ticketsData = await getComparisonTickets(filter.comparison).then(
+          async (response: any) => await getAllTickets(response)
+        )
+
+        return res.setHeader('Content-Type', 'application/json').status(200).json(ticketsData)
+      }
+
+      if (filter.seller_id) {
+        const ticketData = await getTicketsWithSeller(filter.seller_id).then(
+          async (response: any) => await getAllTickets(response)
+        )
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(ticketData)
       }
 
       if (filter.equals) {
-        await getEqualsTickets(filter.equals).then(async (response: any) => {
-          const tickets = await getAllTickets(response)
+        const ticketsData = await getEqualsTickets(filter.equals).then(
+          async (response: any) => await getAllTickets(response)
+        )
 
-          return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
-        })
+        return res.status(200).setHeader('Content-Type', 'application/json').json(ticketsData)
       } else {
         await getAll().then((response: any) => {
           const tickets = getAllTickets(response)
@@ -70,10 +79,14 @@ class TicketsController {
         })
       }
     } catch (error: any) {
-      console.log(error, '2')
-      return res.status(500).setHeader('Content-Type', 'application/json').json({
-        message: error.detail,
-      })
+      console.log(error)
+      return res
+        .status(500)
+        .setHeader('Content-Type', 'application/json')
+        .json({
+          message: error.detail,
+        })
+        .end('Cannot ' + req.method + ' ' + req.url)
     }
   }
 
@@ -87,9 +100,13 @@ class TicketsController {
         message: 'Успешно',
       })
     } catch (error: any) {
-      return res.status(500).setHeader('Content-Type', 'application/json').json({
-        message: error.detail,
-      })
+      return res
+        .status(500)
+        .setHeader('Content-Type', 'application/json')
+        .json({
+          message: error.detail,
+        })
+        .end('Cannot ' + req.method + ' ' + req.url)
     }
   }
 }
