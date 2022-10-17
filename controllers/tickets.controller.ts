@@ -49,7 +49,6 @@ class TicketsController {
       }
 
       if (filter.comparison && filter.seller_id) {
-        console.log(filter)
         await getComparisonTicketsWithSeller(filter.comparison, filter.seller_id).then(async (response: any) => {
           const tickets = await getAllTickets(response)
 

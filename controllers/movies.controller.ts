@@ -42,7 +42,6 @@ class MoviesController {
 
       if (mostPopular) {
         const data = await getMostPopularMovie()
-        // console.log('123')
 
         return res.status(200).setHeader('Content-Type', 'application/json').send(data.rows)
       }

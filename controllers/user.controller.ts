@@ -117,7 +117,6 @@ class UserController {
   async getUsersTable(req: Request, res: Response) {
     try {
       const data = await db.query('SELECT * FROM person')
-      console.log(data)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(data)
     } catch (error: any) {
