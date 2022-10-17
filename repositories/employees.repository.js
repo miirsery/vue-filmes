@@ -9,13 +9,15 @@ module.exports = {
   //       ' AND (SELECT SUM(ticket.price) FROM ticket WHERE ticket.seller_id = employee.id) > $1',
   //     [price]
   //   ),
-  filteredAll: async (position, price) =>
-    db.query(
+  filteredAll: async (position, price) => {
+    console.log(position, price)
+    return db.query(
       'SELECT * from employee' +
         ' WHERE employee.position=$1' +
         ' AND (SELECT SUM(ticket.price)' +
         ' FROM ticket' +
         ' WHERE ticket.seller_id=employee.id) > $2',
       [position, price]
-    ),
+    )
+  },
 }
