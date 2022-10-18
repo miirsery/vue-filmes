@@ -3,8 +3,13 @@
     <div class="halls-page__header d-flex ai-center jc-between">
       <h1>Employees</h1>
       <div class="d-flex ai-center">
+        <el-tooltip class="box-item" effect="dark" placement="left">
+          <template #content>
+            <input-common v-model="price" placeholder="enter a amount" />
+          </template>
+          <el-button type="primary" @click="getEmployees">Get best</el-button>
+        </el-tooltip>
         <!--        <el-button type="success" @click="handleDeleteModalVisibleChange">Delete employee</el-button>-->
-        <el-button type="primary" @click="getEmployees(300)">Get best</el-button>
       </div>
     </div>
     <employees-table :employees="employees" :loading="tableLoading" @update-table="getEmployees" />
@@ -15,14 +20,16 @@
 import employeesApi from '@/api/employees/employees.api'
 import { onMounted, ref } from 'vue'
 import EmployeesTable from '@/components/employees/EmployeesTable.vue'
+import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
 
+const price = ref(0)
 const employees = ref<any>([])
 const tableLoading = ref(false)
 
-const getEmployees = async (price?: number): Promise<void> => {
+const getEmployees = async (): Promise<void> => {
   tableLoading.value = true
 
-  const [error, data] = await employeesApi.getEmployees(price)
+  const [error, data] = await employeesApi.getEmployees(price.value || undefined)
 
   if (!error && data) {
     employees.value = data

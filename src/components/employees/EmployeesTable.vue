@@ -1,5 +1,5 @@
 <template>
-  <el-table v-loading="loading" :data="props.users" @selection-change="handleRowSelect">
+  <el-table v-loading="loading" :data="props.employees" @selection-change="handleRowSelect">
     <el-table-column type="selection" />
     <el-table-column label="ID" prop="id">
       <template #default="{ row }">
@@ -21,13 +21,6 @@
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
           {{ row.surname }}
-        </div>
-      </template>
-    </el-table-column>
-    <el-table-column label="Birthdate" prop="birthdate">
-      <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
-          {{ row.birthdate }}
         </div>
       </template>
     </el-table-column>

@@ -3,6 +3,7 @@
     :model-value="props.value"
     :placeholder="props.placeholder"
     :label="props.label"
+    :type="type"
     @input="handleValueChange"
   />
 </template>
@@ -12,6 +13,7 @@ interface IProps {
   label?: string
   placeholder?: string
   value?: string | number
+  type?: 'text' | 'number'
 }
 
 interface IEmits {

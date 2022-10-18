@@ -7,8 +7,6 @@ class EmployeesApi extends AxiosService {
   }
 
   async getEmployees(price?: number) {
-    console.log(price)
-
     return this.axiosCall({
       method: 'get',
       url: '',
