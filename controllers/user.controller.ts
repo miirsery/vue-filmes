@@ -94,8 +94,8 @@ class UserController {
 
   async getUsers(req: Request, res: Response) {
     try {
-      await getAll().then((r: any) => {
-        const users = r.rows.map((user: any) => {
+      const users = await getAll().then((r: any) => {
+        return r.rows.map((user: any) => {
           const changedBirthdate = moment(user.birthdate).format('DD-MM-YYYY')
           const changedRegisterDate = moment(user.register_date).format('DD-MM-YYYY;HH:MM:SS')
 
@@ -104,11 +104,11 @@ class UserController {
 
           return Object.assign(user, { birthdate: changedBirthdate, register_date: changedRegisterDate })
         })
-
-        return res.status(200).setHeader('Content-Type', 'application/json').json(users)
       })
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json(users)
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
@@ -120,7 +120,7 @@ class UserController {
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(data)
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
