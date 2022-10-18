@@ -5,20 +5,6 @@ module.exports = {
   findAll: async () => db.query('SELECT * FROM movie'),
   updateOne: async (args: any) =>
     db.query('UPDATE movie SET title=$1, preview=$2 WHERE id=$3', [args.title, args.preview, args.id]),
-  // getMostPopularMovie: async () =>
-  //   db.query(
-  //     'SELECT id,' +
-  //       ' COUNT(id)' +
-  //       ' FROM movie' +
-  //       ' GROUP BY id' +
-  //       ' HAVING COUNT (id)' +
-  //       ' = (SELECT MAX(current_count)' +
-  //       ' FROM (' +
-  //       ' SELECT id,' +
-  //       ' COUNT(id) current_count' +
-  //       ' FROM movie' +
-  //       ' GROUP BY id))',
-  //   ),
   getMostPopularMovie: () =>
     db.query(
       'SELECT ticket.id as ticket_id,' +
@@ -31,6 +17,6 @@ module.exports = {
         ' movie.title' +
         ' FROM movie' +
         ' LEFT JOIN ticket' +
-        ' ON movie.id = ticket.movie_id',
+        ' ON movie.id = ticket.movie_id'
     ),
 }

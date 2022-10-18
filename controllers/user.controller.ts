@@ -84,6 +84,7 @@ class UserController {
   async updateUser(req: Request, res: Response) {
     try {
       const id = req.params.id
+      // console.log(id)
       // TODO: Заврешить потом
     } catch (error: any) {
       res.status(500).setHeader('Content-Type', 'application/json').json({

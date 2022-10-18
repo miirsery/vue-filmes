@@ -5,11 +5,8 @@ module.exports = {
   getFilteredTickets: async (userId) => db.query('SELECT * FROM ticket WHERE user_id=$1', [userId]),
   getFilteredOnSessionTickets: async (sessionId) => db.query('SELECT * FROM ticket WHERE session_id=$1', [sessionId]),
   getComparisonTickets: async (amount) => db.query('SELECT * FROM ticket WHERE price>$1', [amount]),
-  getComparisonTicketsWithSeller: async (amount, sellerId) => {
-    console.log(amount, sellerId)
-    console.log(typeof amount, typeof sellerId)
-    return db.query('SELECT * FROM ticket WHERE price > $1 AND seller_id=$2', [amount, sellerId])
-  },
+  getComparisonTicketsWithSeller: async (amount, sellerId) =>
+    db.query('SELECT * FROM ticket' + ' WHERE price > $1 AND seller_id=$2', [amount, sellerId]),
   getTicketsWithSeller: async (sellerId) => db.query('SELECT * FROM ticket WHERE seller_id=$1', [sellerId]),
   getEqualsTickets: async (amount) => db.query('SELECT * FROM ticket WHERE $1=price', [amount]),
   addTicket: async (ticket) =>
