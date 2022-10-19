@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 const db = require('../db')
 const bcrypt = require('bcryptjs')
 const moment = require('moment/moment')
-const { getAll } = require('../repositories/users.reposotory.js')
+const { getAll, setDiscount } = require('../repositories/users.reposotory.js')
 
 class UserController {
   async registerUser(req: Request, res: Response) {
@@ -118,6 +118,20 @@ class UserController {
   async getUsersTable(req: Request, res: Response) {
     try {
       const data = await db.query('SELECT * FROM person')
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json(data)
+    } catch (error: any) {
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async setUserDiscount(req: Request, res: Response) {
+    try {
+      const discount = req.body.discount
+
+      const data = await setDiscount(+discount)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(data)
     } catch (error: any) {

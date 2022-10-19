@@ -16,4 +16,17 @@ module.exports = {
         ' discount ' +
         'FROM person;'
     ),
+  setDiscount: async (discount) =>
+    db.query(
+      'UPDATE person' +
+        ' SET discount = $1' +
+        ' WHERE id = (SELECT id FROM person' +
+        ' GROUP BY id' +
+        ' ORDER BY MAX((SELECT CAST(COUNT(*) as INTEGER)' +
+        ' FROM ticket' +
+        ' WHERE ticket.user_id = person.id))' +
+        'LIMIT 1' +
+        ')',
+      [discount]
+    ),
 }

@@ -82,7 +82,6 @@ class MoviesController {
     try {
       const body = req.body
       const pathToFile = path.replace('/app', 'http://localhost:3030/')
-
       if (body) {
         await updateOne({
           id: body.id,

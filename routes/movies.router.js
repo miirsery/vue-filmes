@@ -6,6 +6,7 @@ const movieController = require('../controllers/movies.controller')
 
 let pathToFile = ''
 
+// TODO: Смена картинки у фильма. Сделать удаление картинки у фильма
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'media')
