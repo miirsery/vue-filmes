@@ -13,7 +13,7 @@ BEGIN;
 --     password          TEXT NOT NULL,
 --     register_date     TIMESTAMP NOT NULL default now(),
 --     birthdate         DATE,
---     discount          NUMERIC DEFAULT 0 CHECK ( discount >= 0 ),
+--     discount          INT DEFAULT 0 CHECK ( discount >= 0 ),
 --     avatar            TEXT
 -- );
 --

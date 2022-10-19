@@ -81,10 +81,13 @@ router.get('/', userController.getUsers)
  *               items:
  *                 $ref: '#/components/schemas/Person'
  */
-router.get('/table', userController.getUsersTable)
+router.get('table', userController.getUsersTable)
+
+router.post('/discount', userController.setUserDiscount)
 router.post('/', userController.registerUser)
 
 router.delete('/:id', userController.deleteUser)
+
 router.patch('/:id', userController.updateUser)
 
 module.exports = router
