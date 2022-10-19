@@ -3,7 +3,7 @@
     <div class="halls-page__header d-flex ai-center jc-between">
       <h1>Employees</h1>
       <div class="d-flex ai-center">
-        <el-tooltip class="box-item" effect="dark" placement="left">
+        <el-tooltip effect="dark" placement="left">
           <template #content>
             <input-common v-model="price" placeholder="enter a amount" />
           </template>

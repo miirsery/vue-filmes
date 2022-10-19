@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="form" class="movie-create-form">
+  <el-form ref="formEl" :model="form" class="movie-create-form">
     <el-form-item prop="title">
       <input-common v-model="form.title" placeholder="Enter a title" />
     </el-form-item>
@@ -13,7 +13,13 @@
       <input-common v-model="form.description" placeholder="Enter a description" />
     </el-form-item>
     <el-form-item prop="preview">
-      <el-upload v-model="form.preview" action="#" :auto-upload="false" :on-change="handlePreviewSet">
+      <el-upload
+        v-model:file-list="form.preview"
+        list-type="picture"
+        action="#"
+        :auto-upload="false"
+        :on-change="handlePreviewSet"
+      >
         <el-button type="primary">Click to upload</el-button>
       </el-upload>
     </el-form-item>
@@ -28,11 +34,12 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import moviesApi from '@/api/movies/movies.api'
 import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
 import { MovieCreateType } from '@/components/movie/MovieCreate/movie-create.types'
 import { FileType } from '@/types/common.types'
+import { FormInstance } from 'element-plus'
 
 interface IEmits {
   (e: 'close-dialog'): void
@@ -40,13 +47,14 @@ interface IEmits {
 }
 
 const emit = defineEmits<IEmits>()
+const formEl = ref<FormInstance | undefined>(undefined)
 
 const form = reactive<MovieCreateType>({
   title: '',
   studio: '',
   genre: '',
   description: '',
-  preview: null,
+  preview: [],
   release_date: '',
 })
 
@@ -60,8 +68,13 @@ const handleCloseDialog = (): void => {
 
 const handlePreviewSet = (image: FileType): void => {
   if (image) {
-    form.preview = image
+    form.preview = [image]
   }
+}
+
+const resetForm = () => {
+  if (!formEl.value) return
+  formEl.value.resetFields()
 }
 
 const handleCreateMovie = async (): Promise<void> => {
@@ -77,13 +90,15 @@ const handleCreateMovie = async (): Promise<void> => {
 
   formData.append('release_date', form.release_date)
 
-  if (form.preview && form.preview.raw) {
-    formData.append('preview', form.preview.raw)
+  if (form.preview && form.preview[0] && form.preview[0].raw) {
+    formData.append('preview', form.preview[0].raw)
   }
 
   const [error] = await moviesApi.createMovie(formData)
 
   if (!error) {
+    resetForm()
+
     handleCloseDialog()
 
     updateTable()
