@@ -79,13 +79,17 @@ const getMovies = async (filters?: any): Promise<void> => {
 }
 
 const handleMostPopularMovieGet = async (): Promise<void> => {
+  tableLoading.value = true
+
   const [error, data] = await moviesApi.getMovies({
     most_popular: filter.most_popular,
   })
 
   if (!error && data) {
-    movie.value = data
+    movies.value = data
   }
+
+  tableLoading.value = false
 }
 
 onMounted(() => {

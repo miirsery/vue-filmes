@@ -46,6 +46,13 @@
         </div>
       </template>
     </el-table-column>
+    <el-table-column label="Discount" prop="discount">
+      <template #default="{ row }">
+        <div v-if="checkSelectedRow(row.id)">
+          {{ row.discount }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column label="Birthdate" prop="birthdate">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">

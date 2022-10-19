@@ -1,5 +1,5 @@
 <template>
-  <el-form ref="movieEditForm" class="movie-edit-form">
+  <el-form ref="movieEditForm" :molel="form" class="movie-edit-form">
     <el-form-item prop="title">
       <input-common v-model="form.title" placeholder="Enter a title" />
     </el-form-item>
@@ -19,6 +19,7 @@
         action="#"
         :auto-upload="false"
         :on-change="handlePreviewSet"
+        :before-remove="handlePreviewRemove"
       >
         <el-button type="primary">Click to upload</el-button>
       </el-upload>
@@ -60,16 +61,25 @@ const form = reactive<any>({
   preview: [],
   release_date: '',
 })
-const movieEditForm = ref<InstanceType<typeof ElForm>>()
+
+const movieEditForm = ref<FormInstance>()
 
 const updateTable = (): void => {
   emit('update-table')
+}
+
+const getNameFromUrl = (url: string): string => {
+  return url.split('.').slice(0, -1).join('.')
 }
 
 const clearFrom = (formEl?: FormInstance) => {
   if (!formEl) return
 
   formEl.resetFields()
+}
+
+const handlePreviewRemove = (): void => {
+  form.preview = []
 }
 
 const handleCloseDialog = (formEl?: FormInstance): void => {
@@ -79,8 +89,6 @@ const handleCloseDialog = (formEl?: FormInstance): void => {
 }
 
 const handlePreviewSet = (image: FileType): void => {
-  console.log(image)
-
   if (image) {
     form.preview = [image]
   }
@@ -102,8 +110,6 @@ const handleUpdateMovie = async (): Promise<void> => {
   formData.append('release_date', form.release_date)
 
   if (form.preview && form.preview[0] && form.preview[0].raw) {
-    console.log(form.preview)
-
     formData.append('preview', form.preview[0].raw)
   }
 
@@ -127,10 +133,26 @@ watch(
 
     form.genre = currentMovie.genre
 
+    // TODO: Смена картинки у фильма. Сделать удаление картинки у фильма
+    // if (currentMovie.preview) {
+    //   const blob = new Blob([JSON.stringify(form.preview[0], null, 2)], {
+    //     type: 'image/jpeg',
+    //   })
+    //
+    //   const file: File = new File([blob], `${getNameFromUrl(currentMovie.preview)}.jpg`, { type: 'image/jpeg' })
+    //
+    //   form.preview = [
+    //     {
+    //       url: currentMovie.preview,
+    //       name: currentMovie.title,
+    //       raw: file,
+    //     },
+    //   ]
+    // }
+
     if (currentMovie.preview) {
       form.preview = [
         {
-          name: currentMovie.title,
           url: currentMovie.preview,
         },
       ]

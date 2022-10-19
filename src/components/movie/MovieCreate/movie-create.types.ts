@@ -5,6 +5,6 @@ export type MovieCreateType = {
   studio: string
   genre: string
   description: string
-  preview: FileType | null
+  preview: FileType[] | null
   release_date: string
 }

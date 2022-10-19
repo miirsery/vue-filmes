@@ -28,6 +28,16 @@ class UsersApi extends AxiosService {
       url: `/${id}`,
     })
   }
+
+  async setDiscount(discount: number) {
+    return this.axiosCall({
+      method: 'post',
+      url: '/discount',
+      data: {
+        discount,
+      },
+    })
+  }
 }
 
 export default new UsersApi({

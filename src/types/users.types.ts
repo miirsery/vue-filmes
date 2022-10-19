@@ -10,4 +10,5 @@ export type UserType = {
   register_date: string
   birthdate: string
   avatar: string
+  discount: number
 }
