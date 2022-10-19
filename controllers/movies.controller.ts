@@ -41,9 +41,17 @@ class MoviesController {
       const mostPopular = req.query.most_popular
 
       if (mostPopular) {
-        const data = await getMostPopularMovie()
+        const data = await getMostPopularMovie().then((r: any) => {
+          return r.rows.map((movie: any) => {
+            const releaseDate = moment(movie.release_date).format('DD-MM-YYYY')
 
-        return res.status(200).setHeader('Content-Type', 'application/json').send(data.rows)
+            delete movie.release_date
+
+            return Object.assign(movie, { release_date: releaseDate })
+          })
+        })
+
+        return res.status(200).setHeader('Content-Type', 'application/json').send(data)
       }
 
       const moviesData = await findAll().then((r: any) => {

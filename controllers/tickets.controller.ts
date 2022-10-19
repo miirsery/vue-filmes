@@ -25,7 +25,6 @@ class TicketsController {
   async getTickets(req: Request, res: Response) {
     try {
       const filter = req.query
-      console.log(filter)
 
       if (filter.user_id) {
         const ticketsData = await getFilteredTickets(filter.user_id).then(
