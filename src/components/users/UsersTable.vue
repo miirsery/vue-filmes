@@ -6,7 +6,7 @@
         <div v-if="checkSelectedRow(row.id)">
           {{ row.id }}
         </div>
-        <el-button v-else>edit</el-button>
+        <el-button v-else @click="handleUserDelete(row.id)">delete</el-button>
       </template>
     </el-table-column>
     <el-table-column label="Name" prop="name">
@@ -14,7 +14,6 @@
         <div v-if="checkSelectedRow(row.id)">
           {{ row.name }}
         </div>
-        <el-button v-else>edit</el-button>
       </template>
     </el-table-column>
     <el-table-column label="Surname" prop="surname">
@@ -22,7 +21,6 @@
         <div v-if="checkSelectedRow(row.id)">
           {{ row.surname }}
         </div>
-        <el-button v-else @click="handleUserDelete(row.id)">delete</el-button>
       </template>
     </el-table-column>
     <el-table-column label="Role" prop="role">

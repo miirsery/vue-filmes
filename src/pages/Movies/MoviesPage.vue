@@ -1,6 +1,6 @@
 <template>
   <div class="movies-page w-100">
-    <div class="users-page__header d-flex ai-center jc-between">
+    <div class="users-page__header d-flex ai-center jc-between mb-16">
       <h1>Movies with tickets</h1>
       <div class="d-flex ai-center">
         <el-button type="success" @click="handleMostPopularMovieGet">Most popular</el-button>

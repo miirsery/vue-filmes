@@ -25,7 +25,7 @@ import { sidebarMenuItems } from '@/components/layouts/DefaultLayout/TheSidebar/
   margin-right: 40px;
 
   &__menu {
-    width: 300px;
+    width: 250px;
 
     &-link {
       display: block;
