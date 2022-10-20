@@ -14,7 +14,8 @@ module.exports = {
         ' birthdate,' +
         ' register_date,' +
         ' discount ' +
-        'FROM person;'
+        'FROM person' +
+        'ORDER BY id;'
     ),
   setDiscount: async (discount) =>
     db.query(
@@ -25,7 +26,8 @@ module.exports = {
         ' ORDER BY MAX((SELECT CAST(COUNT(*) as INTEGER)' +
         ' FROM ticket' +
         ' WHERE ticket.user_id = person.id))' +
-        'LIMIT 1' +
+        ' DESC' +
+        ' LIMIT 1' +
         ')',
       [discount]
     ),

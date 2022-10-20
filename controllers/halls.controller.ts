@@ -56,7 +56,6 @@ class HallsController {
         return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows)
       } else {
         const data = await getAll()
-        console.log(data)
 
         return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows)
       }
