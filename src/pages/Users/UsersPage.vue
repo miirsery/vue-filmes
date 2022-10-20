@@ -1,6 +1,6 @@
 <template>
   <div class="users-page w-100">
-    <div class="users-page__header d-flex ai-center jc-between">
+    <div class="users-page__header d-flex ai-center jc-between mb-16">
       <h1>Users</h1>
       <div class="d-flex ai-center">
         <el-tooltip effect="dark" placement="left">

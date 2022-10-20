@@ -113,6 +113,10 @@ const handleUpdateMovie = async (): Promise<void> => {
     formData.append('preview', form.preview[0].raw)
   }
 
+  if (!form.preview.lenght) {
+    formData.append('preview', 'null')
+  }
+
   const [error] = await moviesApi.updateMovie(formData)
 
   if (!error) {

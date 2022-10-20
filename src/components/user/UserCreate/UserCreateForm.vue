@@ -16,7 +16,10 @@
       <input-common v-model="form.email" placeholder="Enter a email" />
     </el-form-item>
     <el-form-item prop="birthdate">
-      <el-date-picker v-model="form.birthdate" format="DD-MM-YYYY" value-format="YYYY-MM-DD" />
+      <div class="d-flex fd-column">
+        <div>birthdate</div>
+        <el-date-picker v-model="form.birthdate" format="DD-MM-YYYY" value-format="YYYY-MM-DD" />
+      </div>
     </el-form-item>
     <el-form-item prop="role">
       <el-select v-model="form.role" class="m-2" placeholder="Select">

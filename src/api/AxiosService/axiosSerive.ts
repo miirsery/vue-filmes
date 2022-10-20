@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 // import Cookies from 'js-cookie'
-import { AxiosResponseType } from '@/api/AxiosService/axiosSerivce.type'
+import { AxiosResponseType } from '@/api/AxiosService/axios-service'
 import { ElMessage } from 'element-plus'
 
 export class AxiosService {

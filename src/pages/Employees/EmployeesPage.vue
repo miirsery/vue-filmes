@@ -1,6 +1,6 @@
 <template>
   <div class="employees-page w-100">
-    <div class="halls-page__header d-flex ai-center jc-between">
+    <div class="halls-page__header d-flex ai-center jc-between mb-16">
       <h1>Employees</h1>
       <div class="d-flex ai-center">
         <el-tooltip effect="dark" placement="left">
@@ -9,7 +9,6 @@
           </template>
           <el-button type="primary" @click="getEmployees">Get best</el-button>
         </el-tooltip>
-        <!--        <el-button type="success" @click="handleDeleteModalVisibleChange">Delete employee</el-button>-->
       </div>
     </div>
     <employees-table :employees="employees" :loading="tableLoading" @update-table="getEmployees" />

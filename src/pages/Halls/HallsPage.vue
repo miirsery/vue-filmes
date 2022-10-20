@@ -1,6 +1,6 @@
 <template>
   <div class="halls-page w-100">
-    <div class="halls-page__header d-flex ai-center jc-between">
+    <div class="halls-page__header d-flex ai-center jc-between mb-16">
       <h1>Halls</h1>
       <div class="d-flex ai-center">
         <el-button type="success" @click="handleDeleteModalVisibleChange">Delete hall</el-button>

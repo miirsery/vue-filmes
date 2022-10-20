@@ -1,6 +1,6 @@
 <template>
   <div class="tickets-page w-100">
-    <div class="d-flex ai-center jc-between">
+    <div class="d-flex ai-center jc-between mb-16">
       <h1>Tickets</h1>
       <el-button type="primary" @click="handleTicketCreateDialogVisibleChange">Create ticket</el-button>
     </div>

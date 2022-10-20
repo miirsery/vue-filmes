@@ -24,24 +24,24 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Role" prop="role">
+    <el-table-column label="Position" prop="position">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.role }}
+          {{ row.position }}
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Email" prop="email">
+    <el-table-column label="Rate" prop="rate">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.email }}
+          {{ row.rate }}
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Login" prop="login">
+    <el-table-column label="Cinema id" prop="cinema_id">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.login }}
+          {{ row.cinema_id }}
         </div>
       </template>
     </el-table-column>
@@ -52,13 +52,13 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="registerDate" prop="register_date">
-      <template #default="{ row }">
-        <div v-if="checkSelectedRow(row.id)">
-          {{ row.register_date }}
-        </div>
-      </template>
-    </el-table-column>
+    <!--    <el-table-column label="registerDate" prop="register_date">-->
+    <!--      <template #default="{ row }">-->
+    <!--        <div v-if="checkSelectedRow(row.id)">-->
+    <!--          {{ row.register_date }}-->
+    <!--        </div>-->
+    <!--      </template>-->
+    <!--    </el-table-column>-->
   </el-table>
 </template>
 
