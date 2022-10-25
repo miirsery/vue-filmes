@@ -1,5 +1,21 @@
 <template>
   <el-form class="ticket-create-form">
+    <el-form-item prop="movie_id">
+      <el-select v-model="form.movie_id" class="m-2" placeholder="Select movie" @focus.once="handleMoviesGet">
+        <el-option v-for="item in moviesOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </el-form-item>
+    <el-form-item prop="movie_id">
+      <el-select
+        v-model="form.hall_id"
+        class="m-2"
+        placeholder="Select hall"
+        @focus.once="handleHallsGet"
+        @change="handleHallGet"
+      >
+        <el-option v-for="item in hallsOptions" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+    </el-form-item>
     <el-form-item prop="seat">
       <input-common v-model="form.seat" placeholder="Enter a seat" />
     </el-form-item>
@@ -19,11 +35,6 @@
         <el-option v-for="item in userOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </el-form-item>
-    <el-form-item prop="movie_id">
-      <el-select v-model="form.movie_id" class="m-2" placeholder="Select movie" @focus.once="handleMoviesGet">
-        <el-option v-for="item in moviesOptions" :key="item.value" :label="item.label" :value="item.value" />
-      </el-select>
-    </el-form-item>
     <div class="d-flex ai-center jc-between">
       <el-button @click="handleCloseDialog">close</el-button>
       <el-button @click="handleTicketCreate">Create</el-button>
@@ -39,6 +50,7 @@ import { UserType } from '@/types/users.types'
 import usersApi from '@/api/users/users.api'
 import moviesApi from '@/api/movies/movies.api'
 import employeesApi from '@/api/employees/employees.api'
+import hallsApi from '@/api/halls/halls.api'
 
 interface IEmits {
   (e: 'close-dialog'): void
@@ -54,11 +66,14 @@ const form = reactive({
   sellerId: '',
   userId: null,
   movie_id: '',
+  hall_id: '',
+  hall_seats_count: '',
 })
 
 const userOptions = ref<any>([])
 const moviesOptions = ref<any>([])
 const employeesOptions = ref<any>([])
+const hallsOptions = ref<any>([])
 
 const updateTable = (): void => {
   emit('update-table')
@@ -76,6 +91,7 @@ const handleTicketCreate = async (): Promise<void> => {
     seller_id: +form.sellerId,
     user_id: form.userId,
     movie_id: form.movie_id,
+    hall_id: +form.hall_id,
   })
 
   if (!error) {
@@ -112,6 +128,15 @@ const setEmployeesOptions = (employeesData: any): void => {
   })
 }
 
+const setHallsOptions = (hallsData: any): void => {
+  hallsData.forEach((hall: any) => {
+    hallsOptions.value.push({
+      label: `${hall.title}`,
+      value: hall.id,
+    })
+  })
+}
+
 const handleGetUsers = async (): Promise<void> => {
   const [error, data] = await usersApi.getUsers()
 
@@ -139,6 +164,24 @@ const handleSellersGet = async (): Promise<void> => {
     const employees = data.map((employee: any) => ({ id: employee.id, name: employee.name }))
 
     await setEmployeesOptions(employees)
+  }
+}
+
+const handleHallsGet = async (): Promise<void> => {
+  const [error, data] = await hallsApi.getHalls()
+
+  if (!error && data) {
+    const halls = data.map((hall: any) => ({ id: hall.id, title: hall.title }))
+
+    await setHallsOptions(halls)
+  }
+}
+
+const handleHallGet = async (): Promise<void> => {
+  const [error, data] = await hallsApi.getHall(+form.hall_id)
+
+  if (!error && data) {
+    form.hall_seats_count = data.seats_count
   }
 }
 </script>

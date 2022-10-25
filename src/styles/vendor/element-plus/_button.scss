@@ -1,13 +1,13 @@
 @use '@/styles/resources/variables' as *;
 
 .el-button {
-  background: var(--el-color-primary-light-5);
   border: none;
+  background: var(--el-color-primary-light-5);
 }
 
 .is-dark {
   .el-button {
-    background: var(--el-color-primary-light-5);
     border: none;
+    background: var(--el-color-primary-light-5);
   }
 }

@@ -105,6 +105,13 @@
         </div>
       </template>
     </el-table-column>
+    <el-table-column label="Hall ID" prop="ticket_id">
+      <template #default="{ row }">
+        <div v-if="checkSelectedRow(row.id)">
+          {{ row.hall_id }}
+        </div>
+      </template>
+    </el-table-column>
     <el-table-column label="Buy time" prop="buy_date">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">

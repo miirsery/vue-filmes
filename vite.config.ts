@@ -5,6 +5,9 @@ import StyleLintPlugin from 'vite-plugin-stylelint'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import path from 'path'
+
 const styleLintConfig = StyleLintPlugin({
   files: ['src/**/*.{vue,scss}'],
   fix: true,
@@ -31,11 +34,21 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue(), styleLintConfig, eslintConfig],
+  plugins: [
+    vue(),
+    styleLintConfig,
+    eslintConfig,
+    createSvgIconsPlugin({
+      iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+      symbolId: 'icon-[dir]-[name]',
+      inject: 'body-first',
+      customDomId: '__svg__icons__dom__',
+    }),
+  ],
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "@/styles/resources/variables/index.scss" as *;',
+        additionalData: '@use "@/styles/resources" as *;',
       },
     },
   },

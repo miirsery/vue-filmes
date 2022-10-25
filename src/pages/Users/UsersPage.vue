@@ -3,6 +3,27 @@
     <div class="users-page__header d-flex ai-center jc-between mb-16">
       <h1>Users</h1>
       <div class="d-flex ai-center">
+        <el-tooltip effect="dark" placement="left" :show-arrow="false">
+          <template #content>
+            <div v-html="exampleFilePath" />
+          </template>
+          <div class="users-page__help">
+            <icon-template name="question" width="16" height="16" />
+          </div>
+        </el-tooltip>
+
+        <el-upload
+          ref="upload"
+          action=""
+          :auto-upload="false"
+          :on-change="handlePreviewSet"
+          :file-list="usersFile ? [usersFile] : []"
+          accept=".csv"
+        >
+          <el-button type="primary">Click to upload</el-button>
+        </el-upload>
+
+        <el-button type="primary" @click="handleUsersLoad">Load users</el-button>
         <el-tooltip effect="dark" placement="left">
           <template #content>
             <input-common v-model="discount" placeholder="enter a amount" />
@@ -30,11 +51,29 @@ import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
 import { onMounted, ref } from 'vue'
 import usersApi from '@/api/users/users.api'
 import { UserType } from '@/types/users.types'
+import IconTemplate from '@/components/common/IconTemplate.vue'
+import { FileType } from '@/types/common.types'
 
 const isUserCreateDialogVisible = ref(false)
 const tableLoading = ref(false)
 const discount = ref(0)
 const users = ref<UserType[]>([])
+const exampleFilePath = ref('')
+const usersFile = ref<any>(null)
+
+const getExampleFileLink = async (): Promise<void> => {
+  const [error, data] = await usersApi.getExampleFile()
+
+  if (!error && data) {
+    exampleFilePath.value = data.path
+  }
+}
+
+const handlePreviewSet = (image: FileType): void => {
+  if (image) {
+    usersFile.value = [image]
+  }
+}
 
 const handleUserCreateModalVisibleChange = (): void => {
   isUserCreateDialogVisible.value = !isUserCreateDialogVisible.value
@@ -60,7 +99,37 @@ const handleDiscountSet = async (): Promise<void> => {
   }
 }
 
+const handleUsersLoad = async (): Promise<void> => {
+  const formData = new FormData()
+
+  if (usersFile.value && usersFile.value[0].raw) {
+    formData.append('users', usersFile.value[0].raw)
+
+    await usersApi.addUsersGroup(formData)
+  }
+}
+
 onMounted(() => {
   getUsers()
+
+  getExampleFileLink()
 })
 </script>
+
+<style lang="scss" scoped>
+@import '@/styles/resources/mixins';
+
+.users-page {
+  &__help {
+    @include color('background-color', $color--primary--light-9, 10%);
+
+    width: $size--20;
+    height: $size--20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: $size--8;
+  }
+}
+</style>
