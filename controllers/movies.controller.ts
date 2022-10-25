@@ -19,7 +19,7 @@ class MoviesController {
           ' release_date,' +
           ' preview' +
           ') VALUES ($1, $2, $3, $4, $5, $6)',
-        [title, description, studio, genre, release_date, pathToFile],
+        [title, description, studio, genre, release_date, pathToFile]
       )
 
       return res

@@ -83,11 +83,13 @@ BEGIN;
 --     seller_id		SERIAL,
 --     user_id		    SERIAL,
 --     movie_id        SERIAL,
+--     hall_id         SERIAL,
 --
 --     CONSTRAINT      fk_movie FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
 --     CONSTRAINT      fk_session FOREIGN KEY (session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE,
 --     CONSTRAINT      fk_user FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE,
---     CONSTRAINT      fk_seller FOREIGN KEY (seller_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
+--     CONSTRAINT      fk_seller FOREIGN KEY (seller_id) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
+--     CONSTRAINT      fk_hall FOREIGN KEY (hall_id) REFERENCES hall(id) ON DELETE CASCADE ON UPDATE CASCADE
 -- );
 
 COMMIT;

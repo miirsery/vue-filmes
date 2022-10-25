@@ -18,8 +18,9 @@ module.exports = {
         ' user_id,' +
         ' price,' +
         ' seller_id,' +
-        ' movie_id' +
-        ') VALUES ($1, $2, $3, $4, $5, $6)',
-      [ticket.session_id, ticket.seat, ticket.user_id, ticket.price, ticket.seller_id, ticket.movie_id]
+        ' movie_id,' +
+        ' hall_id' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [ticket.session_id, ticket.seat, ticket.user_id, ticket.price, ticket.seller_id, ticket.movie_id, ticket.hall_id]
     ),
 }

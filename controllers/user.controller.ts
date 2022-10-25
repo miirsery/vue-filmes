@@ -47,7 +47,7 @@ class UserController {
           ' login, ' +
           ' birthdate' +
           ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-        [name, surname, patronymic, role, email, hashedPassword, login, birthdate],
+        [name, surname, patronymic, role, email, hashedPassword, login, birthdate]
       )
 
       return res
@@ -109,7 +109,7 @@ class UserController {
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(users)
     } catch (error: any) {
-      console.log(error);
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
@@ -135,6 +135,32 @@ class UserController {
       const data = await setDiscount(+discount)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(data)
+    } catch (error: any) {
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async getExampleFile(req: Request, res: Response) {
+    try {
+      return res.status(200).setHeader('Content-Type', 'application/json').json({
+        path: 'Download example: <a href="http://localhost:3030/media/csv/usersFileExample.csv">download</a>',
+      })
+    } catch (error: any) {
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: 'File doesnt exists',
+      })
+    }
+  }
+
+  async createGroupUsers(req: Request, res: Response, path = '') {
+    try {
+      const pathToFile = path.replace('/app', 'http://localhost:3030/')
+
+      return res.status(201).setHeader('Content-Type', 'application/json').json({
+        message: 'Success',
+      })
     } catch (error: any) {
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,

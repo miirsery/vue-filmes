@@ -9,13 +9,13 @@ let pathToFile = ''
 // TODO: Смена картинки у фильма. Сделать удаление картинки у фильма
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'media')
+    cb(null, 'media/images')
   },
   filename: (req, file, cb) => {
     const filename = file.originalname.split('.').slice(0, -1).join('.')
     const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
 
-    pathToFile = path.resolve('./') + 'media/' + formattedFilename
+    pathToFile = path.resolve('./') + 'media/images' + formattedFilename
 
     cb(null, formattedFilename)
   },

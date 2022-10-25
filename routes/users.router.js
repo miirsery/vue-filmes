@@ -1,6 +1,39 @@
 const Router = require('express')
 const router = Router.Router()
 const userController = require('../controllers/user.controller')
+const multer = require('multer')
+const path = require('path')
+const csv = require('csv-parser')
+const fs = require('fs')
+
+let pathToFile = ''
+const results = []
+
+// TODO: Смена картинки у фильма. Сделать удаление картинки у фильма
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'media/tempCSV')
+  },
+  filename: (req, file, cb) => {
+    const filename = file.originalname.split('.').slice(0, -1).join('.')
+    const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
+
+    pathToFile = path.resolve('./') + '/media/tempCSV/' + formattedFilename
+    console.log(__filename)
+
+    fs.createReadStream('backend/media/tempCSV/' + formattedFilename)
+      .pipe(csv())
+      .on('data', (data) => results.push(data))
+      .on('end', () => {
+        console.log(results)
+      })
+
+    cb(null, formattedFilename)
+  },
+})
+
+const upload = multer({ storage })
+
 /**
  * @swagger
  * components:
@@ -43,7 +76,7 @@ const userController = require('../controllers/user.controller')
  * @swagger
  * tags:
  *   name: Users
- *   description: The books managing API
+ *   description: The users managing API
  */
 
 /**
@@ -81,8 +114,10 @@ router.get('/', userController.getUsers)
  *               items:
  *                 $ref: '#/components/schemas/Person'
  */
-router.get('table', userController.getUsersTable)
+router.get('/table', userController.getUsersTable)
+router.get('/example-file', userController.getExampleFile)
 
+router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, pathToFile))
 router.post('/discount', userController.setUserDiscount)
 router.post('/', userController.registerUser)
 
