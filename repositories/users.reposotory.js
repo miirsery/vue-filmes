@@ -3,7 +3,8 @@ const db = require('../db')
 module.exports = {
   getAll: async () =>
     db.query(
-      'SELECT id,' +
+      'SELECT' +
+        ' id,' +
         ' name,' +
         ' surname,' +
         ' patronymic,' +
@@ -13,9 +14,9 @@ module.exports = {
         ' avatar,' +
         ' birthdate,' +
         ' register_date,' +
-        ' discount ' +
-        'FROM person' +
-        'ORDER BY id;'
+        ' discount' +
+        ' FROM person' +
+        ' ORDER BY id;'
     ),
   setDiscount: async (discount) =>
     db.query(

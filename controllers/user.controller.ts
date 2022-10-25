@@ -109,6 +109,7 @@ class UserController {
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(users)
     } catch (error: any) {
+      console.log(error);
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })

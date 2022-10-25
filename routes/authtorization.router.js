@@ -13,7 +13,7 @@ initialPassport(
   },
   async (id) => {
     return await db.query('SELECT * FROM users WHERE id=$1', [id]).then((r) => r.rows[0])
-  },
+  }
 )
 
 const getToken = (user) => {
@@ -24,7 +24,7 @@ const getToken = (user) => {
       iat: new Date().getTime(),
       exp: new Date().setDate(new Date().getDate() + 1),
     },
-    'secretKey',
+    'secretKey'
   )
 }
 
@@ -36,7 +36,7 @@ router
       successRedirect: '/api/v1/token',
       failureRedirect: '/api/v1/login/failure',
       failureFlash: true,
-    }),
+    })
   )
   .get('/login/failure', function (res, req) {
     return req.sendStatus(500).setHeader('Content-Type', 'application/json').json({
