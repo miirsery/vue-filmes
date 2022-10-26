@@ -11,6 +11,8 @@ const {
   getTicketsWithSeller,
 } = require('../repositories/tickets.repository.js')
 
+const { removeSeat } = require('../repositories/halls.repository.js')
+
 const getAllTickets = (response: any): Promise<any> => {
   return response.rows.map((ticket: any) => {
     const changedBuyDate = moment(ticket.buy_date).format('DD-MM-YYYY ; HH:MM:SS')
@@ -94,6 +96,7 @@ class TicketsController {
       const body = req.body
 
       await addTicket(body)
+      await removeSeat(body.hall_id)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({
         message: 'Успешно',

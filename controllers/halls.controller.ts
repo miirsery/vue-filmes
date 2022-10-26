@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-const { getAll, deleteOne, getFilteredHalls } = require('../repositories/halls.repository')
+const { getAll, deleteOne, getFilteredHalls, getOne } = require('../repositories/halls.repository')
 
 const db = require('../db')
 
@@ -58,6 +58,23 @@ class HallsController {
         const data = await getAll()
 
         return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows)
+      }
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async getHall(req: Request, res: Response) {
+    try {
+      const id = +req.params.id
+
+      if (id) {
+        const data = await getOne(id)
+
+        return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows[0])
       }
     } catch (error: any) {
       console.log(error)
