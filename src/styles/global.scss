@@ -1,3 +1,5 @@
+@use 'resources/variables' as *;
+
 .the-sidebar__menu-link {
   &.exact-active-link {
     color: #f90;
