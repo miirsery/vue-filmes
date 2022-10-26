@@ -11,19 +11,7 @@
             <icon-template name="question" width="16" height="16" />
           </div>
         </el-tooltip>
-
-        <el-upload
-          ref="upload"
-          action=""
-          :auto-upload="false"
-          :on-change="handlePreviewSet"
-          :file-list="usersFile ? [usersFile] : []"
-          accept=".csv"
-        >
-          <el-button type="primary">Click to upload</el-button>
-        </el-upload>
-
-        <el-button type="primary" @click="handleUsersLoad">Load users</el-button>
+        <el-button type="primary" @click="handleUsersLoadVisibleChange">Load users</el-button>
         <el-tooltip effect="dark" placement="left">
           <template #content>
             <input-common v-model="discount" placeholder="enter a amount" />
@@ -41,6 +29,8 @@
       @close-dialog="handleUserCreateModalVisibleChange"
       @update-table="getUsers"
     />
+
+    <users-load :visible="isUsersLoadVisible" @close-dialog="handleUsersLoadVisibleChange" />
   </div>
 </template>
 
@@ -52,14 +42,14 @@ import { onMounted, ref } from 'vue'
 import usersApi from '@/api/users/users.api'
 import { UserType } from '@/types/users.types'
 import IconTemplate from '@/components/common/IconTemplate.vue'
-import { FileType } from '@/types/common.types'
+import UsersLoad from '@/components/users/UsersLoad.vue'
 
 const isUserCreateDialogVisible = ref(false)
 const tableLoading = ref(false)
+const isUsersLoadVisible = ref(false)
 const discount = ref(0)
 const users = ref<UserType[]>([])
 const exampleFilePath = ref('')
-const usersFile = ref<any>(null)
 
 const getExampleFileLink = async (): Promise<void> => {
   const [error, data] = await usersApi.getExampleFile()
@@ -69,14 +59,12 @@ const getExampleFileLink = async (): Promise<void> => {
   }
 }
 
-const handlePreviewSet = (image: FileType): void => {
-  if (image) {
-    usersFile.value = [image]
-  }
-}
-
 const handleUserCreateModalVisibleChange = (): void => {
   isUserCreateDialogVisible.value = !isUserCreateDialogVisible.value
+}
+
+const handleUsersLoadVisibleChange = (): void => {
+  isUsersLoadVisible.value = !isUsersLoadVisible.value
 }
 
 const getUsers = async (): Promise<void> => {
@@ -96,16 +84,6 @@ const handleDiscountSet = async (): Promise<void> => {
 
   if (!error && data) {
     await getUsers()
-  }
-}
-
-const handleUsersLoad = async (): Promise<void> => {
-  const formData = new FormData()
-
-  if (usersFile.value && usersFile.value[0].raw) {
-    formData.append('users', usersFile.value[0].raw)
-
-    await usersApi.addUsersGroup(formData)
   }
 }
 
