@@ -38,6 +38,21 @@ class UsersApi extends AxiosService {
       },
     })
   }
+
+  async getExampleFile() {
+    return this.axiosCall({
+      method: 'get',
+      url: '/example-file',
+    })
+  }
+
+  async addUsersGroup(users: FormData) {
+    return this.axiosCall({
+      method: 'post',
+      url: '/group',
+      data: users,
+    })
+  }
 }
 
 export default new UsersApi({

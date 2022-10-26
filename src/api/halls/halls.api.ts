@@ -20,6 +20,13 @@ class HallsApi extends AxiosService {
       url: `/${id}`,
     })
   }
+
+  async getHall(id: number) {
+    return this.axiosCall({
+      method: 'get',
+      url: `/${id}`,
+    })
+  }
 }
 
 export default new HallsApi({

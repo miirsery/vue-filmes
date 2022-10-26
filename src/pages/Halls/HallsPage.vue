@@ -4,7 +4,7 @@
       <h1>Halls</h1>
       <div class="d-flex ai-center">
         <el-button type="success" @click="handleDeleteModalVisibleChange">Delete hall</el-button>
-        <el-button type="primary" @click="handleCreateModalVisibleChange">Create hall</el-button>
+        <!--        <el-button type="primary" @click="handleCreateModalVisibleChange">Create hall</el-button>-->
       </div>
     </div>
 

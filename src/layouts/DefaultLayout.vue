@@ -21,7 +21,7 @@ header {
 
 .default-layout {
   &__container {
-    max-width: 1440px;
+    max-width: 1840px;
     padding: 0 20px;
     margin: 0 auto;
   }
