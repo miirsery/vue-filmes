@@ -3,11 +3,8 @@ const router = Router.Router()
 const userController = require('../controllers/user.controller')
 const multer = require('multer')
 const path = require('path')
-const csv = require('csv-parser')
-const fs = require('fs')
 
-let pathToFile = ''
-const results = []
+let changedFilename = ''
 
 // TODO: Смена картинки у фильма. Сделать удаление картинки у фильма
 const storage = multer.diskStorage({
@@ -18,15 +15,7 @@ const storage = multer.diskStorage({
     const filename = file.originalname.split('.').slice(0, -1).join('.')
     const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
 
-    pathToFile = path.resolve('./') + '/media/tempCSV/' + formattedFilename
-    console.log(__filename)
-
-    fs.createReadStream('backend/media/tempCSV/' + formattedFilename)
-      .pipe(csv())
-      .on('data', (data) => results.push(data))
-      .on('end', () => {
-        console.log(results)
-      })
+    changedFilename = formattedFilename
 
     cb(null, formattedFilename)
   },
@@ -117,7 +106,7 @@ router.get('/', userController.getUsers)
 router.get('/table', userController.getUsersTable)
 router.get('/example-file', userController.getExampleFile)
 
-router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, pathToFile))
+router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, changedFilename))
 router.post('/discount', userController.setUserDiscount)
 router.post('/', userController.registerUser)
 

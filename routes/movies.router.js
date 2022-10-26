@@ -15,7 +15,7 @@ const storage = multer.diskStorage({
     const filename = file.originalname.split('.').slice(0, -1).join('.')
     const formattedFilename = `${filename}-${Date.now()}${path.extname(file.originalname)}`
 
-    pathToFile = path.resolve('./') + 'media/images' + formattedFilename
+    pathToFile = path.resolve('./') + 'media/images/' + formattedFilename
 
     cb(null, formattedFilename)
   },

@@ -3,10 +3,13 @@ import { Request, Response } from 'express'
 const db = require('../db')
 const bcrypt = require('bcryptjs')
 const moment = require('moment/moment')
-const { getAll, setDiscount } = require('../repositories/users.reposotory.js')
+const { getAll, setDiscount, setOne } = require('../repositories/users.reposotory.js')
+
+const { excelToData } = require('../utis/excel-to-data.js')
+const fs = require('fs-extra')
 
 class UserController {
-  async registerUser(req: Request, res: Response) {
+  async registerUser(req: Request, res: Response, user: any = {}) {
     try {
       const {
         name = null,
@@ -145,7 +148,7 @@ class UserController {
   async getExampleFile(req: Request, res: Response) {
     try {
       return res.status(200).setHeader('Content-Type', 'application/json').json({
-        path: 'Download example: <a href="http://localhost:3030/media/csv/usersFileExample.csv">download</a>',
+        path: 'Download example: <a href="http://localhost:3030/media/csv/usersFileExample.xlsx">download</a>',
       })
     } catch (error: any) {
       return res.status(500).setHeader('Content-Type', 'application/json').json({
@@ -156,12 +159,23 @@ class UserController {
 
   async createGroupUsers(req: Request, res: Response, path = '') {
     try {
-      const pathToFile = path.replace('/app', 'http://localhost:3030/')
+      const data = await excelToData(path).then((r: any) => r.Sheet1)
+
+      for (const user of data) {
+        const hashedPassword = await bcrypt.hash(user.password, 10)
+
+        delete user.password
+
+        await setOne(Object.assign(user, { password: hashedPassword }))
+      }
+
+      fs.remove('/app/media/tempCSV/' + path)
 
       return res.status(201).setHeader('Content-Type', 'application/json').json({
         message: 'Success',
       })
     } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })

@@ -2,7 +2,7 @@ const db = require('../db')
 
 module.exports = {
   getAll: async () =>
-    db.query(
+    await db.query(
       'SELECT' +
         ' id,' +
         ' name,' +
@@ -19,7 +19,7 @@ module.exports = {
         ' ORDER BY id;'
     ),
   setDiscount: async (discount) =>
-    db.query(
+    await db.query(
       'UPDATE person' +
         ' SET discount = $1' +
         ' WHERE id = (SELECT id FROM person' +
@@ -31,5 +31,19 @@ module.exports = {
         ' LIMIT 1' +
         ')',
       [discount]
+    ),
+  setOne: async (user) =>
+    await db.query(
+      'INSERT INTO person' +
+        ' (name,' +
+        ' surname,' +
+        ' patronymic,' +
+        ' role,' +
+        ' email,' +
+        ' password,' +
+        ' login, ' +
+        ' birthdate' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [user.name, user.surname, user.patronymic, user.role, user.email, user.password, user.login, user.birthdate]
     ),
 }
