@@ -37,3 +37,7 @@ psql social_db -U socialUser;
 ALTER TABLE person ADD phone TEXT;
 ALTER TABLE person DROP column phone;
 ```
+
+#### Заметки
+1. У ticket убрать поле **movie_id**. Это поле можно будет получить через **session**.
+2. 

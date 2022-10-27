@@ -103,7 +103,6 @@ router.get('/', userController.getUsers)
  *               items:
  *                 $ref: '#/components/schemas/Person'
  */
-router.get('/table', userController.getUsersTable)
 router.get('/example-file', userController.getExampleFile)
 
 router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, changedFilename))
