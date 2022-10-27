@@ -6,6 +6,7 @@ const moment = require('moment/moment')
 const { getAll, setDiscount, setOne } = require('../repositories/users.reposotory.js')
 
 const { excelToData } = require('../utis/excel-to-data.js')
+const { transporter } = require('../utis/mailer.js')
 const fs = require('fs-extra')
 
 class UserController {
@@ -171,9 +172,20 @@ class UserController {
 
       fs.remove('/app/media/tempCSV/' + path)
 
-      return res.status(201).setHeader('Content-Type', 'application/json').json({
-        message: 'Success',
+      await transporter.sendMail({
+        from: 'nikiforov.byrip@yandex.ru',
+        to: 'sania.nika@mail.ru',
+        subject: 'Message from Node js',
+        text: 'This message was sent from Node js server.',
+        html: '<div>All users have been successfully added </div>',
       })
+
+      return res
+        .status(201)
+        .setHeader('Content-Type', 'application/json')
+        .json({
+          message: `We send email on ${process.env.MAILER_EMAIL}`,
+        })
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
