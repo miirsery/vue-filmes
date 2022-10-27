@@ -9,6 +9,7 @@ const {
   addTicket,
   getComparisonTicketsWithSeller,
   getTicketsWithSeller,
+  getTotal
 } = require('../repositories/tickets.repository.js')
 
 const { removeSeat } = require('../repositories/halls.repository.js')
@@ -73,10 +74,15 @@ class TicketsController {
 
         return res.status(200).setHeader('Content-Type', 'application/json').json(ticketsData)
       } else {
-        await getAll().then((response: any) => {
+        const ticketsCount = await getTotal()
+
+        await getAll().then(async (response: any) => {
           const tickets = getAllTickets(response)
 
-          return res.status(200).setHeader('Content-Type', 'application/json').json(tickets)
+          return res.status(200).setHeader('Content-Type', 'application/json').json({
+            tickets_count: ticketsCount.rows[0].count,
+            items: tickets,
+          })
         })
       }
     } catch (error: any) {

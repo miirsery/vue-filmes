@@ -53,11 +53,11 @@ class HallsController {
       if (filter.cinema_id) {
         const data = await getFilteredHalls(filter)
 
-        return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows)
+        return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows)
       } else {
         const data = await getAll()
 
-        return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows)
+        return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows)
       }
     } catch (error: any) {
       console.log(error)
