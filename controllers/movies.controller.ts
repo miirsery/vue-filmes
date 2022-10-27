@@ -1,8 +1,7 @@
 import { Request, Response } from 'express'
 
-const db = require('../db')
 const moment = require('moment')
-const { findOne, findAll, updateOne, getMostPopularMovie } = require('../repositories/movies.repository.ts')
+const { findOne, findAll, updateOne, getMostPopularMovie, createOne } = require('../repositories/movies.repository.ts')
 
 class MoviesController {
   async addMovie(req: Request, res: Response, path = '') {
@@ -10,17 +9,14 @@ class MoviesController {
       const { title, studio, genre, description, release_date } = req.body
       const pathToFile = path.replace('/app', 'http://localhost:3030/')
 
-      await db.query(
-        'INSERT INTO movie' +
-          ' (title,' +
-          ' description,' +
-          ' studio,' +
-          ' genre,' +
-          ' release_date,' +
-          ' preview' +
-          ') VALUES ($1, $2, $3, $4, $5, $6)',
-        [title, description, studio, genre, release_date, pathToFile]
-      )
+      await createOne({
+        title,
+        studio,
+        genre,
+        description,
+        release_date,
+        pathToFile,
+      })
 
       return res
         .status(201)
@@ -67,7 +63,7 @@ class MoviesController {
       return res.status(200).setHeader('Content-Type', 'application/json').send(moviesData)
     } catch (error: any) {
       console.log(error)
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
@@ -80,7 +76,8 @@ class MoviesController {
 
       return res.status(200).setHeader('Content-Type', 'application/json').send(candidate.rows[0])
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
@@ -108,7 +105,8 @@ class MoviesController {
         message: 'Успешно',
       })
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }

@@ -1,9 +1,8 @@
 import { Request, Response } from 'express'
 
-const db = require('../db')
 const bcrypt = require('bcryptjs')
 const moment = require('moment/moment')
-const { getAll, setDiscount, setOne } = require('../repositories/users.reposotory.js')
+const { getAll, setDiscount, setOne, createOne, deleteOne } = require('../repositories/users.reposotory.js')
 
 const { excelToData } = require('../utis/excel-to-data.js')
 const { transporter } = require('../utis/mailer.js')
@@ -40,19 +39,16 @@ class UserController {
 
       const hashedPassword = await bcrypt.hash(password, 10)
 
-      await db.query(
-        'INSERT INTO person' +
-          ' (name,' +
-          ' surname,' +
-          ' patronymic,' +
-          ' role,' +
-          ' email,' +
-          ' password,' +
-          ' login, ' +
-          ' birthdate' +
-          ') VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *',
-        [name, surname, patronymic, role, email, hashedPassword, login, birthdate]
-      )
+      await createOne({
+        name,
+        surname,
+        patronymic,
+        role,
+        email,
+        hashedPassword,
+        login,
+        birthdate,
+      })
 
       return res
         .status(201)
@@ -61,6 +57,7 @@ class UserController {
           message: `Пользователь ${name} успешно добавлен`,
         })
     } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
@@ -70,7 +67,7 @@ class UserController {
   async deleteUser(req: Request, res: Response) {
     try {
       const id = req.params.id
-      const candidate = await db.query('DELETE FROM person WHERE id=$1 RETURNING *', [id])
+      const candidate = await deleteOne(id)
 
       return res
         .status(200)
@@ -79,6 +76,7 @@ class UserController {
           message: `Пользователь ${candidate.rows[0].name} успешно удалён`,
         })
     } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
@@ -91,7 +89,8 @@ class UserController {
       // console.log(id)
       // TODO: Заврешить потом
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
@@ -120,18 +119,6 @@ class UserController {
     }
   }
 
-  async getUsersTable(req: Request, res: Response) {
-    try {
-      const data = await db.query('SELECT * FROM person')
-
-      return res.status(200).setHeader('Content-Type', 'application/json').json(data)
-    } catch (error: any) {
-      return res.status(500).setHeader('Content-Type', 'application/json').json({
-        message: error.detail,
-      })
-    }
-  }
-
   async setUserDiscount(req: Request, res: Response) {
     try {
       const discount = req.body.discount
@@ -140,6 +127,7 @@ class UserController {
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(data)
     } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
@@ -152,6 +140,7 @@ class UserController {
         path: 'Download example: <a href="http://localhost:3030/media/csv/usersFileExample.xlsx">download</a>',
       })
     } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: 'File doesnt exists',
       })

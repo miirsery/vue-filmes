@@ -9,7 +9,7 @@ const {
   addTicket,
   getComparisonTicketsWithSeller,
   getTicketsWithSeller,
-  getTotal
+  getTotal,
 } = require('../repositories/tickets.repository.js')
 
 const { removeSeat } = require('../repositories/halls.repository.js')

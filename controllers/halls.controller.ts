@@ -1,18 +1,16 @@
 import { Request, Response } from 'express'
-const { getAll, deleteOne, getFilteredHalls, getOne } = require('../repositories/halls.repository')
-
-const db = require('../db')
+const { getAll, deleteOne, getFilteredHalls, getOne, createOne } = require('../repositories/halls.repository')
 
 class HallsController {
   async createHall(req: Request, res: Response) {
     try {
       const { title, seats_count, cinema_id } = req.body
 
-      const data = await db.query('INSERT INTO halls (title, seats_count, cinema_id) VALUES ($1, $2, $3) RETURNING *', [
+      const data = await createOne({
         title,
         seats_count,
         cinema_id,
-      ])
+      })
 
       return res
         .status(201)
@@ -21,7 +19,7 @@ class HallsController {
           message: `Зал ${data.rows[0].title} успешно создан`,
         })
     } catch (error: any) {
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
@@ -74,7 +72,7 @@ class HallsController {
       if (id) {
         const data = await getOne(id)
 
-        return res.status(201).setHeader('Content-Type', 'application/json').json(data.rows[0])
+        return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows[0])
       }
     } catch (error: any) {
       console.log(error)
