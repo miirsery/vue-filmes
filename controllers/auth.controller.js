@@ -13,11 +13,5 @@ function checkNotAuthenticated(req, res, next) {
 
   next()
 }
-
-class AuthController {
-  //...
-}
-
-module.exports = new AuthController()
 module.exports.checkAuthenticated = checkAuthenticated
 module.exports.checkNotAuthenticated = checkNotAuthenticated

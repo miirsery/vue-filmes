@@ -3,22 +3,22 @@ const router = Router.Router()
 const authController = require('../controllers/auth.controller')
 const initialPassport = require('../passport-config')
 const passport = require('passport')
-const db = require('../db')
 const jwt = require('jsonwebtoken')
+
+const { getUserById, getUserByEmail } = require('../repositories/users.reposotory.js')
+const moment = require('moment')
 
 initialPassport(
   passport,
-  async (email) => {
-    return await db.query('SELECT * FROM users WHERE email=$1', [email]).then((r) => r.rows[0])
-  },
-  async (id) => {
-    return await db.query('SELECT * FROM users WHERE id=$1', [id]).then((r) => r.rows[0])
-  }
+  async (email) => await getUserByEmail(email),
+  async (id) => await getUserById(id)
 )
 
 const getToken = (user) => {
   return jwt.sign(
     {
+      login: user.login,
+      role: user.role,
       iss: 'secretKey',
       sub: user.id,
       iat: new Date().getTime(),
@@ -33,8 +33,8 @@ router
     '/get-token',
     authController.checkNotAuthenticated,
     passport.authenticate('get-token', {
-      successRedirect: '/api/v1/token',
-      failureRedirect: '/api/v1/login/failure',
+      successRedirect: '/api/v1/auth/token',
+      failureRedirect: '/api/v1/auth/login/failure',
       failureFlash: true,
     })
   )
@@ -58,15 +58,17 @@ router
   .get('/self', passport.authenticate('jwt', { session: false }), async (req, res, next) => {
     const user = await req.user
 
-    const registerDate = new Date(user.register_date).toISOString().slice(0, 19).replace('T', ' ')
+    const changedRegisterDate = moment(user.register_date).format('DD-MM-YYYY;HH:MM:SS')
+    const changedBirthdate = moment(user.birthdate).format('DD-MM-YYYY')
 
     delete user.register_date
+    delete user.birthdate
     delete user.password
 
     return res
       .status(200)
       .setHeader('Content-Type', 'application/json')
-      .json(Object.assign(user, { register_date: registerDate }))
+      .json(Object.assign(user, { register_date: changedRegisterDate, birthdate: changedBirthdate }))
   })
 
 module.exports = router

@@ -1,7 +1,5 @@
 import { Request, Response } from 'express'
 
-const db = require('../db')
-
 const { createOne, deleteOne, getAll } = require('../repositories/cinemas.repository.js')
 const { getAllByCinemaId } = require('../repositories/halls.repository.js')
 

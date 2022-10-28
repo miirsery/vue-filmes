@@ -4,8 +4,8 @@ const bcrypt = require('bcryptjs')
 const moment = require('moment/moment')
 const { getAll, setDiscount, setOne, createOne, deleteOne } = require('../repositories/users.reposotory.js')
 
-const { excelToData } = require('../utis/excel-to-data.js')
-const { transporter } = require('../utis/mailer.js')
+const { excelToData } = require('../utils/excel-to-data.js')
+const { transporter } = require('../utils/mailer.js')
 const fs = require('fs-extra')
 
 class UserController {
@@ -101,7 +101,7 @@ class UserController {
       const users = await getAll().then((r: any) => {
         return r.rows.map((user: any) => {
           const changedBirthdate = moment(user.birthdate).format('DD-MM-YYYY')
-          const changedRegisterDate = moment(user.register_date).format('DD-MM-YYYY;HH:MM:SS')
+          const changedRegisterDate = moment(user.register_date).format('DD-MM-YYYY ; HH:MM:SS')
 
           delete user.birthdate
           delete user.register_date

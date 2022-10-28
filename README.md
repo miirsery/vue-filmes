@@ -40,4 +40,5 @@ ALTER TABLE person DROP column phone;
 
 #### Заметки
 1. У ticket убрать поле **movie_id**. Это поле можно будет получить через **session**.
-2. 
+2. Весь проект перевести на ts.
+3. 

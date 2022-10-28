@@ -18,6 +18,9 @@ module.exports = {
         ' FROM person' +
         ' ORDER BY id;'
     ),
+  getUserByEmail: async (email) =>
+    await db.query('SELECT * FROM person WHERE email=$1', [email]).then((r) => r.rows[0]),
+  getUserById: async (id) => await db.query('SELECT * FROM person WHERE id=$1', [id]).then((r) => r.rows[0]),
   createOne: async (user) =>
     await db.query(
       'INSERT INTO person' +
