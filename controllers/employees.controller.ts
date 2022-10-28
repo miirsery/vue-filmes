@@ -34,7 +34,7 @@ class EmployeesController {
       return res.status(200).setHeader('Content-Type', 'application/json').json(employees)
     } catch (error: any) {
       console.log(error)
-      res.status(500).setHeader('Content-Type', 'application/json').json({
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
     }
