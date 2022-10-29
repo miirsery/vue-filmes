@@ -3,6 +3,7 @@ const multer = require('multer')
 const path = require('path')
 const router = Router.Router()
 const movieController = require('../controllers/movies.controller')
+const { checkRole } = require('../utils/check.ts')
 
 let pathToFile = ''
 
@@ -23,9 +24,19 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-router.get('/', movieController.getMovies)
-router.get('/:id', movieController.getMovie)
-router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
-router.patch('/', upload.any(), (req, res) => movieController.updateMovie(req, res, pathToFile))
+router.get('/', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovies)
+router.get('/:id', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovie)
+router.post(
+  '/',
+  (req, res, next) => checkRole(req, res, next, ['admin']),
+  upload.any(),
+  (req, res) => movieController.addMovie(req, res, pathToFile)
+)
+router.patch(
+  '/',
+  (req, res, next) => checkRole(req, res, next, ['admin']),
+  upload.any(),
+  (req, res) => movieController.updateMovie(req, res, pathToFile)
+)
 
 module.exports = router

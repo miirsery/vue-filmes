@@ -23,7 +23,8 @@ const app: Application = express(),
   ticketsRouter = require('./routes/tickets.router'),
   employeesRouter = require('./routes/employees.router')
 
-const jwt = require('jsonwebtoken')
+const { checkRole } = require('./utils/check')
+const { checkAuth } = require('./utils/check-auth')
 
 app.use(express.static('public'))
 app.use('/media', express.static(__dirname + '/media'))
@@ -44,34 +45,30 @@ app.use(passport.session())
 
 app.set('view engine', 'ejs')
 
-const checkRole = (req: Request, res: Response, next: NextFunction, roles = [] as string[]): any => {
-  const token = req.headers.authorization?.replace('Bearer', '').trim()
-
-  jwt.verify(token, 'secretKey', async (err: any, user: any) => {
-    if (err) {
-      return res.status(403).setHeader('Content-Type', 'application/json').json({ message: 'Not enough permissions' })
-    }
-
-    if (roles.includes(user.role)) {
-      return next()
-    }
-
-    return res.status(403).setHeader('Content-Type', 'application/json').json({ message: 'Not enough permissions' })
-  })
-}
-
-app.use('/api/v1/auth', authRouter)
-app.use('/api/v1/users', usersRouter)
+app.use('/api/v1/auth', (req: Request, res: Response, next: NextFunction) => checkAuth(req, res, next), authRouter)
 app.use(
-  '/api/v1/movies',
-  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
-  moviesRouter
+  '/api/v1/users',
+  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['admin']),
+  usersRouter
 )
+app.use('/api/v1/movies', moviesRouter)
 app.use('/api/v1/halls', hallsRouter)
 app.use('/api/v1/cinemas', cinemasRouter)
-app.use('/api/v1/sessions', sessionsRouter)
-app.use('/api/v1/tickets', ticketsRouter)
-app.use('/api/v1/employees', employeesRouter)
+app.use(
+  '/api/v1/sessions',
+  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
+  sessionsRouter
+)
+app.use(
+  '/api/v1/tickets',
+  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
+  ticketsRouter
+)
+app.use(
+  '/api/v1/employees',
+  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['admin']),
+  employeesRouter
+)
 
 app.get('/', (req: Request, res: Response) => {
   res.send({

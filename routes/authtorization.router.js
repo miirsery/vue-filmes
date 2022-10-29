@@ -14,9 +14,12 @@ initialPassport(
   async (id) => await getUserById(id)
 )
 
+let platform = ''
+
 const getToken = (user) => {
   return jwt.sign(
     {
+      platform,
       login: user.login,
       role: user.role,
       iss: 'secretKey',
@@ -31,7 +34,11 @@ const getToken = (user) => {
 router
   .post(
     '/get-token',
-    authController.checkNotAuthenticated,
+    (req, res, next) => {
+      platform = req.body?.platform
+
+      return next()
+    },
     passport.authenticate('get-token', {
       successRedirect: '/api/v1/auth/token',
       failureRedirect: '/api/v1/auth/login/failure',
@@ -46,6 +53,7 @@ router
   })
   .get('/token', async function (res, req) {
     const user = await res.user
+
     const token = getToken(user)
 
     return req.status(200).setHeader('Content-Type', 'application/json').json({ token })
