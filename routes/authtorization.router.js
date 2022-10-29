@@ -54,11 +54,11 @@ router
   .get('/token', async function (res, req) {
     const user = await res.user
 
-    const token = getToken(user)
+    const token = await getToken(user)
 
     return req.status(200).setHeader('Content-Type', 'application/json').json({ token })
   })
-  .post('/login', passport.authenticate('jwt', { session: false }), (req, res, next) => {
+  .get('/login', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     return res.status(200).setHeader('Content-Type', 'application/json').json({
       message: 'Успешный вход',
     })

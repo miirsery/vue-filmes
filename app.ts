@@ -45,12 +45,8 @@ app.use(passport.session())
 
 app.set('view engine', 'ejs')
 
-app.use('/api/v1/auth', (req: Request, res: Response, next: NextFunction) => checkAuth(req, res, next), authRouter)
-app.use(
-  '/api/v1/users',
-  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['admin']),
-  usersRouter
-)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/movies', moviesRouter)
 app.use('/api/v1/halls', hallsRouter)
 app.use('/api/v1/cinemas', cinemasRouter)
