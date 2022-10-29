@@ -1,11 +1,10 @@
 const Router = require('express')
 const router = Router.Router()
-const authController = require('../controllers/auth.controller')
-const initialPassport = require('../passport-config')
+const initialPassport = require('../../passport-config')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
-const { getUserById, getUserByEmail } = require('../repositories/users.reposotory.js')
+const { getUserById, getUserByEmail } = require('../../repositories/users.reposotory.js')
 const moment = require('moment')
 
 initialPassport(
@@ -14,12 +13,9 @@ initialPassport(
   async (id) => await getUserById(id)
 )
 
-let platform = ''
-
 const getToken = (user) => {
   return jwt.sign(
     {
-      platform,
       login: user.login,
       role: user.role,
       iss: 'secretKey',
@@ -35,20 +31,18 @@ router
   .post(
     '/get-token',
     (req, res, next) => {
-      platform = req.body?.platform
-
       return next()
     },
     passport.authenticate('get-token', {
-      successRedirect: '/api/v1/auth/token',
-      failureRedirect: '/api/v1/auth/login/failure',
+      successRedirect: '/api/v1/main/auth/token',
+      failureRedirect: '/api/v1/main/auth/login/failure',
       failureFlash: true,
     })
   )
-  .get('/login/failure', function (res, req) {
-    return req.sendStatus(500).setHeader('Content-Type', 'application/json').json({
+  .get('/login/failure', (res, req) => {
+    return req.status(500).setHeader('Content-Type', 'application/json').json({
       status: 'Fail',
-      message: 'Fail while auth',
+      message: 'fail while auth',
     })
   })
   .get('/token', async function (res, req) {
