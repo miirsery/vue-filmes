@@ -29,7 +29,6 @@
         "semi": false
       }
     ],
-    "no-console": "warn",
     "semi": ["error", "never"],
     "quotes": ["error", "single"],
     "@typescript-eslint/no-var-requires": 0,

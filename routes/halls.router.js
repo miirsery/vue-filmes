@@ -2,11 +2,12 @@ const Router = require('express')
 const router = Router.Router()
 
 const hallsController = require('../controllers/halls.controller')
+const { checkRole } = require('../utils/check.ts')
 
 router
-  .post('/', hallsController.createHall)
   .get('/', hallsController.getHalls)
   .get('/:id', hallsController.getHall)
-  .delete('/:id', hallsController.deleteHall)
+  .post('/', (req, res, next) => checkRole(req, res, next, ['admin']), hallsController.createHall)
+  .delete('/:id', (req, res, next) => checkRole(req, res, next, ['admin']), hallsController.deleteHall)
 
 module.exports = router
