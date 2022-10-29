@@ -30,6 +30,6 @@ class AuthorizationApi extends AxiosService {
 }
 
 export default new AuthorizationApi({
-  baseURL: '/api/v1/auth/',
+  baseURL: '/api/v1/dashboard/auth/',
   withCredentials: false,
 })

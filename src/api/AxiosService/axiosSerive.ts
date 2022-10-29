@@ -55,6 +55,11 @@ export class AxiosService {
           case 401:
             break
           case 403:
+            ElMessage({
+              type: 'error',
+              message: response.message,
+            })
+
             break
           case 404:
             break
