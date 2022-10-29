@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-// import Cookies from 'js-cookie'
 import { AxiosResponseType } from '@/api/AxiosService/axios-service'
 import { ElMessage } from 'element-plus'
 
@@ -10,11 +9,7 @@ export class AxiosService {
     this.axiosInstance = axios.create(config)
 
     this.axiosInstance.interceptors.request.use((config: any) => {
-      // const token = Cookies.get('token_for_admin_panel')
       const token = localStorage.getItem('token') || ''
-      //
-      // config.xsrfCookieName = 'XSRF-TOKEN'
-      // config.xsrfHeaderName = 'X-XSRF-TOKEN'
 
       config.headers = {
         Authorization: `Bearer ${token}`,

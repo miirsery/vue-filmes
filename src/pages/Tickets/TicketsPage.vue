@@ -6,7 +6,7 @@
     </div>
 
     <tickets-table
-      :tickets="tickets"
+      :tickets="tickets.items"
       :loading="tableLoading"
       @update-table="getTickets"
       @apply-filters="applyFilters"
@@ -17,6 +17,8 @@
       @close-dialog="handleTicketCreateDialogVisibleChange"
       @update-table="getTickets"
     />
+
+    <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000" />
   </div>
 </template>
 
