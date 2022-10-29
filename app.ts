@@ -14,7 +14,8 @@ const app: Application = express(),
   bodyParser = require('body-parser'),
   swaggerJsdoc = require('swagger-jsdoc'),
   swaggerUi = require('swagger-ui-express'),
-  authRouter = require('./routes/authtorization.router'),
+  authDashboardRouter = require('./routes/dashboard/authtorization.dashboard.router.js'),
+  authMainRouter = require('./routes/main/authtorization.main.router.js'),
   usersRouter = require('./routes/users.router'),
   moviesRouter = require('./routes/movies.router.js'),
   hallsRouter = require('./routes/halls.router'),
@@ -24,7 +25,6 @@ const app: Application = express(),
   employeesRouter = require('./routes/employees.router')
 
 const { checkRole } = require('./utils/check')
-const { checkAuth } = require('./utils/check-auth')
 
 app.use(express.static('public'))
 app.use('/media', express.static(__dirname + '/media'))
@@ -45,7 +45,8 @@ app.use(passport.session())
 
 app.set('view engine', 'ejs')
 
-app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/main/auth', authMainRouter)
+app.use('/api/v1/dashboard/auth', authDashboardRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/movies', moviesRouter)
 app.use('/api/v1/halls', hallsRouter)
