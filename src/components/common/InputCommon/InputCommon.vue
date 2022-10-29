@@ -13,7 +13,7 @@ interface IProps {
   label?: string
   placeholder?: string
   value?: string | number
-  type?: 'text' | 'number'
+  type?: 'text' | 'number' | 'password'
 }
 
 interface IEmits {
