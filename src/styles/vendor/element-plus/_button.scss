@@ -11,3 +11,10 @@
     background: var(--el-color-primary-light-5);
   }
 }
+
+
+.choose-place-item__button {
+  &.el-button {
+    background: none;
+  }
+}

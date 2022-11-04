@@ -14,16 +14,39 @@ class HallsApi extends AxiosService {
     })
   }
 
-  async deleteHall(id: number) {
+  async getHall(id: number) {
     return this.axiosCall({
-      method: 'delete',
+      method: 'get',
       url: `/${id}`,
     })
   }
 
-  async getHall(id: number) {
+  async getSchema() {
     return this.axiosCall({
       method: 'get',
+      url: 'schema',
+    })
+  }
+
+  async createHall(data: any) {
+    return this.axiosCall({
+      method: 'post',
+      url: '',
+      data,
+    })
+  }
+
+  async createSchema(data: any) {
+    return this.axiosCall({
+      method: 'post',
+      url: 'schema',
+      data,
+    })
+  }
+
+  async deleteHall(id: number) {
+    return this.axiosCall({
+      method: 'delete',
       url: `/${id}`,
     })
   }
