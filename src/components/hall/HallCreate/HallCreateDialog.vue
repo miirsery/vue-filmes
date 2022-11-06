@@ -1,11 +1,7 @@
 <template>
   <div class="hall-create-dialog">
     <el-dialog title="Hall create" :model-value="props.visible" :before-close="handleCloseDialog">
-      <hall-create-form
-        @close-dialog="handleCloseDialog"
-        @update-table="updateTable"
-        @choose-place-visible-change="handleChoosePlaceOpen"
-      />
+      <hall-create-form @close-dialog="handleCloseDialog" @update-table="updateTable" />
     </el-dialog>
   </div>
 </template>
@@ -20,15 +16,10 @@ interface IProps {
 interface IEmits {
   (e: 'close-dialog'): void
   (e: 'update-table'): void
-  (e: 'choose-place-visible-change'): void
 }
 
 const props = defineProps<IProps>()
 const emit = defineEmits<IEmits>()
-
-const handleChoosePlaceOpen = (): void => {
-  emit('choose-place-visible-change')
-}
 
 const updateTable = (): void => {
   emit('update-table')

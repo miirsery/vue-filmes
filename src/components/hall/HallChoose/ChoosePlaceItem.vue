@@ -30,7 +30,7 @@ const handleSeatSelect = (id: number): void => {
   width: 40px;
   height: 40px;
   border-radius: 4px;
-  margin: 8px;
+  margin: 0 8px;
 
   &.busy {
     background-color: $color--warning;

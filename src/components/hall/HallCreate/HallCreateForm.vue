@@ -11,9 +11,6 @@
     <el-form-item>
       <input-common v-model="form.title" type="number" placeholder="Enter a title" />
     </el-form-item>
-    <el-form-item>
-      <el-button @click="handleChoosePlaceOpen">Choose place</el-button>
-    </el-form-item>
     <div class="d-flex ai-center jc-between">
       <el-button @click="handleCloseDialog">close</el-button>
       <el-button @click="handleHallCreate">Create</el-button>
@@ -30,7 +27,6 @@ import hallsApi from '@/api/halls/halls.api'
 interface IEmits {
   (e: 'close-dialog'): void
   (e: 'update-table'): void
-  (e: 'choose-place-visible-change'): void
 }
 
 const emit = defineEmits<IEmits>()
@@ -43,10 +39,6 @@ const updateTable = (): void => {
 
 const handleCloseDialog = (): void => {
   emit('close-dialog')
-}
-
-const handleChoosePlaceOpen = (): void => {
-  emit('choose-place-visible-change')
 }
 
 const form = reactive<any>({

@@ -9,17 +9,17 @@
         <el-option v-for="item in hallsOptions" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </div>
-    <hall-create-schema />
+    <hall-create-schema :selected-seats="selectedSeats" @select-seat="handleSeatSelect" />
     <el-button @click="handleSchemaCreate">Create schema</el-button>
   </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import hallsApi from '@/api/halls/halls.api'
-import { seats } from '@/components/hall/HallChoose/ChoosePlace.constants'
 import { reactive, ref } from 'vue'
 import cinemasApi from '@/api/cinemas/cinemas.api'
 import HallCreateSchema from '@/components/hall/HallCreateSchema/HallCreateSchema.vue'
+import { seatsPattern } from '@/components/hall/HallCreateSchema/HallCreateSchema.contstants'
 
 interface IProps {
   visible: boolean
@@ -40,8 +40,8 @@ const form = reactive<any>({
   hallId: '',
   title: 0,
 })
-
 const hallsOptions = ref<any>([])
+const selectedSeats = ref<any>(seatsPattern)
 
 const updateTable = (): void => {
   emit('update-table')
@@ -49,6 +49,13 @@ const updateTable = (): void => {
 
 const handleCloseDialog = (): void => {
   emit('close-dialog')
+}
+
+const handleSeatSelect = (seat: any): void => {
+  const obj = selectedSeats.value.find((seatData: any) => seatData.id_in_hall === seat.id_in_hall)
+  const index = selectedSeats.value.findIndex((seatData: any) => seatData.id_in_hall === seat.id_in_hall)
+
+  selectedSeats.value[index] = obj
 }
 
 const setHallsOptions = (hallsData: any): void => {
@@ -61,20 +68,22 @@ const setHallsOptions = (hallsData: any): void => {
 }
 
 const handleSchemaCreate = async (): Promise<void> => {
-  const [error, data] = await hallsApi.createSchema(
-    Object.assign(
-      {
-        items: seats,
-      },
-      {
-        hall_id: form.hallId,
-      }
-    )
-  )
+  // const [error, data] = await hallsApi.createSchema(
+  //   Object.assign(
+  //     {
+  //       items: seats,
+  //     },
+  //     {
+  //       hall_id: form.hallId,
+  //     }
+  //   )
+  // )
 
-  if (!error && data) {
-    console.log(data)
-  }
+  console.log(selectedSeats.value)
+
+  // if (!error && data) {
+  //   console.log(data)
+  // }
 }
 
 const handleCinemasGet = async (): Promise<void> => {
