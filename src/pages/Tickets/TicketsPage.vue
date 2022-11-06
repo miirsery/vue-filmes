@@ -21,11 +21,7 @@
       @update-table="getTickets"
     />
 
-    <choose-place-dialog
-      :visible="isChoosePlaceVisible"
-      :seats="schema"
-      @close-dialog="handleChoosePlaceVisibleChange"
-    />
+    <choose-place-dialog :visible="isChoosePlaceVisible" @close-dialog="handleChoosePlaceVisibleChange" />
 
     <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000" />
   </div>
@@ -37,13 +33,11 @@ import ChoosePlaceDialog from '@/components/hall/HallChoose/ChoosePlaceDialog.vu
 import { onMounted, ref } from 'vue'
 import ticketsApi from '@/api/tickets/tickets.api'
 import TicketCreateDialog from '@/components/ticket/TicketCreateDialog.vue'
-import hallsApi from '@/api/halls/halls.api'
 
 const tableLoading = ref(false)
 const isCreateTicketDialogVisible = ref(false)
 const isChoosePlaceVisible = ref(false)
 const tickets = ref<any>([])
-const schema = ref<any>([])
 
 const handleTicketCreateDialogVisibleChange = (): void => {
   isCreateTicketDialogVisible.value = !isCreateTicketDialogVisible.value
@@ -51,8 +45,6 @@ const handleTicketCreateDialogVisibleChange = (): void => {
 
 const handleChoosePlaceVisibleChange = (): void => {
   isChoosePlaceVisible.value = !isChoosePlaceVisible.value
-
-  getSchema()
 }
 
 const applyFilters = async (filters: any): Promise<void> => {
@@ -69,14 +61,6 @@ const getTickets = async (filters?: any): Promise<void> => {
   }
 
   tableLoading.value = false
-}
-
-const getSchema = async (): Promise<void> => {
-  const [error, data] = await hallsApi.getSchema()
-
-  if (!error && data) {
-    schema.value = data
-  }
 }
 
 onMounted(() => {

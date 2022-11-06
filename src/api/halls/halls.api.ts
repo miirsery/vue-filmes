@@ -1,5 +1,6 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
+import { SeatsSchemaType } from '@/types/hall.types'
 
 class HallsApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -22,7 +23,7 @@ class HallsApi extends AxiosService {
   }
 
   async getSchema() {
-    return this.axiosCall({
+    return this.axiosCall<SeatsSchemaType[]>({
       method: 'get',
       url: 'schema',
     })

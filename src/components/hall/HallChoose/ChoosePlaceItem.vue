@@ -30,7 +30,7 @@ const handleSeatSelect = (id: number): void => {
   width: 40px;
   height: 40px;
   border-radius: 4px;
-  margin: 0 8px;
+  margin: 4px;
 
   &.busy {
     background-color: $color--warning;
@@ -38,11 +38,6 @@ const handleSeatSelect = (id: number): void => {
 
   &.available {
     background-color: $color--success;
-  }
-
-  &.place-hidden {
-    visibility: hidden;
-    opacity: 0;
   }
 }
 </style>
