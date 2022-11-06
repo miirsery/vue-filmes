@@ -229,28 +229,8 @@ CREATE TABLE public.hall_seat (
     y_position text,
     available boolean,
     have boolean,
-    hall_id integer NOT NULL
+    hall_id integer
 );
-
-
---
--- Name: hall_seat_hall_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.hall_seat_hall_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: hall_seat_hall_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.hall_seat_hall_id_seq OWNED BY public.hall_seat.hall_id;
 
 
 --
@@ -472,29 +452,8 @@ CREATE TABLE public.ticket (
     buy_date timestamp without time zone DEFAULT now() NOT NULL,
     session_id integer NOT NULL,
     seller_id integer NOT NULL,
-    user_id integer NOT NULL,
-    hall_id integer NOT NULL
+    user_id integer NOT NULL
 );
-
-
---
--- Name: ticket_hall_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.ticket_hall_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: ticket_hall_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.ticket_hall_id_seq OWNED BY public.ticket.hall_id;
 
 
 --
@@ -634,13 +593,6 @@ ALTER TABLE ONLY public.hall_seat ALTER COLUMN id SET DEFAULT nextval('public.ha
 
 
 --
--- Name: hall_seat hall_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.hall_seat ALTER COLUMN hall_id SET DEFAULT nextval('public.hall_seat_hall_id_seq'::regclass);
-
-
---
 -- Name: migrations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -711,18 +663,11 @@ ALTER TABLE ONLY public.ticket ALTER COLUMN user_id SET DEFAULT nextval('public.
 
 
 --
--- Name: ticket hall_id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ticket ALTER COLUMN hall_id SET DEFAULT nextval('public.ticket_hall_id_seq'::regclass);
-
-
---
 -- Data for Name: cinema; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public.cinema (id, title, address, location, description, phone) FROM stdin;
-1	ByTowne Cinema	325 Rideau St. Ottawa K1N 5Y4	45.429533402427424, -75.68467923650148	\N	(613) 789-4600
+1	ByTowne Cinema	\N	\N	\N	\N
 \.
 
 
@@ -747,8 +692,8 @@ COPY public.employee (id, name, surname, patronymic, "position", email, login, r
 --
 
 COPY public.hall (id, title, cinema_id) FROM stdin;
-2	1	1
-3	2	1
+1	1	1
+2	2	1
 \.
 
 
@@ -757,6 +702,19 @@ COPY public.hall (id, title, cinema_id) FROM stdin;
 --
 
 COPY public.hall_seat (id, seat, x_position, y_position, available, have, hall_id) FROM stdin;
+2	1	1	1	t	f	1
+3	2	2	1	t	f	1
+4	3	3	1	f	t	1
+5	4	4	1	f	t	1
+6	5	5	1	f	t	1
+7	6	6	1	t	t	1
+8	7	7	1	t	t	1
+9	8	8	1	t	t	1
+10	9	9	1	t	t	1
+11	10	10	1	f	t	1
+12	11	1	2	t	t	1
+13	12	2	2	t	t	1
+14	13	3	3	t	t	1
 \.
 
 
@@ -765,8 +723,8 @@ COPY public.hall_seat (id, seat, x_position, y_position, available, have, hall_i
 --
 
 COPY public.migrations (id, name, run_on) FROM stdin;
-1	/20220929105015-initialize	2022-11-04 11:22:52.21
-2	/20221015164456-insert-tables	2022-11-04 11:22:52.236
+1	/20220929105015-initialize	2022-11-04 12:55:04.678
+2	/20221015164456-insert-tables	2022-11-04 12:55:04.696
 \.
 
 
@@ -783,7 +741,7 @@ COPY public.movie (id, title, studio, directors, genre, duration, country, descr
 --
 
 COPY public.person (id, name, surname, patronymic, role, email, login, register_date, birthdate, discount, phone, avatar, password) FROM stdin;
-1	admin	admin	admin	admin	admin@admin.com	admin	2022-11-04 11:26:23.427361	2022-11-02	0	\N	\N	$2a$10$esI/IIkFgtfQipc0elrXg.IpFES1EjrahuSgZ6wVUsspvCDlv9zs.
+1	admin	admin	admin	admin	admin@admin.com	admin	2022-11-04 12:55:59.109969	2022-11-02	0	\N	\N	$2a$10$eKn8xgKl80lF86DenIf.uuLmt4y/A.4uFmg9IxhYnq4JD0Zkv.o5C
 \.
 
 
@@ -799,7 +757,7 @@ COPY public.session (id, date, "time", hall_id, movie_id) FROM stdin;
 -- Data for Name: ticket; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.ticket (id, seat, price, buy_date, session_id, seller_id, user_id, hall_id) FROM stdin;
+COPY public.ticket (id, seat, price, buy_date, session_id, seller_id, user_id) FROM stdin;
 \.
 
 
@@ -849,21 +807,14 @@ SELECT pg_catalog.setval('public.hall_cinema_id_seq', 1, false);
 -- Name: hall_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.hall_id_seq', 3, true);
-
-
---
--- Name: hall_seat_hall_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.hall_seat_hall_id_seq', 1, false);
+SELECT pg_catalog.setval('public.hall_id_seq', 2, true);
 
 
 --
 -- Name: hall_seat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.hall_seat_id_seq', 1, false);
+SELECT pg_catalog.setval('public.hall_seat_id_seq', 14, true);
 
 
 --
@@ -906,13 +857,6 @@ SELECT pg_catalog.setval('public.session_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.session_movie_id_seq', 1, false);
-
-
---
--- Name: ticket_hall_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.ticket_hall_id_seq', 1, false);
 
 
 --
@@ -1092,14 +1036,6 @@ ALTER TABLE ONLY public.hall_seat
 --
 
 ALTER TABLE ONLY public.session
-    ADD CONSTRAINT fk_hall FOREIGN KEY (hall_id) REFERENCES public.hall(id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: ticket fk_hall; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.ticket
     ADD CONSTRAINT fk_hall FOREIGN KEY (hall_id) REFERENCES public.hall(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 

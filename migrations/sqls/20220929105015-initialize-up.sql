@@ -87,8 +87,8 @@
 -- (
 --     id                  SERIAL PRIMARY KEY NOT NULL,
 --     seat                INT,
---     x_position          TEXT,
---     y_position          TEXT,
+--     x_position          INT,
+--     y_position          INT,
 --     available           BOOLEAN,
 --     have                BOOLEAN,
 --     hall_id             INT,
