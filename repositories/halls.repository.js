@@ -12,7 +12,7 @@ module.exports = {
   getSchema: async () =>
     db.query(
       // eslint-disable-next-line max-len
-      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY CAST(x_position AS INTEGER)) AS seats FROM hall_seat GROUP BY y_position ORDER BY y_position;'
+      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat GROUP BY y_position ORDER BY y_position;'
     ),
   createOne: async (hall) =>
     await db.query('INSERT INTO hall (title, cinema_id) VALUES ($1, $2) RETURNING *', [hall.title, hall.cinema_id]),
