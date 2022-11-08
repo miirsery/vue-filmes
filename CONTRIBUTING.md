@@ -2,7 +2,7 @@
 
 ## Vue 3
 
-На проекте используется Vue 3 с Composition API в связке с SSR и Vuex.
+На проекте используется Vue 3 с Composition API в связке с Pinia
 
 ---
 ---
