@@ -49,7 +49,7 @@
 ### Code style
 
 - Шаблон компонента должен быть максимально чистым (за исключением самостоятельных компонентов)
-- Методы-обработчики именуются: `{{цель}}{{действие}}Handler`. Пример: `userChangeHandler`.
+- Методы-обработчики именуются: `handle{{цель}}{{действие}}`. Пример: `handleUserChange`.
 - Методы-предикаты именуются: `is{{цель}}{{условие}}`. Пример: `isModalVisible`.
 - Методы-действия именуются: `{{глагол}}{{контекст}}`. Пример: `getUser`, `generateStyle` и т.д. Так же глагол должен использоваться один и тот же во всех методах-действиях одного типа. Например, получение чего-либо - всегда `get...`, не использовать синонимы, по типу `take` и прочие. Если `generate` - всегда `generate`, не нужно мешать с, например, `make`.
 
@@ -81,7 +81,7 @@
     <div>
       <span> Пользователь: {{ userWithId }} </span>
     </div>
-    <button @click="changeUserHandler"> Click to change user </button>
+    <button @click="handleUserChange"> Click to change user </button>
   </div>
 </template>
 
@@ -116,7 +116,7 @@
     //some logic...
   })
 
-  const changeUserHandler = () => {
+  const handleUserChange = () => {
     id.value += 1
   }
 </script>
