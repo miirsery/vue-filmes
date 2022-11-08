@@ -16,14 +16,12 @@ module.exports = {
     db.query(
       'INSERT INTO ticket' +
         ' (' +
-        'session_id,' +
+        ' session_id,' +
         ' seat,' +
         ' user_id,' +
         ' price,' +
-        ' seller_id,' +
-        ' movie_id,' +
-        ' hall_id' +
-        ') VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [ticket.session_id, ticket.seat, ticket.user_id, ticket.price, ticket.seller_id, ticket.movie_id, ticket.hall_id]
+        ' seller_id' +
+        ') VALUES ($1, $2, $3, $4, $5)',
+      [ticket.session_id, ticket.seat, ticket.user_id, ticket.price, ticket.seller_id]
     ),
 }

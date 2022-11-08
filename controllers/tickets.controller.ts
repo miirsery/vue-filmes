@@ -13,6 +13,7 @@ const {
 } = require('../repositories/tickets.repository.js')
 
 const { removeSeat } = require('../repositories/halls.repository.js')
+const { updateSchema } = require('../repositories/halls.repository.js')
 
 const getAllTickets = (response: any): Promise<any> => {
   return response.rows.map((ticket: any) => {
@@ -102,12 +103,14 @@ class TicketsController {
       const body = req.body
 
       await addTicket(body)
-      await removeSeat(body.hall_id)
+
+      await updateSchema(body.seat)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({
         message: 'Успешно',
       })
     } catch (error: any) {
+      console.log(error)
       return res
         .status(500)
         .setHeader('Content-Type', 'application/json')
