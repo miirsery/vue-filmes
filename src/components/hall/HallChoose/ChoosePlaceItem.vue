@@ -7,7 +7,7 @@
       <div v-if="!props.seat.available">Busy</div>
       <div>Seat {{ props.seat.seat }}</div>
       <template #reference>
-        <el-button class="choose-place-item__button" @click="handleSeatSelect(props.seat.id)" />
+        <el-button class="choose-place-item__button" @click="handleSeatSelect(props.seat.seat)" />
       </template>
     </el-popover>
   </div>
@@ -18,10 +18,15 @@ interface IProps {
   seat: any
 }
 
-const props = defineProps<IProps>()
+interface IEmits {
+  (e: 'select-seat', seat: number): void
+}
 
-const handleSeatSelect = (id: number): void => {
-  console.log(id)
+const props = defineProps<IProps>()
+const emit = defineEmits<IEmits>()
+
+const handleSeatSelect = (seat: number): void => {
+  emit('select-seat', seat)
 }
 </script>
 

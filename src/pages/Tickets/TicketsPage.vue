@@ -21,7 +21,11 @@
       @update-table="getTickets"
     />
 
-    <choose-place-dialog :visible="isChoosePlaceVisible" @close-dialog="handleChoosePlaceVisibleChange" />
+    <choose-place-dialog
+      :visible="isChoosePlaceVisible"
+      @update-table="getTickets"
+      @close-dialog="handleChoosePlaceVisibleChange"
+    />
 
     <el-pagination :page-size="20" :pager-count="11" layout="prev, pager, next" :total="1000" />
   </div>
