@@ -73,7 +73,7 @@
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="User Id" prop="user_id">
+    <el-table-column label="User Name" prop="user_id">
       <template #header>
         <el-tooltip>
           <span>User id</span>
@@ -85,11 +85,11 @@
       </template>
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.user_id }}
+          {{ row.user_name }}
         </div>
       </template>
     </el-table-column>
-    <el-table-column label="Movie Id" prop="movie_id">
+    <el-table-column label="Movie title" prop="movie_id">
       <template #header>
         <el-tooltip>
           <span>Movie id</span>
@@ -101,7 +101,7 @@
       </template>
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.movie_id }}
+          {{ row.movie_title }}
         </div>
       </template>
     </el-table-column>

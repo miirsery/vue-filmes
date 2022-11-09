@@ -17,10 +17,10 @@
         <el-button v-else @click="handleHallDelete(row.id)">delete</el-button>
       </template>
     </el-table-column>
-    <el-table-column label="Seats count" prop="seats_count">
+    <el-table-column label="Available seats" prop="seats_count">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.seats_count }}
+          {{ row.available_seats }}
         </div>
         <div />
       </template>

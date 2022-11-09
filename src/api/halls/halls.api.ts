@@ -7,11 +7,13 @@ class HallsApi extends AxiosService {
     super(config)
   }
 
-  async getHalls(filters?: any) {
+  async getHalls(cinemaId?: any) {
     return this.axiosCall({
       method: 'get',
       url: '',
-      params: filters,
+      params: {
+        cinema_id: cinemaId,
+      },
     })
   }
 
@@ -22,10 +24,13 @@ class HallsApi extends AxiosService {
     })
   }
 
-  async getSchema() {
+  async getSchema(hallId?: number) {
     return this.axiosCall<SeatsSchemaType[]>({
       method: 'get',
       url: 'schema',
+      params: {
+        hall_id: hallId,
+      },
     })
   }
 

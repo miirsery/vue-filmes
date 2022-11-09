@@ -1,20 +1,43 @@
 <template>
   <el-dialog title="Choose place" :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
     <div class="d-flex ai-center jc-between">
-      <div class="d-flex ai-center mb-16">
-        <el-select v-model="form.movie_id" class="mr-8" placeholder="Select movie" @focus.once="handleMoviesGet">
+      <div class="d-flex fd-column ai-center mb-16">
+        <el-select
+          v-model="chosePlaceForm.cinemaId"
+          class="mb-16"
+          placeholder="Select cinema"
+          @focus.once="handleCinemasGet"
+        >
+          <el-option v-for="item in cinemasOptions" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+        <el-select
+          v-model="chosePlaceForm.hallId"
+          class="mb-16"
+          placeholder="Select hall"
+          :disabled="!cinemasOptions.length"
+          @focus.once="handleHallsGet"
+          @change="getSchema"
+        >
+          <el-option v-for="item in hallsOptions" :key="item.value" :label="item.label" :value="item.value" />
+        </el-select>
+        <el-select
+          v-model="chosePlaceForm.movie_id"
+          class="mb-16"
+          placeholder="Select movie"
+          @focus.once="handleMoviesGet"
+        >
           <el-option v-for="item in moviesOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
         <el-select
-          v-model="form.session_id"
-          class="mr-8"
-          placeholder="Select movie"
+          v-model="chosePlaceForm.session_id"
+          class="mb-16"
+          placeholder="Select session"
           @focus.once="handleSessionsGet"
           @change="getSchema"
         >
           <el-option v-for="item in sessionsOptions" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
-        <input-common v-model="form.price" placeholder="Enter a price" type="number" />
+        <input-common v-model="chosePlaceForm.price" placeholder="Enter a price" type="number" />
       </div>
       <el-button type="primary" :disabled="isCreateDisabled" @click="handleTicketCreate">Create ticket</el-button>
     </div>
@@ -109,6 +132,7 @@ import hallsApi from '@/api/halls/halls.api'
 import ChooseUserDialog from '@/components/user/ChooseUser/ChooseUserDialog.vue'
 import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
 import ticketsApi from '@/api/tickets/tickets.api'
+import cinemasApi from '@/api/cinemas/cinemas.api'
 
 interface IProps {
   visible: boolean
@@ -135,9 +159,13 @@ let lastSeat: SeatType | null = null
 
 const moviesOptions = ref<any>([])
 const sessionsOptions = ref<any>([])
-const form = reactive<any>({})
+const cinemasOptions = ref<any>([])
+const chosePlaceForm = reactive<any>({
+  hallId: '',
+})
 const schema = ref<SeatsSchemaType[]>([])
 const selectedPlaces = ref<any>([])
+const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
 
 const isCreateDisabled = computed(() => !selectedPlaces.value.length)
@@ -147,17 +175,17 @@ const handleChooseUserVisibleChange = (): void => {
 }
 
 const handleSeatSelect = (seat: number): void => {
-  form.seat = seat
+  chosePlaceForm.seat = seat
 }
 
 const handleUsersSet = (data: any): void => {
   Object.entries(data).forEach(([key, value]) => {
-    form[key] = value
+    chosePlaceForm[key] = value
   })
 
   selectedPlaces.value.push({
-    user_id: form.user_id,
-    seller_id: form.seller_id,
+    user_id: chosePlaceForm.user_id,
+    seller_id: chosePlaceForm.seller_id,
   })
 }
 
@@ -211,8 +239,26 @@ const setSessionsOptions = async (sessionsData: any): Promise<void> => {
   })
 }
 
+const setHallsOptions = (hallsData: any): void => {
+  hallsData.forEach((hall: any) => {
+    hallsOptions.value.push({
+      label: `hall: ${hall.title}`,
+      value: hall.id,
+    })
+  })
+}
+
+const setCinemasOptions = (cinemasData: any): void => {
+  cinemasData.forEach((cinema: any) => {
+    cinemasOptions.value.push({
+      label: `cinema: ${cinema.title}`,
+      value: cinema.id,
+    })
+  })
+}
+
 const getSchema = async (): Promise<void> => {
-  const [error, data] = await hallsApi.getSchema()
+  const [error, data] = await hallsApi.getSchema(+chosePlaceForm.hallId)
 
   if (!error && data) {
     schema.value = data
@@ -241,17 +287,37 @@ const handleSessionsGet = async (): Promise<void> => {
 
 const handleTicketCreate = async (): Promise<void> => {
   const [error, data] = await ticketsApi.createTicket({
-    seat: form.seat,
-    price: +form.price,
-    session_id: form.session_id,
-    seller_id: form.seller_id,
-    user_id: form.user_id,
+    seat: chosePlaceForm.seat,
+    price: +chosePlaceForm.price,
+    session_id: chosePlaceForm.session_id,
+    seller_id: chosePlaceForm.seller_id,
+    user_id: chosePlaceForm.user_id,
   })
 
   if (!error && data) {
     await getSchema()
 
     await updateTable()
+  }
+}
+
+const handleHallsGet = async (): Promise<void> => {
+  const [error, data] = await hallsApi.getHalls(chosePlaceForm.cinemaId)
+
+  if (!error && data) {
+    const halls = data.map((hall: any) => ({ id: hall.id, title: hall.title }))
+
+    await setHallsOptions(halls)
+  }
+}
+
+const handleCinemasGet = async (): Promise<void> => {
+  const [error, data] = await cinemasApi.getCinemas()
+
+  if (!error && data) {
+    const cinemas = data.map((cinema: any) => ({ id: cinema.id, title: cinema.title }))
+
+    await setCinemasOptions(cinemas)
   }
 }
 </script>
