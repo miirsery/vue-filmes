@@ -10,6 +10,10 @@ const fs = require('fs-extra')
 
 class UserController {
   async registerUser(req: Request, res: Response, user: any = {}) {
+    // eslint-disable-next-line max-len
+    const emailRePattern =
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu
+
     try {
       const {
         name = null,
@@ -19,7 +23,7 @@ class UserController {
         email,
         password,
         login,
-        birthdate,
+        birthdate = null,
       } = req.body
 
       if (!password || !login) {
@@ -34,6 +38,12 @@ class UserController {
       if (password.length < 6) {
         return res.status(500).setHeader('Content-Type', 'application/json').json({
           message: 'Пароль должен содеражть больше 6-ти символов',
+        })
+      }
+
+      if (!emailRePattern.test(email)) {
+        return res.status(500).setHeader('Content-Type', 'application/json').json({
+          message: 'Enter a correct email and try again!',
         })
       }
 

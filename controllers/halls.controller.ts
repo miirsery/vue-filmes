@@ -1,14 +1,23 @@
 import { Request, Response } from 'express'
-const { getAll, deleteOne, getFilteredHalls, getOne, createOne } = require('../repositories/halls.repository')
+const {
+  getAll,
+  deleteOne,
+  getFilteredHalls,
+  getOne,
+  createOne,
+  createSchema,
+  getSchema,
+  getSchemaById,
+  getAllByCinemaId,
+} = require('../repositories/halls.repository.js')
 
 class HallsController {
   async createHall(req: Request, res: Response) {
     try {
-      const { title, seats_count, cinema_id } = req.body
+      const { title, cinema_id } = req.body
 
       const data = await createOne({
         title,
-        seats_count,
         cinema_id,
       })
 
@@ -19,6 +28,33 @@ class HallsController {
           message: `Зал ${data.rows[0].title} успешно создан`,
         })
     } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async createSchema(req: Request, res: Response) {
+    try {
+      const body = req.body
+
+      for (const item of body.items) {
+        await createSchema({
+          seat: item.seat,
+          x_position: item.x,
+          y_position: item.y,
+          available: item.available,
+          have: item.have,
+          hall_id: body.hall_id,
+        })
+      }
+
+      return res.status(201).setHeader('Content-Type', 'application/json').json({
+        message: 'Success',
+      })
+    } catch (error: any) {
+      console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
         message: error.detail,
       })
@@ -53,9 +89,9 @@ class HallsController {
 
         return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows)
       } else {
-        const data = await getAll()
+        const data = await getAll().then((r: any) => r.rows)
 
-        return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows)
+        return res.status(200).setHeader('Content-Type', 'application/json').json(data)
       }
     } catch (error: any) {
       console.log(error)
@@ -74,6 +110,33 @@ class HallsController {
 
         return res.status(200).setHeader('Content-Type', 'application/json').json(data.rows[0])
       }
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async getSchema(req: Request, res: Response) {
+    try {
+      const { hall_id, cinema_id } = req.query
+
+      if (hall_id) {
+        const schema = await getSchemaById(hall_id).then((r: any) => r.rows)
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(schema)
+      }
+
+      if (cinema_id) {
+        const halls = await getAllByCinemaId(cinema_id).then((r: any) => r.rows)
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(halls)
+      }
+
+      const schema = await getSchema().then((r: any) => r.rows)
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json(schema)
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({

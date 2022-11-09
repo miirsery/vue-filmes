@@ -16,7 +16,10 @@ module.exports = {
         ' register_date,' +
         ' discount' +
         ' FROM person' +
-        ' ORDER BY id;'
+        ' ORDER BY id' +
+        ' ASC' +
+        ' LIMIT 10' +
+        ' OFFSET 0;'
     ),
   getUserByEmail: async (email) =>
     await db.query('SELECT * FROM person WHERE email=$1', [email]).then((r) => r.rows[0]),

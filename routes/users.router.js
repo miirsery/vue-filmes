@@ -89,22 +89,46 @@ router.get('/', userController.getUsers)
 
 /**
  * @swagger
- * /api/v1/users:
+ * /api/v1/users/example-file:
  *   get:
- *     summary: Returns the list of all the users
+ *     summary: Link to example file
  *     tags: [Users]
  *     responses:
  *       200:
- *         description: The list of the users
+ *         description: Link to example file
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               required:
+ *                 - login
+ *                 - email
+ *                 - password
+ *               properties:
+ *                 path:
+ *                   type: string
+ *                   description: html for download example file
+ *
+ */
+router.get('/example-file', userController.getExampleFile)
+
+/**
+ * @swagger
+ * /api/v1/users/group:
+ *   post:
+ *     summary: Register group users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Link to example file
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Person'
+ *
  */
-router.get('/example-file', userController.getExampleFile)
-
 router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, changedFilename))
 router.post('/discount', userController.setUserDiscount)
 router.post('/', userController.registerUser)

@@ -14,14 +14,8 @@ module.exports = {
       [movie.title, movie.description, movie.studio, movie.genre, movie.release_date, movie.pathToFile]
     ),
   findOne: async (id: number) => db.query('SELECT * FROM movie WHERE id=$1', [id]),
-  findAll: async () =>
-    db.query(
-      'SELECT *, (SELECT CAST(COUNT(*) as INTEGER)' +
-        ' FROM ticket' +
-        ' WHERE ticket.movie_id = public.movie.id) AS sales_count' +
-        ' FROM movie' +
-        ' ORDER BY movie.id ASC'
-    ),
+  getOneByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
+  findAll: async () => db.query('SELECT * FROM movie'),
   updateOne: async (args: any) =>
     db.query('UPDATE movie SET title=$1, preview=$2 WHERE id=$3', [args.title, args.preview, args.id]),
   getMostPopularMovie: () =>
