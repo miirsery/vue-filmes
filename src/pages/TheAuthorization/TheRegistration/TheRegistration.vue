@@ -1,7 +1,7 @@
 <template>
   <div class="the-registration">
     <div class="d-flex ai-center fd-column">
-      <h1 class="the-registration__title">Зарегистироваться</h1>
+      <h1 class="the-registration__title">Зарегистрироваться</h1>
       <el-form :model="registrationForm">
         <el-form-item prop="name">
           <input-common v-model="registrationForm.name" class="mb-16" placeholder="Имя" />
@@ -32,8 +32,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { RegistrationFormType } from '@/pages/TheAuthorization/TheRegistration/theRegistration.types'
-import authorizationApi from '@/api/authorization/authorization.api'
 import { useRouter } from 'vue-router'
+import usersApi from '@/api/users/users.api'
 
 const router = useRouter()
 
@@ -49,7 +49,7 @@ const registrationForm = ref<RegistrationFormType>({
 })
 
 const handleAccountCreate = async (): Promise<void> => {
-  const [error, data] = await authorizationApi.userRegister(registrationForm.value)
+  const [error, data] = await usersApi.userRegister(registrationForm.value)
 
   if (!error && data) {
     console.log(data)

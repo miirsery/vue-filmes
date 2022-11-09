@@ -9,14 +9,6 @@ class AuthorizationApi extends AxiosService {
     super(config)
   }
 
-  async userRegister(payload: RegistrationFormType) {
-    return this.axiosCall<SuccessResponseMessageType>({
-      method: 'post',
-      url: '/register',
-      data: { ...payload },
-    })
-  }
-
   async getToken(payload: LoginFormType) {
     return this.axiosCall<TokenResponseType>({
       method: 'post',

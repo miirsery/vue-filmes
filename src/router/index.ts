@@ -16,6 +16,21 @@ const router = createRouter({
           name: 'Home',
           component: () => import('@/pages/HomePage.vue'),
         },
+        {
+          path: '/movie',
+          name: 'Movie',
+          component: () => import('@/pages/Movie/MoviePage.vue'),
+        },
+        {
+          path: '/movie/:id',
+          name: 'MovieDetailed',
+          component: () => import('@/pages/MovieDetailed/MovieDetailedPage.vue'),
+        },
+        {
+          path: '/cinemas',
+          name: 'CinemasPage',
+          component: () => import('@/pages/Cinemas/CinemasPage.vue'),
+        },
       ],
     },
     {
@@ -41,6 +56,7 @@ const router = createRouter({
         },
       ],
     },
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('@/pages/NotFoundPage.vue') },
   ],
 })
 

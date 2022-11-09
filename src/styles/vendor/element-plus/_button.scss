@@ -12,6 +12,15 @@
     padding: 10px 60px;
   }
 
+  &.the-header-profile__button {
+    background: none;
+    padding: 0;
+
+    &-logout {
+      background: $color--accent;
+    }
+  }
+
   &--primary {
     background-color: $color--accent !important;
   }
