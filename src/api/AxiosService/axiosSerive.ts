@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
-import { AxiosResponseType } from '@/api/AxiosService/axios-service'
+import { AxiosResponseType } from '@/api/AxiosService/axios-service.type'
 import { ElMessage } from 'element-plus'
 
 export class AxiosService {

@@ -1,29 +1,58 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
+import { SeatsSchemaType } from '@/types/hall.types'
 
 class HallsApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
     super(config)
   }
 
-  async getHalls(filters?: any) {
+  async getHalls(cinemaId?: any) {
     return this.axiosCall({
       method: 'get',
       url: '',
-      params: filters,
-    })
-  }
-
-  async deleteHall(id: number) {
-    return this.axiosCall({
-      method: 'delete',
-      url: `/${id}`,
+      params: {
+        cinema_id: cinemaId,
+      },
     })
   }
 
   async getHall(id: number) {
     return this.axiosCall({
       method: 'get',
+      url: `/${id}`,
+    })
+  }
+
+  async getSchema(hallId?: number) {
+    return this.axiosCall<SeatsSchemaType[]>({
+      method: 'get',
+      url: 'schema',
+      params: {
+        hall_id: hallId,
+      },
+    })
+  }
+
+  async createHall(data: any) {
+    return this.axiosCall({
+      method: 'post',
+      url: '',
+      data,
+    })
+  }
+
+  async createSchema(data: any) {
+    return this.axiosCall({
+      method: 'post',
+      url: 'schema',
+      data,
+    })
+  }
+
+  async deleteHall(id: number) {
+    return this.axiosCall({
+      method: 'delete',
       url: `/${id}`,
     })
   }

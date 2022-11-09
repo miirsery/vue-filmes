@@ -1,5 +1,6 @@
 <template>
-  <el-table v-loading="loading" :data="props.users" @selection-change="handleRowSelect">
+  <div v-if="!props.users.length"> No data :( </div>
+  <el-table v-else v-loading="loading" :data="props.users" @selection-change="handleRowSelect">
     <el-table-column type="selection" />
     <el-table-column label="ID" prop="id">
       <template #default="{ row }">

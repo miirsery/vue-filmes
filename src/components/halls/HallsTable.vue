@@ -9,26 +9,26 @@
         <el-button v-else>edit</el-button>
       </template>
     </el-table-column>
-    <el-table-column label="Title" prop="title">
+    <el-table-column label="Title" prop="hall_title">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.title }}
+          {{ row.hall_title }}
         </div>
         <el-button v-else @click="handleHallDelete(row.id)">delete</el-button>
       </template>
     </el-table-column>
-    <el-table-column label="Seats count" prop="seats_count">
+    <el-table-column label="Available seats" prop="seats_count">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.seats_count }}
+          {{ row.available_seats }}
         </div>
         <div />
       </template>
     </el-table-column>
-    <el-table-column label="cinema_id" prop="cinema_id">
+    <el-table-column label="Cinema title" prop="cinema_title">
       <template #default="{ row }">
         <div v-if="checkSelectedRow(row.id)">
-          {{ row.cinema_id }}
+          {{ row.cinema_title }}
         </div>
         <div />
       </template>
@@ -76,7 +76,7 @@ const handleHallDelete = async (id: number): Promise<void> => {
   const [error] = await hallsApi.deleteHall(id)
 
   if (!error) {
-    updateTable()
+    await updateTable()
   }
 }
 </script>
