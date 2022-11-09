@@ -2,7 +2,12 @@ const db = require('../db')
 
 module.exports = {
   getTotal: async () => db.query('SELECT COUNT(*) FROM ticket'),
-  getAll: async () => db.query('SELECT * FROM ticket ORDER BY id'),
+  getAll: async () =>
+    db.query(
+        ' SELECT t.id, t.seat as seat, t.session_id, t.buy_date, t.price, t.seller_id, p.name AS user_name, m.title AS movie_title' +
+        ' FROM ticket t, session s, movie m, person p' +
+        ' WHERE s.movie_id = m.id AND p.id = t.user_id;'
+    ),
   getAllPagination: (filter) =>
     db.query('SELECT * FROM ticket ORDER BY id LIMIT=$1 OFFSET=$2', [filter.limit, filter.offset]),
   getFilteredTickets: async (userId) => db.query('SELECT * FROM ticket WHERE user_id=$1', [userId]),

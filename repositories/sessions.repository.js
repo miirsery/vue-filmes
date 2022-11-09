@@ -1,5 +1,13 @@
 const db = require('../db')
 
+// class SessionsRepository {
+//   async getAll() {
+//     return await db.query('SELECT * FROM session')
+//   }
+// }
+
+// module.exports = new SessionsRepository()
+
 module.exports = {
   getAll: async () => await db.query('SELECT * FROM session'),
   createOne: async (session) =>

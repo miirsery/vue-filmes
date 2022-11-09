@@ -7,6 +7,8 @@ const {
   createOne,
   createSchema,
   getSchema,
+  getSchemaById,
+  getAllByCinemaId,
 } = require('../repositories/halls.repository.js')
 
 class HallsController {
@@ -118,6 +120,20 @@ class HallsController {
 
   async getSchema(req: Request, res: Response) {
     try {
+      const { hall_id, cinema_id } = req.query
+
+      if (hall_id) {
+        const schema = await getSchemaById(hall_id).then((r: any) => r.rows)
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(schema)
+      }
+
+      if (cinema_id) {
+        const halls = await getAllByCinemaId(cinema_id).then((r: any) => r.rows)
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(halls)
+      }
+
       const schema = await getSchema().then((r: any) => r.rows)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(schema)
