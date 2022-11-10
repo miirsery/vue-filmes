@@ -31,6 +31,11 @@ const router = createRouter({
           name: 'CinemasPage',
           component: () => import('@/pages/Cinemas/CinemasPage.vue'),
         },
+        {
+          path: '/cinemas/:id',
+          name: 'CinemaPage',
+          component: () => import('@/pages/Cinema/CinemaPage.vue'),
+        },
       ],
     },
     {
