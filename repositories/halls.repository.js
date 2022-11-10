@@ -13,7 +13,8 @@ module.exports = {
         ' WHERE c.id = h.cinema_id'
     ),
   getOne: async (id) => db.query('SELECT * FROM hall WHERE id=$1', [id]),
-  getAllByCinemaId: async (cinemaId) => await db.query('SELECT title FROM hall WHERE cinema_id=$1', [cinemaId]),
+  getAllByCinemaId: async (cinemaId) =>
+    await db.query('SELECT id, title, cinema_id FROM hall WHERE cinema_id=$1', [cinemaId]),
   getSchema: async () =>
     db.query(
       // eslint-disable-next-line max-len

@@ -23,7 +23,8 @@
 --     id              SERIAL PRIMARY KEY NOT NULL,
 --     title           TEXT,
 --     address         TEXT,
---     location        TEXT,
+--     lng             FLOAT(6),
+--     lat             FLOAT(6),
 --     description     TEXT,
 --     phone           TEXT
 -- );
