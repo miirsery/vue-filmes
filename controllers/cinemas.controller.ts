@@ -91,7 +91,7 @@ class HallsController {
 
       const result = Object.assign(cinema, {
         halls,
-        sessions: newSessions,
+        sessions: newSessions.flat(),
       })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(result)
