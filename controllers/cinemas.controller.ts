@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response } from 'express'
 
 const { createOne, deleteOne, getAll, getOne } = require('../repositories/cinemas.repository.js')
 const { getAllByCinemaId } = require('../repositories/halls.repository.js')
 const { getAllByHallId } = require('../repositories/sessions.repository.js')
-const { getMovieBySession } = require('../repositories/movies.repository')
 
 class HallsController {
   async createCinema(req: Request, res: Response) {
@@ -71,6 +70,19 @@ class HallsController {
       const cinema = await getOne(id).then((r: any) => r.rows[0])
       const halls: any = await getAllByCinemaId(cinema.id).then((r: any) => r.rows)
 
+      const newSessions: any = []
+
+      for (const hall of halls) {
+        const session = await getAllByHallId(hall.id).then((r: any) => r.rows)
+
+        if (!session.length) {
+          continue
+        }
+
+        newSessions.push(session)
+      }
+
+
       if (!halls) {
         return res.status(500).setHeader('Content-Type', 'application/json').json({
           message: 'No halls',
@@ -79,6 +91,7 @@ class HallsController {
 
       const result = Object.assign(cinema, {
         halls,
+        sessions: newSessions,
       })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(result)
