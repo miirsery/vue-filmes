@@ -8,6 +8,8 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     CinemaCard: typeof import('./src/components/pages/Cinema/CinemaCard.vue')['default']
+    CinemasMap: typeof import('./src/components/pages/Cinemas/CinemasMap.vue')['default']
+    CinemasMovie: typeof import('./src/components/pages/Cinema/CinemasMovie.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']

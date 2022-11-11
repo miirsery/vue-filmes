@@ -20,3 +20,12 @@ img {
 a {
   color: $color--text;
 }
+
+.link {
+  border: 1px solid $color--border;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 8px 12px;
+}

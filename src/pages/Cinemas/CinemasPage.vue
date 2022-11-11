@@ -12,19 +12,32 @@
 import { onMounted, ref } from 'vue'
 import cinemasApi from '@/api/cinemas/cinemas.api'
 
-const cinemas = ref<any>([])
+// const cinemas = ref<any>([])
 
-onMounted(async () => {
-  await getCinemas()
-})
+const cinemas = [
+  {
+    id: 1,
+    image: 'https://wallpapersmug.com/download/1024x768/955152/dark-anime-girl-ruby-rose.jpg',
+    title: 'Cinema title',
+  },
+  {
+    id: 2,
+    image: 'https://wallpapersmug.com/download/1024x768/955152/dark-anime-girl-ruby-rose.jp',
+    title: 'Cinema title #2',
+  },
+]
 
-const getCinemas = async (): Promise<void> => {
-  const [error, data] = await cinemasApi.getCinemas()
-
-  if (!error && data) {
-    cinemas.value = data
-  }
-}
+// onMounted(async () => {
+//   await getCinemas()
+// })
+//
+// const getCinemas = async (): Promise<void> => {
+//   const [error, data] = await cinemasApi.getCinemas()
+//
+//   if (!error && data) {
+//     cinemas.value = data
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
