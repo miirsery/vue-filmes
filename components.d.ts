@@ -7,9 +7,11 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    CinemaCard: typeof import('./src/components/pages/Cinema/CinemaCard.vue')['default']
+    ChoosePlaceDialog: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceDialog.vue')['default']
+    ChoosePlaceItem: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceItem.vue')['default']
+    CinemaCard: typeof import('./src/components/pages/Cinema/Cinema/CinemaCard.vue')['default']
     CinemasMap: typeof import('./src/components/pages/Cinemas/CinemasMap.vue')['default']
-    CinemasMovie: typeof import('./src/components/pages/Cinema/CinemasMovie.vue')['default']
+    CinemasMovie: typeof import('./src/components/pages/Cinema/Cinema/CinemasMovie.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -20,8 +22,10 @@ declare module '@vue/runtime-core' {
     ElForm: typeof import('element-plus/es')['ElForm']
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElOption: typeof import('element-plus/es')['ElOption']
     ElPopover: typeof import('element-plus/es')['ElPopover']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSelect: typeof import('element-plus/es')['ElSelect']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     IconTemplate: typeof import('./src/components/common/IconTemplate.vue')['default']
     InputCommon: typeof import('./src/components/common/InputCommon/InputCommon.vue')['default']

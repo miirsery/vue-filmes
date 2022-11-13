@@ -33,7 +33,7 @@ const setToken = (token: string): void => {
 }
 
 const loginUser = async (): Promise<void> => {
-  const [error, data] = await authorizationApi.loginUser({ ...loginForm.value })
+  const [error, data] = await authorizationApi.loginUser()
 
   if (!error && data) {
     await router.push({ name: 'Home' })
