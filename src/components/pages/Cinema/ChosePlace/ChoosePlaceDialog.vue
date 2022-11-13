@@ -128,7 +128,8 @@ const chosePlaceForm = reactive<any>({
   user,
 })
 const schema = ref<any[]>([])
-const selectedPlaces = ref<any>([])
+// TODO: Сделать выбор нескольких мест
+// const selectedPlaces = ref<any>([])
 const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
 

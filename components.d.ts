@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    BuyTicket: typeof import('./src/components/pages/Cinema/BuyTicket/BuyTicket.vue')['default']
     ChoosePlaceDialog: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceDialog.vue')['default']
     ChoosePlaceItem: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceItem.vue')['default']
     CinemaCard: typeof import('./src/components/pages/Cinema/Cinema/CinemaCard.vue')['default']
@@ -42,6 +43,7 @@ declare module '@vue/runtime-core' {
     TheSearch: typeof import('./src/components/layouts/TheHeader/TheSearch/TheSearch.vue')['default']
     TheSearchDropdown: typeof import('./src/components/layouts/TheHeader/TheSearchDropdown/TheSearchDropdown.vue')['default']
     TheSearchDropdownItem: typeof import('./src/components/layouts/TheHeader/TheSearchDropdown/TheSearchDropdownItem.vue')['default']
+    TicketResult: typeof import('./src/components/Ticket/TicketResult.vue')['default']
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
   export interface ComponentCustomProperties {

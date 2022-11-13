@@ -1,4 +1,5 @@
 @use '@/styles/resources/variables' as *;
+@import '@/styles/resources/mixins';
 
 .el-button {
   border: none !important;
@@ -18,6 +19,15 @@
 
     &-logout {
       background: $color--accent;
+    }
+  }
+
+  &.cinemas-movie__session-button {
+    border: 1px solid $color--border !important;
+    background: none !important;
+
+    &:hover {
+      @include color('background-color', $color--border, 10%, -0.9);
     }
   }
 

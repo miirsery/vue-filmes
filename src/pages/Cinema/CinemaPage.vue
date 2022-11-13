@@ -1,10 +1,12 @@
 <template>
   <div class="cinema-page">
-    <h1>Cinema: {{ cinema.title }}</h1>
+    <h1 class="mt-16 mb-16">Cinema: {{ cinema.title }}</h1>
     <div class="cinema-page__content">
-      Расписание на
-      <div>
-        <el-date-picker v-model="cinema.date" type="date" placeholder="Pick a day" />
+      <div class="d-flex ai-center">
+        <div class="mr-8"> Расписание на </div>
+        <div>
+          <el-date-picker v-model="cinema.date" type="date" placeholder="Pick a day" />
+        </div>
       </div>
       <cinemas-movie v-for="movie in movies" :key="movie.id" :movie="movie" :cinema="cinema" :sessions="sessions" />
     </div>
