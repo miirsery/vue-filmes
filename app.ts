@@ -3,6 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 import { Application, NextFunction, Request, Response } from 'express'
+import './create-admin'
 
 const express = require('express')
 

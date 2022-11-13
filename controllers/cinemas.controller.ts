@@ -1,8 +1,10 @@
 import { Request, Response } from 'express'
+import moment from 'moment/moment'
 
 const { createOne, deleteOne, getAll, getOne } = require('../repositories/cinemas.repository.js')
 const { getAllByCinemaId } = require('../repositories/halls.repository.js')
 const { getAllByHallId } = require('../repositories/sessions.repository.js')
+const { findOne } = require('../repositories/movies.repository')
 
 class HallsController {
   async createCinema(req: Request, res: Response) {
@@ -71,17 +73,25 @@ class HallsController {
       const halls: any = await getAllByCinemaId(cinema.id).then((r: any) => r.rows)
 
       const newSessions: any = []
+      const newMovies: any = []
 
       for (const hall of halls) {
-        const session = await getAllByHallId(hall.id).then((r: any) => r.rows)
+        const sessions = await getAllByHallId(hall.id).then((r: any) => r.rows)
 
-        if (!session.length) {
+        if (!sessions.length) {
           continue
         }
 
-        newSessions.push(session)
-      }
+        for (const session of sessions) {
+          const sessionTime = moment(session.time, 'HH:mm:ss').format('hh:mm')
+          const sessionDate = moment(session.date).format('DD-MM-YYYY')
 
+          delete session.time
+          delete session.date
+
+          newSessions.push(Object.assign(session, { time: sessionTime, date: sessionDate }))
+        }
+      }
 
       if (!halls) {
         return res.status(500).setHeader('Content-Type', 'application/json').json({
@@ -89,9 +99,22 @@ class HallsController {
         })
       }
 
+      for (const session of newSessions) {
+        const movies = await findOne(session.movie_id as number).then((r: any) => r.rows)
+
+        for (const movie of movies) {
+          const movieIndex = newMovies.findIndex((item: any) => item.id === movie.id)
+
+          if (movieIndex === -1) {
+            newMovies.push(movie)
+          }
+        }
+      }
+
       const result = Object.assign(cinema, {
         halls,
-        sessions: newSessions.flat(),
+        sessions: newSessions,
+        movies: newMovies,
       })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(result)
