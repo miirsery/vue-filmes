@@ -14,7 +14,9 @@
             <el-option v-for="item in hallsOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
-        <el-button type="primary" :disabled="false" @click="handleBuyTicketShowChange">Next</el-button>
+        <el-button type="primary" :disabled="isNextStepButtonDisabled" @click="handleBuyTicketShowChange">
+          Next
+        </el-button>
       </div>
       <div v-if="!schema.length"> Choose a <strong>session</strong> for displaying schema of hall </div>
       <div v-else>
@@ -148,6 +150,8 @@ const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
 const isBuyTicketShow = ref(false)
 
+const isNextStepButtonDisabled = computed(() => !selectedPlaces.value.length)
+
 const handleChooseUserVisibleChange = (): void => {
   isChooseUserShow.value = !isChooseUserShow.value
 }
@@ -227,29 +231,24 @@ const handleHallsGet = async (): Promise<void> => {
   }
 }
 
-const handleTicketCreate = async (data: any): Promise<void> => {
-  console.log(data)
+const handleTicketCreate = async (paymentData: any): Promise<void> => {
+  const [error, data] = await ticketsApi.createTicket(
+    Object.assign(
+      {
+        user_id: chosePlaceForm.user.id,
+        seat: chosePlaceForm.seat,
+        price: chosePlaceForm.price,
+        hall_id: chosePlaceForm.hallId,
+        session_id: currentSessionId.value,
+        seller_id: 1,
+      },
+      paymentData
+    )
+  )
 
-  console.log({
-    user_id: chosePlaceForm.user.id,
-    seat: chosePlaceForm.seat,
-    price: chosePlaceForm.price,
-    hall_id: chosePlaceForm.hallId,
-    session_id: currentSessionId.value,
-    seller_id: 1,
-  })
-  // const [error, data] = await ticketsApi.createTicket({
-  //   user_id: chosePlaceForm.user.id,
-  //   seat: chosePlaceForm.seat,
-  //   price: chosePlaceForm.price,
-  //   hall_id: chosePlaceForm.hallId,
-  //   session_id: currentSessionId.value,
-  //   seller_id: 1,
-  // })
-  //
-  // if (!error && data) {
-  //   await getSchema()
-  // }
+  if (!error && data) {
+    await getSchema()
+  }
 }
 </script>
 
