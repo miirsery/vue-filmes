@@ -1,0 +1,6 @@
+@use "sass:color";
+@import "@/styles/resources/variables";
+
+@mixin color($prop, $color, $amount, $alpha: 1) {
+  #{$prop}: color.adjust($color, $lightness: $amount, $alpha: $alpha) !important;
+}

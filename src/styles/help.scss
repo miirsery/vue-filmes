@@ -20,6 +20,10 @@
   flex-direction: column !important;
 }
 
+.ta-center {
+  text-align: center !important;
+}
+
 .w-100 {
   width: 100% !important;
 }
@@ -34,6 +38,10 @@
 
 .mb-16 {
   margin-bottom: $size--16 !important;
+}
+
+.mt-16 {
+  margin-top: $size--16 !important;
 }
 
 .mr-50 {

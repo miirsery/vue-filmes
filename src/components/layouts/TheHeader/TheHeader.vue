@@ -5,7 +5,7 @@
         <el-col :span="12">
           <ul class="d-flex ai-center">
             <li v-for="item in headerItems" :key="item.title" class="mr-50">
-              {{ item.title }}
+              <router-link :to="item.url">{{ item.title }}</router-link>
             </li>
           </ul>
         </el-col>
@@ -16,8 +16,7 @@
           <the-search />
         </el-col>
         <el-col v-if="isAuth" :span="2">
-          <icon-template class="mr-8" name="favorite" width="32" height="32" />
-          <icon-template name="user" width="32" height="32" @click="handleClickLogout" />
+          <the-header-avatar />
         </el-col>
         <el-col v-else :span="2">
           <router-link class="the-header__login" to="/authorization/login"> Вход </router-link>
@@ -31,6 +30,7 @@
 import { headerItems } from '@/constants/header'
 import { ref } from 'vue'
 import { MovieType } from '@/types/movies.types'
+import TheHeaderAvatar from '@/components/layouts/TheHeader/TheHeaderProfile/TheHeaderProfile.vue'
 
 const movies = ref<MovieType[]>([
   {
@@ -43,13 +43,7 @@ const movies = ref<MovieType[]>([
 ])
 
 const isToken = localStorage.getItem('token')
-const isAuth = ref<boolean>(isToken ? true : false)
-
-const handleClickLogout = (): void => {
-  localStorage.clear()
-
-  location.reload()
-}
+const isAuth = ref<boolean>(!!isToken)
 </script>
 
 <style lang="scss" scoped>

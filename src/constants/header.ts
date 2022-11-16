@@ -17,4 +17,8 @@ export const headerItems: MenuItemType[] = [
     title: 'Топы',
     url: '/top',
   },
+  {
+    title: 'Cinemas',
+    url: '/cinemas',
+  },
 ]

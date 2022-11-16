@@ -9,14 +9,6 @@ class AuthorizationApi extends AxiosService {
     super(config)
   }
 
-  async userRegister(payload: RegistrationFormType) {
-    return this.axiosCall<SuccessResponseMessageType>({
-      method: 'post',
-      url: '/register',
-      data: { ...payload },
-    })
-  }
-
   async getToken(payload: LoginFormType) {
     return this.axiosCall<TokenResponseType>({
       method: 'post',
@@ -25,16 +17,22 @@ class AuthorizationApi extends AxiosService {
     })
   }
 
-  async loginUser(payload: LoginFormType) {
+  async loginUser() {
     return this.axiosCall<TokenResponseType>({
-      method: 'post',
+      method: 'get',
       url: '/login',
-      data: { ...payload },
+    })
+  }
+
+  async getSelf() {
+    return this.axiosCall({
+      method: 'get',
+      url: '/self',
     })
   }
 }
 
 export default new AuthorizationApi({
-  baseURL: '/api/v1/auth',
+  baseURL: '/api/v1/main/auth',
   withCredentials: false,
 })

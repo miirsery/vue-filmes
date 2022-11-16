@@ -25,7 +25,8 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-stylelint": "^3.0.7",
     "vue": "^3.2.38",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue-yandex-maps": "^0.12.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",

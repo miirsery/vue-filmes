@@ -14,11 +14,12 @@ interface IProps {
   value?: string | number
 }
 
-const props = defineProps<IProps>()
-
-const emit = defineEmits<{
+interface IEmits {
   (e: 'change', value: string | number): string | number
-}>()
+}
+
+const props = defineProps<IProps>()
+const emit = defineEmits<IEmits>()
 
 const handleValueChange = (inputValue: string | number): void => {
   emit('change', inputValue)

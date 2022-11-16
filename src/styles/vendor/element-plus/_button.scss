@@ -1,8 +1,17 @@
 @use '@/styles/resources/variables' as *;
+@import '@/styles/resources/mixins';
 
 .el-button {
   border: none !important;
   color: $color--white !important;
+
+  &:focus {
+    background: inherit;
+  }
+
+  &.is-disabled {
+    @include color('background-color', $color--bg, 1.5)
+  }
 
   &.the-registration__button {
     border-radius: 8px !important;
@@ -12,7 +21,34 @@
     padding: 10px 60px;
   }
 
+  &.the-header-profile__button {
+    background: none;
+    padding: 0;
+
+    &-logout {
+      background: $color--primary;
+    }
+  }
+
+  &.cinemas-movie__session-button {
+    border: 1px solid $color--border !important;
+    background: none !important;
+
+    &:hover {
+      @include color('background-color', $color--border, 10%, -0.9);
+    }
+  }
+
+  &.choose-place-item__button {
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      @include color('background-color', $color--border, 1.2)
+    }
+  }
+
   &--primary {
-    background-color: $color--accent !important;
+    background-color: $color--primary !important;
   }
 }
