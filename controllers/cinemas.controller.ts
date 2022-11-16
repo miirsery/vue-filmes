@@ -105,15 +105,20 @@ class HallsController {
         for (const movie of movies) {
           const movieIndex = newMovies.findIndex((item: any) => item.id === movie.id)
 
+          const currentSessions = newSessions.filter((item: any) => item.movie_id === movie.id)
+
           if (movieIndex === -1) {
-            newMovies.push(movie)
+            newMovies.push(
+              Object.assign(movie, {
+                sessions: currentSessions,
+              })
+            )
           }
         }
       }
 
       const result = Object.assign(cinema, {
         halls,
-        sessions: newSessions,
         movies: newMovies,
       })
 
