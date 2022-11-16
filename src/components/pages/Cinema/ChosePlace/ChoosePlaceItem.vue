@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="choose-place-item"
-    :class="[{ 'place-hidden': !props.seat.have }, !props.seat.available ? 'busy' : 'available']"
-  >
+  <div class="choose-place-item" :class="[isSelected && 'active', !props.seat.available ? 'busy' : 'available']">
     <el-popover placement="top" title="Title" :width="200" trigger="hover">
       <div v-if="!props.seat.available">Busy</div>
       <div>Seat {{ props.seat.seat }}</div>
@@ -14,8 +11,11 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue'
+
 interface IProps {
   seat: any
+  selectedPlaces: any
 }
 
 interface IEmits {
@@ -28,6 +28,8 @@ const emit = defineEmits<IEmits>()
 const handleSeatSelect = (seat: number): void => {
   emit('select-seat', seat)
 }
+
+const isSelected = computed(() => props.selectedPlaces.indexOf(props.seat.seat) !== -1)
 </script>
 
 <style lang="scss" scoped>
@@ -43,6 +45,10 @@ const handleSeatSelect = (seat: number): void => {
 
   &.available {
     background-color: $color--success;
+  }
+
+  &.active {
+    background: #d0b7e5;
   }
 }
 </style>

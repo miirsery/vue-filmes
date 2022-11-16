@@ -21,7 +21,7 @@
       <div class="buy-ticket__user-agreement">
         <a href="/pdf" target="_blank">User Agreement</a>
       </div>
-      <el-button class="buy-ticket__submit">Pay 350 Р</el-button>
+      <el-button class="buy-ticket__submit" @click="handleTicketBuy">Pay 350 Р</el-button>
     </div>
   </div>
 </template>
@@ -29,8 +29,22 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 
+interface IEmits {
+  (e: 'buy-ticket', data: any): void
+}
+
+const emit = defineEmits<IEmits>()
+
 const form = reactive<any>({})
 const activePaymentMethod = ref('QR')
+
+const handleTicketBuy = (): void => {
+  emit('buy-ticket', {
+    email: form.email,
+    phone: form.phone,
+    price: form.price,
+  })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -39,6 +53,12 @@ const activePaymentMethod = ref('QR')
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 </style>

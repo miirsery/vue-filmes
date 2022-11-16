@@ -62,7 +62,7 @@ const handleClickLogout = (): void => {
     border-radius: 8px;
     text-align: center;
     color: $color--white;
-    background-color: $color--accent;
+    background-color: $color--primary;
     padding: 10px 0;
   }
 }

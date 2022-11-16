@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     BuyTicket: typeof import('./src/components/pages/Cinema/BuyTicket/BuyTicket.vue')['default']
+    BuyTicketSuccess: typeof import('./src/components/pages/Cinema/BuyTicket/BuyTicketSuccess.vue')['default']
     ChoosePlaceDialog: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceDialog.vue')['default']
     ChoosePlaceItem: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceItem.vue')['default']
     CinemaCard: typeof import('./src/components/pages/Cinema/Cinema/CinemaCard.vue')['default']

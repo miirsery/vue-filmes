@@ -8,7 +8,7 @@
           <el-date-picker v-model="cinema.date" type="date" placeholder="Pick a day" />
         </div>
       </div>
-      <cinemas-movie v-for="movie in movies" :key="movie.id" :movie="movie" :cinema="cinema" :sessions="sessions" />
+      <cinemas-movie v-for="movie in movies" :key="movie.id" :movie="movie" :cinema="cinema" />
     </div>
   </div>
 </template>

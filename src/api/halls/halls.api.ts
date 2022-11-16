@@ -23,12 +23,13 @@ class HallsApi extends AxiosService {
     })
   }
 
-  async getSchema(hallId?: number) {
+  async getSchema(hallId?: number, sessionId?: number) {
     return this.axiosCall<any[]>({
       method: 'get',
       url: 'schema',
       params: {
         hall_id: hallId,
+        session_id: sessionId,
       },
     })
   }

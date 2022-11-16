@@ -5,6 +5,10 @@
   border: none !important;
   color: $color--white !important;
 
+  &:focus {
+    background: inherit;
+  }
+
   &.the-registration__button {
     border-radius: 8px !important;
     font-size: 16px;
@@ -18,7 +22,7 @@
     padding: 0;
 
     &-logout {
-      background: $color--accent;
+      background: $color--primary;
     }
   }
 
@@ -31,7 +35,16 @@
     }
   }
 
+  &.choose-place-item__button {
+    width: 40px;
+    height: 40px;
+
+    &:hover {
+      @include color('background-color', $color--border, 1.2)
+    }
+  }
+
   &--primary {
-    background-color: $color--accent !important;
+    background-color: $color--primary !important;
   }
 }

@@ -14,7 +14,7 @@
       </div>
       <div class="cinemas-movie__sessions d-flex">
         <div
-          v-for="session in props.sessions"
+          v-for="session in props.movie.sessions"
           :key="session.id"
           class="cinemas-movie__session d-flex fd-column ta-center"
         >
@@ -40,7 +40,6 @@ import { reactive, ref } from 'vue'
 
 interface IProps {
   movie: any
-  sessions: any
   cinema: any
 }
 
