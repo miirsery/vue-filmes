@@ -31,7 +31,7 @@
       email: user.email,
       login: user.login,
       birthdate: user.birthdate,
-      password: hashedPassword,
+      hashedPassword,
     })
   } catch (error: any) {
     console.log(error)

@@ -120,7 +120,6 @@ class HallsController {
 
   async getSchema(req: Request, res: Response) {
     try {
-      // TODO: Вывести схему в зависимости от сессии
       const { hall_id, cinema_id, session_id } = req.query
 
       if (hall_id && session_id) {

@@ -20,11 +20,11 @@ module.exports = {
       // eslint-disable-next-line max-len
       'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat GROUP BY y_position ORDER BY y_position;'
     ),
-  getSchemaById: async (hallId) =>
+  getSchemaById: async (hallId, sessionId) =>
     db.query(
       // eslint-disable-next-line max-len
-      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat WHERE hall_id=$1 GROUP BY y_position ORDER BY y_position;',
-      [hallId]
+      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat WHERE hall_id = $1 AND session_id = $2 GROUP BY y_position ORDER BY y_position;',
+      [hallId, sessionId]
     ),
   updateSchema: async (seat) => db.query('UPDATE hall_seat SET available = NOT available WHERE seat=$1', [seat]),
   createOne: async (hall) =>
