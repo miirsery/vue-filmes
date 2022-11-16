@@ -120,10 +120,10 @@ class HallsController {
 
   async getSchema(req: Request, res: Response) {
     try {
-      const { hall_id, cinema_id } = req.query
+      const { hall_id, cinema_id, session_id } = req.query
 
-      if (hall_id) {
-        const schema = await getSchemaById(hall_id).then((r: any) => r.rows)
+      if (hall_id && session_id) {
+        const schema = await getSchemaById(hall_id, session_id).then((r: any) => r.rows)
 
         return res.status(200).setHeader('Content-Type', 'application/json').json(schema)
       }

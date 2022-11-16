@@ -16,6 +16,7 @@ module.exports = {
   findOne: async (id: number) => db.query('SELECT * FROM movie WHERE id=$1', [id]),
   getOneByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
   findAll: async () => db.query('SELECT * FROM movie'),
+  getMovieBySession: async (sessionId: number) => db.query('SELECT * FROM movie WHERE id=$1', [sessionId]),
   updateOne: async (args: any) =>
     db.query('UPDATE movie SET title=$1, preview=$2 WHERE id=$3', [args.title, args.preview, args.id]),
   getMostPopularMovie: () =>

@@ -13,17 +13,18 @@ module.exports = {
         ' WHERE c.id = h.cinema_id'
     ),
   getOne: async (id) => db.query('SELECT * FROM hall WHERE id=$1', [id]),
-  getAllByCinemaId: async (cinemaId) => await db.query('SELECT title FROM hall WHERE cinema_id=$1', [cinemaId]),
+  getAllByCinemaId: async (cinemaId) =>
+    await db.query('SELECT id, title, cinema_id FROM hall WHERE cinema_id=$1', [cinemaId]),
   getSchema: async () =>
     db.query(
       // eslint-disable-next-line max-len
       'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat GROUP BY y_position ORDER BY y_position;'
     ),
-  getSchemaById: async (hallId) =>
+  getSchemaById: async (hallId, sessionId) =>
     db.query(
       // eslint-disable-next-line max-len
-      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat WHERE hall_id=$1 GROUP BY y_position ORDER BY y_position;',
-      [hallId]
+      'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat WHERE hall_id = $1 AND session_id = $2 GROUP BY y_position ORDER BY y_position;',
+      [hallId, sessionId]
     ),
   updateSchema: async (seat) => db.query('UPDATE hall_seat SET available = NOT available WHERE seat=$1', [seat]),
   createOne: async (hall) =>
