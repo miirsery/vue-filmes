@@ -104,7 +104,7 @@ class TicketsController {
 
       await addTicket(body)
 
-      await updateSchema(body.seat, body.session_id)
+      await updateSchema(body.seat, body.session_id, body.user_id)
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({
         message: 'Успешно',

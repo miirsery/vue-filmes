@@ -8,6 +8,7 @@ module.exports = {
         ' FROM ticket t, session s, movie m, person p' +
         ' WHERE s.movie_id = m.id AND p.id = t.user_id;'
     ),
+  getAllByUserId: async (userId) => await db.query('SELECT * FROM ticket WHERE user_id = $1', [userId]),
   getAllPagination: (filter) =>
     db.query('SELECT * FROM ticket ORDER BY id LIMIT=$1 OFFSET=$2', [filter.limit, filter.offset]),
   getFilteredTickets: async (userId) => db.query('SELECT * FROM ticket WHERE user_id=$1', [userId]),

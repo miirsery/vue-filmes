@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS session
     id              SERIAL PRIMARY KEY NOT NULL,
     date            DATE NOT NULL,
     time            TIME,
+    price           INT NOT NULL DEFAULT 0,
     hall_id         SERIAL,
     movie_id        SERIAL,
 
@@ -106,9 +107,11 @@ CREATE TABLE IF NOT EXISTS hall_seat
     have                BOOLEAN,
     hall_id             INT,
     session_id          INT,
+    user_id             INT,
 
     CONSTRAINT          fk_hall  FOREIGN KEY(hall_id) REFERENCES hall(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT          fk_session  FOREIGN KEY(session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT          fk_session  FOREIGN KEY(session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT          fk_user_id FOREIGN KEY(user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ticket
