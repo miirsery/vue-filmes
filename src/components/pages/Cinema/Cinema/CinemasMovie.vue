@@ -18,10 +18,10 @@
           :key="session.id"
           class="cinemas-movie__session d-flex fd-column ta-center"
         >
-          <el-button class="cinemas-movie__session-button" type="primary" @click="setCurrentSession(session.id)">
+          <el-button class="cinemas-movie__session-button" type="primary" @click="setCurrentSession(session)">
             {{ session.time }}
           </el-button>
-          <div class="cinemas-movie__session-price">350 Р</div>
+          <div class="cinemas-movie__session-price">{{ session.price }} Р</div>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <choose-place-dialog
       :visible="isChoosePlaceVisible"
       :cinema="props.cinema"
-      :session-id="currentSession"
+      :session="currentSession"
       @close-dialog="handleChoosePlaceVisibleChange"
     />
   </div>
@@ -53,8 +53,8 @@ const form = reactive<any>({
   movie_id: props.movie.id,
 })
 
-const setCurrentSession = (sessionId: any): void => {
-  currentSession.value = sessionId
+const setCurrentSession = (session: any): void => {
+  currentSession.value = session
 
   handleChoosePlaceVisibleChange()
 }

@@ -5,7 +5,7 @@
       <el-button class="the-header-profile__button"> <icon-template name="user" width="32" height="32" /> </el-button>
       <template #content>
         <div class="the-header-profile__content">
-          <div class="the-header-profile__name">Name</div>
+          <div class="the-header-profile__name">{{ useUser.user.name }}</div>
           <el-divider />
           <el-button class="the-header-profile__button-logout" @click="handleClickLogout">Выйти</el-button>
         </div>
@@ -15,6 +15,10 @@
 </template>
 
 <script lang="ts" setup>
+import { useUserStore } from '@/stores/user.store'
+
+const useUser = useUserStore()
+
 const handleClickLogout = (): void => {
   localStorage.clear()
 

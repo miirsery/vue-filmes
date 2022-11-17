@@ -111,7 +111,7 @@ import { useUserStore } from '@/stores/user.store'
 interface IProps {
   visible: boolean
   cinema: any
-  sessionId: any
+  session: any
 }
 
 interface IEmits {
@@ -136,11 +136,11 @@ let lastSeat: any | null = null
 
 const cinemasOptions = computed(() => [{ label: props.cinema.title, value: props.cinema.id }])
 const user = computed(() => useUser.user)
-const currentSessionId = computed(() => props.sessionId)
+const currentSession = computed(() => props.session)
 
 const chosePlaceForm = reactive<any>({
   hallId: '',
-  price: 250,
+  price: 0,
   user,
 })
 const schema = ref<any[]>([])
@@ -214,7 +214,7 @@ const setHallsOptions = (hallsData: any): void => {
 }
 
 const getSchema = async (): Promise<void> => {
-  const [error, data] = await hallsApi.getSchema(+chosePlaceForm.hallId, +currentSessionId.value)
+  const [error, data] = await hallsApi.getSchema(+chosePlaceForm.hallId, +currentSession.value.id)
 
   if (!error && data) {
     schema.value = data
@@ -237,9 +237,9 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
       {
         user_id: chosePlaceForm.user.id,
         seat: chosePlaceForm.seat,
-        price: chosePlaceForm.price,
+        price: currentSession.value.price,
         hall_id: chosePlaceForm.hallId,
-        session_id: currentSessionId.value,
+        session_id: currentSession.value.id,
         seller_id: 1,
       },
       paymentData
@@ -248,6 +248,10 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
 
   if (!error && data) {
     await getSchema()
+
+    handleBuyTicketShowChange()
+
+    selectedPlaces.value = []
   }
 }
 </script>

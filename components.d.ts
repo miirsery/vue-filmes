@@ -45,6 +45,7 @@ declare module '@vue/runtime-core' {
     TheSearchDropdown: typeof import('./src/components/layouts/TheHeader/TheSearchDropdown/TheSearchDropdown.vue')['default']
     TheSearchDropdownItem: typeof import('./src/components/layouts/TheHeader/TheSearchDropdown/TheSearchDropdownItem.vue')['default']
     TicketResult: typeof import('./src/components/Ticket/TicketResult.vue')['default']
+    UserTickets: typeof import('./src/components/pages/User/UserTickets.vue')['default']
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
   export interface ComponentCustomProperties {
