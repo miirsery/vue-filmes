@@ -1,5 +1,8 @@
 <template>
-  <div class="choose-place-item" :class="[isSelected && 'active', !props.seat.available ? 'busy' : 'available']">
+  <div
+    class="choose-place-item"
+    :class="[isAnotherPerson && 'busy-another', isSelected && 'active', !props.seat.available ? 'busy' : 'available']"
+  >
     <el-popover placement="top" title="Title" :width="200" trigger="hover">
       <div v-if="!props.seat.available">Busy</div>
       <div>Seat {{ props.seat.seat }}</div>
@@ -12,6 +15,7 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
+import { useUserStore } from '@/stores/user.store'
 
 interface IProps {
   seat: any
@@ -24,12 +28,16 @@ interface IEmits {
 
 const props = defineProps<IProps>()
 const emit = defineEmits<IEmits>()
+const useUser = useUserStore()
+
+const user = computed(() => useUser.user)
 
 const handleSeatSelect = (seat: number): void => {
   emit('select-seat', seat)
 }
 
 const isSelected = computed(() => props.selectedPlaces.indexOf(props.seat.seat) !== -1)
+const isAnotherPerson = computed(() => props.seat.user_id !== null && props.seat.user_id !== user.value.id)
 </script>
 
 <style lang="scss" scoped>
@@ -45,6 +53,11 @@ const isSelected = computed(() => props.selectedPlaces.indexOf(props.seat.seat) 
 
   &.available {
     background-color: $color--success;
+  }
+
+  &.busy-another {
+    background-color: $color--bg;
+    pointer-events: none;
   }
 
   &.active {
