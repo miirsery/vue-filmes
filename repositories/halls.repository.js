@@ -26,8 +26,12 @@ module.exports = {
       'SELECT y_position AS row, array_agg(row_to_json(hall_seat) ORDER BY x_position) AS seats FROM hall_seat WHERE hall_id = $1 AND session_id = $2 GROUP BY y_position ORDER BY y_position;',
       [hallId, sessionId]
     ),
-  updateSchema: async (seat, sessionId) =>
-    db.query('UPDATE hall_seat SET available = NOT available WHERE seat=$1 AND session_id=$2', [seat, sessionId]),
+  updateSchema: async (seat, sessionId, userId) =>
+    db.query('UPDATE hall_seat SET available = NOT available, user_id=$1 WHERE seat=$2 AND session_id=$3', [
+      userId,
+      seat,
+      sessionId,
+    ]),
   createOne: async (hall) =>
     await db.query('INSERT INTO hall (title, cinema_id) VALUES ($1, $2) RETURNING *', [hall.title, hall.cinema_id]),
   createSchema: async (data) =>

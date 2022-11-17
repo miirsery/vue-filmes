@@ -57,11 +57,7 @@ app.use(
   (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
   sessionsRouter
 )
-app.use(
-  '/api/v1/tickets',
-  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
-  ticketsRouter
-)
+app.use('/api/v1/tickets', ticketsRouter)
 app.use(
   '/api/v1/employees',
   (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['admin']),
