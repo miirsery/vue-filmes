@@ -1,10 +1,11 @@
 <template>
   <div class="buy-ticket">
     <div class="buy-ticket__header">
-      <div>back</div>
-      <div>Close</div>
+      <el-button class="arrow-button" type="button" @click="handleBuyTicketResultClose">
+        <icon-template name="left-arrow" width="14px" height="14px" />
+      </el-button>
     </div>
-    <div class="buy-ticket__content d-flex">
+    <div class="buy-ticket__content d-flex jc-between">
       <ticket-result />
       <div>
         <div>
@@ -28,9 +29,12 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
+import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
+import IconTemplate from '@/components/common/IconTemplate.vue'
 
 interface IEmits {
   (e: 'buy-ticket', data: any): void
+  (e: 'close-buy-ticket'): void
 }
 
 const emit = defineEmits<IEmits>()
@@ -44,6 +48,10 @@ const handleTicketBuy = (): void => {
     phone: form.phone,
     price: form.price,
   })
+}
+
+const handleBuyTicketResultClose = (): void => {
+  emit('close-buy-ticket')
 }
 </script>
 

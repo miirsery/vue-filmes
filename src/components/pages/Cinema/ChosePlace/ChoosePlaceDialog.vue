@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Choose place" :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
+  <el-dialog :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
     <div v-if="!isBuyTicketShow">
       <div class="d-flex ai-center jc-between">
         <div class="d-flex fd-column ai-center mb-16">
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <buy-ticket v-else @buy-ticket="handleTicketCreate" />
+    <buy-ticket v-else @buy-ticket="handleTicketCreate" @close-buy-ticket="handleBuyTicketShowChange" />
   </el-dialog>
 </template>
 
@@ -148,7 +148,7 @@ const schema = ref<any[]>([])
 const selectedPlaces = ref<any>([])
 const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
-const isBuyTicketShow = ref(false)
+const isBuyTicketShow = ref(true) // TODO: поменять на false
 
 const isNextStepButtonDisabled = computed(() => !selectedPlaces.value.length)
 

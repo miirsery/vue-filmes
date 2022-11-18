@@ -25,8 +25,13 @@ const cinema = reactive<any>({
   date: '',
 })
 
-const movies = ref<any>([])
-
+// const movies = ref<any>([])
+const movies = [
+  {
+    id: 1,
+    title: 'Title',
+  },
+]
 const sessions = ref<any>([])
 
 onMounted(async () => {
