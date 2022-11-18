@@ -1,8 +1,8 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
-import { SuccessResponseMessageType } from '@/types/common.types'
-import { RegistrationFormType } from '@/pages/TheAuthorization/TheRegistration/theRegistration.types'
 import { LoginFormType, TokenResponseType } from '@/pages/TheAuthorization/TheLogin/theLogin.types'
+import { SuccessResponseMessageType } from '@/types/common.types'
+import { UserSelfType } from '@/types/user.types'
 
 class AuthorizationApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -18,14 +18,14 @@ class AuthorizationApi extends AxiosService {
   }
 
   async loginUser() {
-    return this.axiosCall<TokenResponseType>({
+    return this.axiosCall<SuccessResponseMessageType>({
       method: 'get',
       url: '/login',
     })
   }
 
   async getSelf() {
-    return this.axiosCall({
+    return this.axiosCall<UserSelfType>({
       method: 'get',
       url: '/self',
     })
