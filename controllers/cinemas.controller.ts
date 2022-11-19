@@ -68,6 +68,7 @@ class HallsController {
   async getCinema(req: Request, res: Response) {
     try {
       const { id } = req.params
+      const { date } = req.query
 
       const cinema = await getOne(id).then((r: any) => r.rows[0])
       const halls: any = await getAllByCinemaId(cinema.id).then((r: any) => r.rows)
@@ -76,7 +77,7 @@ class HallsController {
       const newMovies: any = []
 
       for (const hall of halls) {
-        const sessions = await getAllByHallId(hall.id).then((r: any) => r.rows)
+        const sessions = await getAllByHallId(hall.id, date).then((r: any) => r.rows)
 
         if (!sessions.length) {
           continue
@@ -85,11 +86,19 @@ class HallsController {
         for (const session of sessions) {
           const sessionTime = moment(session.time, 'HH:mm:ss').format('hh:mm')
           const sessionDate = moment(session.date).format('DD-MM-YYYY')
+          const currentDate = moment(new Date()).format('DD-MM-YYYY')
+          const currentTime = moment(new Date()).format('hh:mm')
 
           delete session.time
           delete session.date
 
-          newSessions.push(Object.assign(session, { time: sessionTime, date: sessionDate }))
+          newSessions.push(
+            Object.assign(session, {
+              time: sessionTime,
+              date: sessionDate,
+              active: currentDate + currentTime <= sessionDate + sessionTime,
+            })
+          )
         }
       }
 
