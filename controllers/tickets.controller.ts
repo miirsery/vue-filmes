@@ -12,8 +12,11 @@ const {
   getTotal,
 } = require('../repositories/tickets.repository.js')
 
-const { removeSeat } = require('../repositories/halls.repository.js')
+const { transporter } = require('../utils/mailer.js')
+
 const { updateSchema } = require('../repositories/halls.repository.js')
+
+const { renderHtml } = require('../utils/makeHtml')
 
 const getAllTickets = (response: any): Promise<any> => {
   return response.rows.map((ticket: any) => {
@@ -105,6 +108,14 @@ class TicketsController {
       await addTicket(body)
 
       await updateSchema(body.seat, body.session_id, body.user_id)
+
+      await transporter.sendMail({
+        from: 'nikiforov.byrip@yandex.ru',
+        to: 'sania.nika@mail.ru',
+        subject: 'Message from Node js',
+        text: 'This message was sent from Node js server.',
+        html: renderHtml(body.email),
+      })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({
         message: 'Успешно',

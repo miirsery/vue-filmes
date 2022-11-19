@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS person
     role              TEXT NOT NULL DEFAULT 'user',
     email             TEXT UNIQUE NOT NULL,
     login             TEXT UNIQUE NOT NULL,
-    register_date     TIMESTAMP NOT NULL default now(),
+    register_date     TIMESTAMP NOT NULL DEFAULT NOW(),
     birthdate         DATE,
     discount          INT DEFAULT 0 CHECK ( discount >= 0 ),
     phone             TEXT,
@@ -26,7 +26,8 @@ CREATE TABLE IF NOT EXISTS cinema
     lng             FLOAT(6),
     lat             FLOAT(6),
     description     TEXT,
-    phone           TEXT
+    phone           TEXT,
+    preview         TEXT
 );
 
 CREATE TABLE IF NOT EXISTS cinema_image
@@ -65,7 +66,7 @@ CREATE TABLE IF NOT EXISTS employee
     position		TEXT NOT NULL DEFAULT 'cashier',
     email           TEXT UNIQUE NOT NULL,
     login           TEXT UNIQUE NOT NULL,
-    register_date   TIMESTAMP NOT NULL default now(),
+    register_date   TIMESTAMP NOT NULL DEFAULT NOW(),
     birthdate	    DATE,
     phone           TEXT,
     cinema_id		SERIAL,
@@ -104,7 +105,6 @@ CREATE TABLE IF NOT EXISTS hall_seat
     x_position          INT,
     y_position          INT,
     available           BOOLEAN,
-    have                BOOLEAN,
     hall_id             INT,
     session_id          INT,
     user_id             INT,

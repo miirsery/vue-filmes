@@ -16,12 +16,8 @@ module.exports = {
   findOne: async (id: number) => db.query('SELECT * FROM movie WHERE id=$1', [id]),
   getOneByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
   findAll: async () => db.query('SELECT * FROM movie'),
-  // getMovieByTicket: async (sessionId: any) =>
-  //   db.query(
-  //     'SELECT movie.id as movie_id, movie.title as movie_title, movie.studio as movie_studio FROM ticket LEFT JOIN session ON ticket.session_id = $1 LEFT JOIN movie ON movie.id = session.movie_id WHERE movie.id = session.movie_id',
-  //     [sessionId]
-  //   ),
-  getMovieByTicket: async (sessionId: any) => db.query('SELECT movie.id as movie_id, movie.title as movie_title, movie.studio as movie_studio FROM movie, session WHERE session.id = $1 AND movie.id = session.movie_id', [sessionId]),
+  getMovieByTicket: async (sessionId: any) =>
+    db.query('SELECT * FROM movie, session WHERE session.id = $1 AND movie.id = session.movie_id', [sessionId]),
   getMovieBySession: async (sessionId: number) => db.query('SELECT * FROM movie WHERE id=$1', [sessionId]),
   updateOne: async (args: any) =>
     db.query('UPDATE movie SET title=$1, preview=$2 WHERE id=$3', [args.title, args.preview, args.id]),
