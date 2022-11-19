@@ -25,9 +25,9 @@
         </div>
       </div>
     </div>
-    <!-- TODO:  поменять на :visible="isChoosePlaceVisible"-->
+
     <choose-place-dialog
-      :visible="true"
+      :visible="isChoosePlaceVisible"
       :cinema="props.cinema"
       :session="currentSession"
       @close-dialog="handleChoosePlaceVisibleChange"

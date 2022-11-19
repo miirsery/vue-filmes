@@ -36,6 +36,11 @@ const router = createRouter({
           name: 'CinemaPage',
           component: () => import('@/pages/Cinema/CinemaPage.vue'),
         },
+        {
+          path: '/profile',
+          name: 'UserPage',
+          component: () => import('@/pages/User/UserPage.vue'),
+        },
       ],
     },
     {

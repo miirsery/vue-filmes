@@ -148,7 +148,7 @@ const schema = ref<any[]>([])
 const selectedPlaces = ref<any>([])
 const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
-const isBuyTicketShow = ref(true) // TODO: поменять на false
+const isBuyTicketShow = ref(false)
 
 const isNextStepButtonDisabled = computed(() => !selectedPlaces.value.length)
 
@@ -205,12 +205,10 @@ const calculateEmptyRowsCount = (data: any, index: number): any => {
 }
 
 const setHallsOptions = (hallsData: any): void => {
-  hallsData.forEach((hall: any) => {
-    hallsOptions.value.push({
-      label: `hall: ${hall.title}`,
-      value: hall.id,
-    })
-  })
+  hallsOptions.value = hallsData.map((hall: any) => ({
+    label: `hall: ${hall.title}`,
+    value: hall.id,
+  }))
 }
 
 const getSchema = async (): Promise<void> => {

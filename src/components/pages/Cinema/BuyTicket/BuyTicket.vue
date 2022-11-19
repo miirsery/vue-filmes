@@ -31,6 +31,7 @@
 import { reactive, ref } from 'vue'
 import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
 import IconTemplate from '@/components/common/IconTemplate.vue'
+import { useUserStore } from '@/stores/user.store'
 
 interface IEmits {
   (e: 'buy-ticket', data: any): void
@@ -39,7 +40,11 @@ interface IEmits {
 
 const emit = defineEmits<IEmits>()
 
-const form = reactive<any>({})
+const useUser = useUserStore()
+
+const form = reactive<any>({
+  email: useUser.user.email,
+})
 const activePaymentMethod = ref('QR')
 
 const handleTicketBuy = (): void => {

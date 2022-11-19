@@ -57,7 +57,6 @@
 
   &__age {
     &.nc-17 {
-      //@include color('background-color', $color--warning, -1);
       background-color: #9a2020;
       padding: 4px;
     }
