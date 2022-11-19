@@ -6,6 +6,9 @@
       <template #content>
         <div class="the-header-profile__content">
           <div class="the-header-profile__name">{{ useUser.user.name }}</div>
+          <div>
+            <router-link to="/profile">Profile</router-link>
+          </div>
           <el-divider />
           <el-button class="the-header-profile__button-logout" @click="handleClickLogout">Выйти</el-button>
         </div>
@@ -25,3 +28,11 @@ const handleClickLogout = (): void => {
   location.reload()
 }
 </script>
+
+<style lang="scss" scoped>
+.the-header-profile {
+  &__name {
+    color: $color--white;
+  }
+}
+</style>

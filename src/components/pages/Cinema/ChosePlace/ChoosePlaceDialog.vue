@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Choose place" :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
+  <el-dialog :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
     <div v-if="!isBuyTicketShow">
       <div class="d-flex ai-center jc-between">
         <div class="d-flex fd-column ai-center mb-16">
@@ -98,7 +98,7 @@
       </div>
     </div>
 
-    <buy-ticket v-else @buy-ticket="handleTicketCreate" />
+    <buy-ticket v-else @buy-ticket="handleTicketCreate" @close-buy-ticket="handleBuyTicketShowChange" />
   </el-dialog>
 </template>
 
@@ -205,12 +205,10 @@ const calculateEmptyRowsCount = (data: any, index: number): any => {
 }
 
 const setHallsOptions = (hallsData: any): void => {
-  hallsData.forEach((hall: any) => {
-    hallsOptions.value.push({
-      label: `hall: ${hall.title}`,
-      value: hall.id,
-    })
-  })
+  hallsOptions.value = hallsData.map((hall: any) => ({
+    label: `hall: ${hall.title}`,
+    value: hall.id,
+  }))
 }
 
 const getSchema = async (): Promise<void> => {

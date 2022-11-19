@@ -13,10 +13,15 @@ class CinemasApi extends AxiosService {
     })
   }
 
-  async getCinema(id: string) {
+  async getCinema(payload?: any) {
+    const params = {
+      date: payload.date,
+    }
+
     return this.axiosCall<any>({
       method: 'get',
-      url: `/${id}`,
+      url: `/${payload.id}`,
+      params,
     })
   }
 
