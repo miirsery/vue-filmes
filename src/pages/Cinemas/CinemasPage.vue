@@ -1,7 +1,9 @@
 <template>
   <div class="cinemas-page">
     <h1>Cinemas</h1>
-    <div class="cinemas-page__map"> This is map :) </div>
+    <div class="cinemas-page__map">
+      <cinemas-map :cinemas="cinemas" />
+    </div>
     <div class="cinemas-page__content">
       <cinema-card v-for="cinema in cinemas" :key="cinema.id" :cinema="cinema" />
     </div>

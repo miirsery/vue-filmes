@@ -13,7 +13,7 @@ declare module '@vue/runtime-core' {
     ChoosePlaceDialog: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceDialog.vue')['default']
     ChoosePlaceItem: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceItem.vue')['default']
     CinemaCard: typeof import('./src/components/pages/Cinema/Cinema/CinemaCard.vue')['default']
-    CinemasMap: typeof import('./src/components/pages/Cinemas/CinemasMap.vue')['default']
+    CinemasMap: typeof import('./src/components/Cinemas/CinemasMap/CinemasMap.vue')['default']
     CinemasMovie: typeof import('./src/components/pages/Cinema/Cinema/CinemasMovie.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
