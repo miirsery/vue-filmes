@@ -21,7 +21,7 @@
         <el-form-item prop="email">
           <input-common v-model="registrationForm.password" class="mb-16" placeholder="Пароль" />
         </el-form-item>
-        <el-button class="the-registration__button" type="primary" @click="handleAccountCreate">
+        <el-button type="primary" class="the-registration__button" @click="handleAccountCreate">
           Создать аккаунт
         </el-button>
       </el-form>

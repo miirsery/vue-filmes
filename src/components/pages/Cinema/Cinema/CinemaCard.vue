@@ -2,14 +2,19 @@
   <div class="cinema-card">
     <div class="d-flex mb-16">
       <div class="cinema-card__image">
-        <img :src="props.cinema.image" alt="image" />
+        <img :src="props.cinema.preview" alt="image" />
       </div>
       <div class="cinema-card__info">
-        <div>ID: №{{ props.cinema.id }}</div>
-        <div class="cinema-card__title"> {{ props.cinema.title }} </div>
+        <div>
+          <div class="cinema-card__title"> {{ props.cinema.title }} </div>
+          <div class="cinema-card__phone mb-16"> {{ props.cinema.phone }} </div>
+          <div class="cinema-card__description"> {{ props.cinema.description }} </div>
+          <div class="cinema-card__age"> {{ props.cinema.description }} </div>
+          <age-restriction :age-restriction="props.cinema.age_restriction" />
+        </div>
+        <router-link class="cinema-card__link link" :to="`/cinemas/${props.cinema.id}`">Check</router-link>
       </div>
     </div>
-    <router-link class="cinema-card__link link" :to="`/cinemas/${props.cinema.id}`">Check</router-link>
   </div>
 </template>
 
@@ -31,14 +36,36 @@ const props = defineProps<IProps>()
   }
 
   &__image {
-    width: 100px;
-    height: 100px;
+    width: 250px;
+    height: 250px;
     margin-right: 16px;
 
     img {
       height: 100%;
       object-fit: cover;
     }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__link {
+    max-width: 140px;
+    border: none;
+    border-bottom: 1px solid $color--border;
+    border-radius: 0;
+    text-align: center;
+
+    &:hover {
+      border-bottom: 1px solid #f4f4f4;
+    }
+  }
+
+  &__description {
+    font-size: $size--12;
   }
 
   &:not(:last-child) {

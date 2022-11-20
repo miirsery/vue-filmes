@@ -17,4 +17,8 @@ export const footerItems: MenuItemType[] = [
     title: 'Топы',
     url: '/top',
   },
+  {
+    title: 'Cinemas',
+    url: '/cinemas',
+  },
 ]

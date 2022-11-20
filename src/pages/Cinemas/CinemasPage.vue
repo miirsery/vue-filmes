@@ -14,19 +14,6 @@ import cinemasApi from '@/api/cinemas/cinemas.api'
 
 const cinemas = ref<any>([])
 
-// const cinemas = [
-//   {
-//     id: 1,
-//     image: 'https://wallpapersmug.com/download/1024x768/955152/dark-anime-girl-ruby-rose.jpg',
-//     title: 'Cinema title',
-//   },
-//   {
-//     id: 2,
-//     image: 'https://wallpapersmug.com/download/1024x768/955152/dark-anime-girl-ruby-rose.jp',
-//     title: 'Cinema title #2',
-//   },
-// ]
-
 onMounted(async () => {
   await getCinemas()
 })

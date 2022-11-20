@@ -46,6 +46,10 @@
     &:hover {
       @include color('background-color', $color--border, 10%, 1)
     }
+
+    &.el-button--primary {
+      background-color: inherit !important;
+    }
   }
 
   &--primary {

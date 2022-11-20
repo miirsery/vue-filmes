@@ -7,7 +7,7 @@
       <div v-if="!props.seat.available">Busy</div>
       <div>Seat {{ props.seat.seat }}</div>
       <template #reference>
-        <el-button class="choose-place-item__button" @click="handleSeatSelect(props.seat.seat)" />
+        <el-button type="primary" class="choose-place-item__button" @click="handleSeatSelect(props.seat)" />
       </template>
     </el-popover>
   </div>
@@ -32,11 +32,11 @@ const useUser = useUserStore()
 
 const user = computed(() => useUser.user)
 
-const handleSeatSelect = (seat: number): void => {
+const handleSeatSelect = (seat: any): void => {
   emit('select-seat', seat)
 }
 
-const isSelected = computed(() => props.selectedPlaces.indexOf(props.seat.seat) !== -1)
+const isSelected = computed(() => props.selectedPlaces.map((place: any) => place.seat).indexOf(props.seat.seat) !== -1)
 const isAnotherPerson = computed(() => props.seat.user_id !== null && props.seat.user_id !== user.value.id)
 </script>
 
@@ -48,20 +48,20 @@ const isAnotherPerson = computed(() => props.seat.user_id !== null && props.seat
   margin: 4px;
 
   &.busy {
-    background-color: $color--warning;
+    background-color: $color--warning !important;
   }
 
   &.available {
-    background-color: $color--success;
+    background-color: $color--success !important;
   }
 
   &.busy-another {
-    background-color: $color--bg;
+    background-color: $color--bg !important;
     pointer-events: none;
   }
 
   &.active {
-    background: #d0b7e5;
+    background: #d0b7e5 !important;
   }
 }
 </style>

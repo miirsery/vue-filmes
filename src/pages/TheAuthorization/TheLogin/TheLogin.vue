@@ -9,7 +9,7 @@
         <el-form-item prop="email">
           <input-common v-model="loginForm.password" class="mb-16" placeholder="Пароль" />
         </el-form-item>
-        <el-button class="the-login__button" type="primary" @click="handleTokenGet"> Войти </el-button>
+        <el-button type="primary" class="the-login__button" @click="handleTokenGet"> Войти </el-button>
       </el-form>
     </div>
   </div>
