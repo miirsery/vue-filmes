@@ -1,5 +1,6 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
+import { SuccessResponseMessageType } from '@/types/common.types'
 
 class TicketsApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -17,6 +18,14 @@ class TicketsApi extends AxiosService {
   async createTicket(data: any) {
     return this.axiosCall<any>({
       method: 'post',
+      url: '',
+      data,
+    })
+  }
+
+  async deleteTickets(data: any) {
+    return this.axiosCall<SuccessResponseMessageType>({
+      method: 'delete',
       url: '',
       data,
     })

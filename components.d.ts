@@ -7,6 +7,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AgeRestriction: typeof import('./src/components/common/AgeRestriction/AgeRestriction.vue')['default']
     BuyTicket: typeof import('./src/components/pages/Cinema/BuyTicket/BuyTicket.vue')['default']
     BuyTicketSuccess: typeof import('./src/components/pages/Cinema/BuyTicket/BuyTicketSuccess.vue')['default']
     ChoosePlaceDialog: typeof import('./src/components/pages/Cinema/ChosePlace/ChoosePlaceDialog.vue')['default']
@@ -35,9 +36,9 @@ declare module '@vue/runtime-core' {
     LatestMovies: typeof import('./src/components/home/LatestMovies/LatestMovies.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheFooter: typeof import('./src/components/common/TheFooter.vue')['default']
-    TheFooterFeedbackModal: typeof import('./src/components/layouts/TheFooter/TheFooterFeedbackModal.vue')['default']
-    TheFooterModal: typeof import('./src/components/layouts/TheFooter/TheFooterModal.vue')['default']
+    TheFooter: typeof import('./src/components/layouts/DefaultLayout/TheFooter/TheFooter.vue')['default']
+    TheFooterFeedbackModal: typeof import('./src/components/layouts/DefaultLayout/TheFooter/TheFooterFeedbackModal.vue')['default']
+    TheFooterModal: typeof import('./src/components/layouts/DefaultLayout/TheFooter/TheFooterModal.vue')['default']
     TheHeader: typeof import('./src/components/layouts/TheHeader/TheHeader.vue')['default']
     TheHeaderAvatar: typeof import('./src/components/layouts/TheHeader/TheHeaderProfile/TheHeaderAvatar.vue')['default']
     TheHeaderProfile: typeof import('./src/components/layouts/TheHeader/TheHeaderProfile/TheHeaderProfile.vue')['default']

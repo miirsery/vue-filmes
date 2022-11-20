@@ -1,12 +1,7 @@
 <template>
   <div class="buy-ticket">
-    <div class="buy-ticket__header">
-      <el-button class="arrow-button" type="button" @click="handleBuyTicketResultClose">
-        <icon-template name="left-arrow" width="14px" height="14px" />
-      </el-button>
-    </div>
     <div class="buy-ticket__content d-flex jc-between">
-      <ticket-result />
+      <ticket-result :movie="props.movie" :session="props.session" :seats="props.seats" />
       <div>
         <div>
           <input-common v-model="form.email" placeholder="Enter a email" />
@@ -22,41 +17,59 @@
       <div class="buy-ticket__user-agreement">
         <a href="/pdf" target="_blank">User Agreement</a>
       </div>
-      <el-button class="buy-ticket__submit" @click="handleTicketBuy">Pay 350 Р</el-button>
+      <el-button type="primary" class="buy-ticket__submit" @click="handleTicketBuy">
+        Pay {{ calculateResultPrice }} Р
+      </el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import InputCommon from '@/components/common/InputCommon/InputCommon.vue'
-import IconTemplate from '@/components/common/IconTemplate.vue'
 import { useUserStore } from '@/stores/user.store'
+
+interface IProps {
+  movie: any
+  seats: any
+  session: any
+}
 
 interface IEmits {
   (e: 'buy-ticket', data: any): void
-  (e: 'close-buy-ticket'): void
 }
 
 const emit = defineEmits<IEmits>()
+const props = defineProps<IProps>()
 
 const useUser = useUserStore()
 
 const form = reactive<any>({
   email: useUser.user.email,
 })
+
 const activePaymentMethod = ref('QR')
+
+const calculateResultPrice = computed(() => {
+  const currentSession = JSON.parse(JSON.stringify(props.session))
+  const currentSessionPrice = currentSession.price
+
+  props.seats.forEach((_: any, index: number) => {
+    if (!index) {
+      return
+    }
+
+    currentSession.price += currentSessionPrice
+  })
+
+  return currentSession.price
+})
 
 const handleTicketBuy = (): void => {
   emit('buy-ticket', {
     email: form.email,
     phone: form.phone,
-    price: form.price,
   })
-}
-
-const handleBuyTicketResultClose = (): void => {
-  emit('close-buy-ticket')
 }
 </script>
 

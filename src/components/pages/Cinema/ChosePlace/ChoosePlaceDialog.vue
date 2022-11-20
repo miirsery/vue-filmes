@@ -1,5 +1,10 @@
 <template>
   <el-dialog :model-value="props.visible" :before-close="handleCloseDialog" class="choose-place">
+    <template v-if="isBuyTicketShow" #header>
+      <el-button type="primary" class="arrow-button" @click="handleBuyTicketShowChange">
+        <icon-template name="left-arrow" width="14px" height="14px" />
+      </el-button>
+    </template>
     <div v-if="!isBuyTicketShow">
       <div class="d-flex ai-center jc-between">
         <div class="d-flex fd-column ai-center mb-16">
@@ -14,7 +19,15 @@
             <el-option v-for="item in hallsOptions" :key="item.value" :label="item.label" :value="item.value" />
           </el-select>
         </div>
-        <el-button type="primary" :disabled="isNextStepButtonDisabled" @click="handleBuyTicketShowChange">
+        <el-button
+          v-if="isDeleteButtonVisible && selectedPlaces.length"
+          type="primary"
+          :disabled="isNextStepButtonDisabled"
+          @click="handleTicketDelete"
+        >
+          Delete
+        </el-button>
+        <el-button v-else type="primary" :disabled="isNextStepButtonDisabled" @click="handleBuyTicketShowChange">
           Next
         </el-button>
       </div>
@@ -98,20 +111,28 @@
       </div>
     </div>
 
-    <buy-ticket v-else @buy-ticket="handleTicketCreate" @close-buy-ticket="handleBuyTicketShowChange" />
+    <buy-ticket
+      v-else
+      :movie="props.movie"
+      :session="props.session"
+      :seats="selectedPlaces"
+      @buy-ticket="handleTicketCreate"
+    />
   </el-dialog>
 </template>
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
+import { useUserStore } from '@/stores/user.store'
+
 import hallsApi from '@/api/halls/halls.api'
 import ticketsApi from '@/api/tickets/tickets.api'
-import { useUserStore } from '@/stores/user.store'
 
 interface IProps {
   visible: boolean
   cinema: any
   session: any
+  movie: any
 }
 
 interface IEmits {
@@ -137,6 +158,7 @@ let lastSeat: any | null = null
 const cinemasOptions = computed(() => [{ label: props.cinema.title, value: props.cinema.id }])
 const user = computed(() => useUser.user)
 const currentSession = computed(() => props.session)
+const isDeleteButtonVisible = computed(() => selectedPlaces.value.every((place: any) => !place.available))
 
 const chosePlaceForm = reactive<any>({
   hallId: '',
@@ -144,7 +166,6 @@ const chosePlaceForm = reactive<any>({
   user,
 })
 const schema = ref<any[]>([])
-// TODO: Сделать выбор нескольких мест
 const selectedPlaces = ref<any>([])
 const hallsOptions = ref<any>([])
 const isChooseUserShow = ref(false)
@@ -160,15 +181,33 @@ const handleBuyTicketShowChange = (): void => {
   isBuyTicketShow.value = !isBuyTicketShow.value
 }
 
-const handleSeatSelect = (seat: number): void => {
+const handleSeatSelect = (seat: any): void => {
   chosePlaceForm.seat = seat
 
-  const seatIndex = selectedPlaces.value.findIndex((item: any) => item === seat)
+  const seatIndex = selectedPlaces.value.findIndex((item: any) => item.seat === seat.seat)
 
   if (seatIndex !== -1) {
     selectedPlaces.value.splice(seatIndex, 1)
   } else {
-    selectedPlaces.value.push(seat)
+    if (!selectedPlaces.value.length) {
+      selectedPlaces.value.push(seat)
+    } else {
+      const isAnotherAction = selectedPlaces.value.every((place: any) => place.available !== seat.available)
+
+      if (!isAnotherAction) {
+        selectedPlaces.value.push(seat)
+      } else {
+        ElMessageBox.confirm('your action will reset the previous actions. Are you sure?', 'Error', {
+          confirmButtonText: 'OK',
+          cancelButtonText: 'Cancel',
+          type: 'error',
+        }).then(() => {
+          selectedPlaces.value = []
+
+          selectedPlaces.value.push(seat)
+        })
+      }
+    }
   }
 }
 
@@ -234,7 +273,7 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
     Object.assign(
       {
         user_id: chosePlaceForm.user.id,
-        seat: chosePlaceForm.seat,
+        seats: selectedPlaces.value,
         price: currentSession.value.price,
         hall_id: chosePlaceForm.hallId,
         session_id: currentSession.value.id,
@@ -248,6 +287,33 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
     await getSchema()
 
     handleBuyTicketShowChange()
+
+    selectedPlaces.value = []
+  }
+}
+
+const handleTicketDelete = async (): Promise<void> => {
+  const ticketsToRemove: any = []
+
+  selectedPlaces.value.forEach((place: any) => {
+    if (!place.available) {
+      user.value.tickets.forEach((ticket: any) => {
+        if (place.seat == ticket.seat) {
+          ticketsToRemove.push(ticket.id)
+        }
+      })
+    }
+  })
+
+  const [error] = await ticketsApi.deleteTickets({
+    tickets_to_remove: ticketsToRemove,
+    seats: selectedPlaces.value,
+    user_id: chosePlaceForm.user.id,
+    session_id: currentSession.value.id,
+  })
+
+  if (!error) {
+    await getSchema()
 
     selectedPlaces.value = []
   }

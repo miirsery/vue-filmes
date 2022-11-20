@@ -11,6 +11,8 @@
         <div>{{ props.movie.title }}</div>
         <div>{{ props.movie.studio }}</div>
         <div>{{ props.movie.duration }}</div>
+        <age-restriction :age-restriction="props.movie.age_restriction" />
+        <router-link :to="`/movies/${props.movie.id}`" class="cinemas-movie__link link">Check</router-link>
       </div>
       <div class="cinemas-movie__sessions d-flex">
         <div
@@ -18,7 +20,7 @@
           :key="session.id"
           class="cinemas-movie__session d-flex fd-column ta-center"
         >
-          <el-button class="cinemas-movie__session-button" type="primary" @click="setCurrentSession(session)">
+          <el-button type="primary" class="cinemas-movie__session-button" @click="setCurrentSession(session)">
             {{ session.time }}
           </el-button>
           <div class="cinemas-movie__session-price">{{ session.price }} Р</div>
@@ -30,6 +32,7 @@
       :visible="isChoosePlaceVisible"
       :cinema="props.cinema"
       :session="currentSession"
+      :movie="props.movie"
       @close-dialog="handleChoosePlaceVisibleChange"
     />
   </div>
@@ -74,6 +77,9 @@ const handleChoosePlaceVisibleChange = (): void => {
     &-info {
       width: 100%;
       max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       margin-left: 16px;
     }
   }
@@ -85,6 +91,15 @@ const handleChoosePlaceVisibleChange = (): void => {
       font-size: 12px;
       margin-top: 8px;
     }
+  }
+
+  &__link {
+    width: 60px;
+    border: none;
+    border-bottom: 1px solid $color--border;
+    border-radius: 0;
+    font-size: $size--12;
+    text-align: center;
   }
 }
 </style>
