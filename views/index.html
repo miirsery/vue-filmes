@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport'
+        content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0'>
+  <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+  <title>Document</title>
+
+  <style>
+   *, *, *::after, *::before {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+   }
+   .container {
+       max-width: 800px;
+       margin: 0 auto;
+   }
+   .text-big {
+       font-size: 28px;
+       font-weight: 600;
+   }
+   .text-middle {
+       font-size: 20px;
+       font-weight: 500;
+   }
+   .d-flex {
+       display: flex;
+   }
+   .w-100 {
+       width: 100%;
+   }
+   .t-center {
+       text-align: center;
+   }
+   .email__movie-preview {
+       width: 300px;
+       height: 150px;
+       margin-right: 20px;
+   }
+   .email__movie-preview img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+   }
+   .email__movie-title {
+       margin-bottom: 8px;
+   }
+  </style>
+
+</head>
+<body>
+   <div class='container'>
+      <div class='email'>
+        <div class='email__header text-big t-center'>
+          Thank you for buy ticket
+        </div>
+        <div class='email__content d-flex w-100'>
+          <div class='email__movie-preview'>
+            <img src='https://pictures.abebooks.com/isbn/9781539134848-de.jpg' alt='movie' />
+          </div>
+          <div>
+            <div class='email__movie-title text-middle'>
+              Movie #1
+            </div>
+            <div class='email__movie-title text-middle'>
+              some address
+            </div>
+            <div class='email__movie-title text-middle'>
+              date
+            </div>
+            <div class='email__movie-title text-middle'>
+              Total price: 99
+            </div>
+          </div>
+        </div>
+        <div class='email__places text-middle'>
+          <div class='email__place'>
+            1 row 7 place
+          </div>
+        </div>
+      </div>
+   </div>
+</body>
+</html>
