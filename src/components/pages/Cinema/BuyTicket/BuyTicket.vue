@@ -69,6 +69,9 @@ const handleTicketBuy = (): void => {
   emit('buy-ticket', {
     email: form.email,
     phone: form.phone,
+    total_price: calculateResultPrice.value,
+    movie: props.movie,
+    session: props.session,
   })
 }
 </script>

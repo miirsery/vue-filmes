@@ -51,6 +51,8 @@ const getCinema = async (): Promise<void> => {
 
     cinema.id = data.id
 
+    cinema.address = data.address
+
     movies.value = data.movies
 
     sessions.value = data.sessions
