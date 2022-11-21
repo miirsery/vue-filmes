@@ -278,6 +278,7 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
         hall_id: chosePlaceForm.hallId,
         session_id: currentSession.value.id,
         seller_id: 1,
+        cinema: props.cinema,
       },
       paymentData
     )
