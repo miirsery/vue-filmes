@@ -123,7 +123,16 @@ class TicketsController {
         to: body.email,
         subject: 'Message from Node js',
         text: 'This message was sent from Node js server.',
-        html: renderHtml('Hi'),
+        html: renderHtml(
+          body.movie.title,
+          body.total_price,
+          body.movie.preview,
+          body.session.date,
+          body.session.time,
+          body.session.hall_id,
+          body.cinema,
+          body.seats
+        ),
       })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({
