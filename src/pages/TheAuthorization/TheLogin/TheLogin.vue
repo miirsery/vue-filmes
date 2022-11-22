@@ -1,15 +1,23 @@
 <template>
   <div class="the-login">
     <div class="d-flex ai-center fd-column">
-      <h1 class="the-registration__title">Авторизоваться</h1>
+      <h1 class="the-registration__title mb-16">Login</h1>
       <el-form :model="loginForm">
         <el-form-item prop="email">
           <input-common v-model="loginForm.email" class="mb-16" placeholder="Email" />
         </el-form-item>
-        <el-form-item prop="email">
-          <input-common v-model="loginForm.password" class="mb-16" placeholder="Пароль" />
+        <el-form-item prop="password">
+          <input-common v-model="loginForm.password" type="password" class="mb-16" placeholder="Пароль" />
         </el-form-item>
-        <el-button type="primary" class="the-login__button" @click="handleTokenGet"> Войти </el-button>
+        <el-form-item prop="remember" class="the-login__remember">
+          <el-checkbox v-model="rememberMe" label="Remember me" />
+        </el-form-item>
+        <div class="d-flex ai-center jc-between">
+          <el-button type="primary" class="the-login__button" @click="handleTokenGet"> Войти </el-button>
+          <router-link class="the-login__register link--second" to="/authorization/registration">
+            No account?
+          </router-link>
+        </div>
       </el-form>
     </div>
   </div>
@@ -27,6 +35,8 @@ const loginForm = ref<LoginFormType>({
   email: '',
   password: '',
 })
+
+const rememberMe = ref(false)
 
 const setToken = (token: string): void => {
   localStorage.setItem('token', token)
@@ -50,3 +60,11 @@ const handleTokenGet = async (): Promise<void> => {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.the-login {
+  &__register {
+    font-size: 12px;
+  }
+}
+</style>

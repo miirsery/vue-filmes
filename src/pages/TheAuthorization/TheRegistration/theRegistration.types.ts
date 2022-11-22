@@ -7,4 +7,5 @@ export type RegistrationFormType = {
   patronymic: string
   role: string
   avatar: string
+  passwordConfirm?: string
 }
