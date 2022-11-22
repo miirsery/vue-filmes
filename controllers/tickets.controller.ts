@@ -15,7 +15,7 @@ const {
 
 const { transporter } = require('../utils/mailer.js')
 
-const { updateSchema } = require('../repositories/halls.repository.js')
+const { updateSchema, removeBookingFromSchema } = require('../repositories/halls.repository.js')
 
 const { renderHtml } = require('../utils/makeHtml')
 
@@ -159,7 +159,7 @@ class TicketsController {
       }
 
       for (const seat of seats) {
-        await updateSchema(seat.seat, session_id, user_id)
+        await removeBookingFromSchema(seat.seat, session_id, user_id)
       }
 
       return res.status(200).setHeader('Content-Type', 'application/json').json({

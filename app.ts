@@ -1,13 +1,14 @@
+import { ApplicationType, NextFunctionType, RequestType, ResponseType } from './types/common.types'
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-import { Application, NextFunction, Request, Response } from 'express'
 import './create-admin'
 
 const express = require('express')
 
-const app: Application = express(),
+const app: ApplicationType = express(),
   cors = require('cors'),
   flash = require('express-flash'),
   session = require('express-session'),
@@ -54,17 +55,17 @@ app.use('/api/v1/halls', hallsRouter)
 app.use('/api/v1/cinemas', cinemasRouter)
 app.use(
   '/api/v1/sessions',
-  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['user', 'admin']),
+  (req: RequestType, res: ResponseType, next: NextFunctionType) => checkRole(req, res, next, ['user', 'admin']),
   sessionsRouter
 )
 app.use('/api/v1/tickets', ticketsRouter)
 app.use(
   '/api/v1/employees',
-  (req: Request, res: Response, next: NextFunction) => checkRole(req, res, next, ['admin']),
+  (req: RequestType, res: ResponseType, next: NextFunctionType) => checkRole(req, res, next, ['admin']),
   employeesRouter
 )
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req: RequestType, res: ResponseType) => {
   res.send({
     status: 'Ok',
     message: 'Success',

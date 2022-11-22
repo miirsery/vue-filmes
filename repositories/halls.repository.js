@@ -32,6 +32,11 @@ module.exports = {
       seat,
       sessionId,
     ]),
+  removeBookingFromSchema: async (seat, sessionId, userId) =>
+    db.query(
+      'UPDATE hall_seat SET available = NOT available, user_id=NULL WHERE seat=$1 AND session_id=$2 AND user_id = $3',
+      [seat, sessionId, userId]
+    ),
   createOne: async (hall) =>
     await db.query('INSERT INTO hall (title, cinema_id) VALUES ($1, $2) RETURNING *', [hall.title, hall.cinema_id]),
   createSchema: async (data) =>
