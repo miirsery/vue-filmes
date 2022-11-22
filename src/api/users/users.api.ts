@@ -11,7 +11,7 @@ class UsersApi extends AxiosService {
   async userRegister(payload: RegistrationFormType) {
     return this.axiosCall<SuccessResponseMessageType>({
       method: 'post',
-      url: '/register',
+      url: '',
       data: { ...payload },
     })
   }

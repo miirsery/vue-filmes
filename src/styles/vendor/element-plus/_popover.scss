@@ -1,5 +1,22 @@
 .el-popper {
-  &.is-dark {
-    background-color: #141414 !important;
+  padding: 0 !important;
+
+  .the-header__popper-item {
+    &-link {
+      width: 100%;
+      display: block;
+      padding: 6px 12px;
+
+      &:hover {
+        @include color('background-color', $color--primary--light-9, 30%, -0.9)
+      }
+    }
+  }
+
+  .the-header-profile {
+    &__button-logout {
+      background: none !important;
+      padding-bottom: 16px;
+    }
   }
 }

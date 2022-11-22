@@ -1,23 +1,29 @@
 <template>
   <div class="the-header-profile d-flex ai-center">
     <icon-template class="mr-8" name="favorite" width="32" height="32" />
-    <el-tooltip>
-      <el-button type="primary" class="the-header-profile__button">
-        <icon-template name="user" width="32" height="32" />
-      </el-button>
-      <template #content>
-        <div class="the-header-profile__content">
-          <div class="the-header-profile__name">{{ useUser.user.name }}</div>
-          <div>
-            <router-link to="/profile">Profile</router-link>
-          </div>
-          <el-divider />
+    <el-popover popper-class="the-header__popper" :show-arrow="false">
+      <template #reference>
+        <el-button type="primary" class="the-header-profile__button">
+          <icon-template name="user" width="32" height="32" />
+        </el-button>
+      </template>
+      <div class="the-header-profile__content">
+        <div class="the-header-profile__name the-header__popper-item">
+          <router-link class="the-header__popper-item-link" to="/profile#general">
+            {{ useUser.user.name }}
+          </router-link>
+        </div>
+        <div class="the-header__popper-item">
+          <router-link class="the-header__popper-item-link" to="/profile#tickets">Tickets</router-link>
+        </div>
+        <el-divider />
+        <div class="d-flex jc-center">
           <el-button type="primary" class="the-header-profile__button-logout" @click="handleClickLogout">
-            Выйти
+            Logout
           </el-button>
         </div>
-      </template>
-    </el-tooltip>
+      </div>
+    </el-popover>
   </div>
 </template>
 
