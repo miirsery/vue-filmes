@@ -294,30 +294,36 @@ const handleTicketCreate = async (paymentData: any): Promise<void> => {
 }
 
 const handleTicketDelete = async (): Promise<void> => {
-  const ticketsToRemove: any = []
+  ElMessageBox.confirm('Are you sure you want to cancel your ticket booking?', 'Error', {
+    confirmButtonText: 'OK',
+    cancelButtonText: 'Cancel',
+    type: 'error',
+  }).then(async () => {
+    const ticketsToRemove: any = []
 
-  selectedPlaces.value.forEach((place: any) => {
-    if (!place.available) {
-      user.value.tickets.forEach((ticket: any) => {
-        if (place.seat == ticket.seat) {
-          ticketsToRemove.push(ticket.id)
-        }
-      })
+    selectedPlaces.value.forEach((place: any) => {
+      if (!place.available) {
+        user.value.tickets.forEach((ticket: any) => {
+          if (place.seat == ticket.seat) {
+            ticketsToRemove.push(ticket.id)
+          }
+        })
+      }
+    })
+
+    const [error] = await ticketsApi.deleteTickets({
+      tickets_to_remove: ticketsToRemove,
+      seats: selectedPlaces.value,
+      user_id: chosePlaceForm.user.id,
+      session_id: currentSession.value.id,
+    })
+
+    if (!error) {
+      await getSchema()
+
+      selectedPlaces.value = []
     }
   })
-
-  const [error] = await ticketsApi.deleteTickets({
-    tickets_to_remove: ticketsToRemove,
-    seats: selectedPlaces.value,
-    user_id: chosePlaceForm.user.id,
-    session_id: currentSession.value.id,
-  })
-
-  if (!error) {
-    await getSchema()
-
-    selectedPlaces.value = []
-  }
 }
 </script>
 
