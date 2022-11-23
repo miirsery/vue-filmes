@@ -3,6 +3,9 @@
     <div class="d-flex mb-16">
       <div class="cinema-card__image">
         <img :src="props.cinema.preview" alt="image" />
+        <el-button type="primary" class="cinema-card__favorite-button" @click="handleToFavoriteAdd">
+          <icon-template name="star" width="16" height="16" />
+        </el-button>
       </div>
       <div class="cinema-card__info">
         <div>
@@ -19,10 +22,21 @@
 </template>
 
 <script lang="ts" setup>
+import moviesApi from '@/api/movies/movies.api'
+
 interface IProps {
   cinema: any
 }
+
 const props = defineProps<IProps>()
+
+const handleToFavoriteAdd = async (): Promise<void> => {
+  const [error] = await moviesApi.addMovieToFavorite(props.cinema.id)
+
+  if (!error) {
+    console.log('123')
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -38,6 +52,7 @@ const props = defineProps<IProps>()
   &__image {
     width: 250px;
     height: 250px;
+    position: relative;
     margin-right: 16px;
 
     img {
@@ -66,6 +81,12 @@ const props = defineProps<IProps>()
 
   &__description {
     font-size: $size--12;
+  }
+
+  &__favorite-button {
+    top: 10px;
+    right: 10px;
+    position: absolute;
   }
 
   &:not(:last-child) {

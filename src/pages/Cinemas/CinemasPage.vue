@@ -14,7 +14,17 @@
 import { onMounted, ref } from 'vue'
 import cinemasApi from '@/api/cinemas/cinemas.api'
 
-const cinemas = ref<any>([])
+const cinemas = ref<any>([
+  {
+    id: 1,
+    preview:
+      'https://avatars.dzeninfra.ru/get-zen_doc/3986710/pub_5f541a1bc84c033ffd42ea0a_5f541a46019fb065e71a5b1a/scale_1200',
+    title: 'cinema #1',
+    phone: '79239999999',
+    description: 'Lorem Lorem',
+    age_restriction: 'NC-17',
+  },
+])
 
 onMounted(async () => {
   await getCinemas()
