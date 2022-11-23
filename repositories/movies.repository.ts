@@ -30,4 +30,6 @@ module.exports = {
         ' GROUP BY movie.id' +
         ' LIMIT 1'
     ),
+  getFavoriteMoves: async () => db.query('SELECT * FROM movie_favorite'),
+  addToFavorite: async (movieid: number, userId) => db.query('INSERT INTO movie_favorite (user_id, movie_id) VALUES ($1, $2))', [movieid, userId]),
 }
