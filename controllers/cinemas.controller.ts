@@ -1,7 +1,16 @@
 import { Request, Response } from 'express'
 import moment from 'moment/moment'
 
-const { createOne, deleteOne, getAll, getOne } = require('../repositories/cinemas.repository.js')
+const {
+  createOne,
+  deleteOne,
+  getAll,
+  getOne,
+  addToFavorite,
+  getFavoriteCinemas,
+  getFavoriteCinemaByUserAndCinemaId,
+  removeFromFavorite,
+} = require('../repositories/cinemas.repository.js')
 const { getAllByCinemaId } = require('../repositories/halls.repository.js')
 const { getAllByHallId } = require('../repositories/sessions.repository.js')
 const { findOne } = require('../repositories/movies.repository')
@@ -43,6 +52,8 @@ class HallsController {
 
   async getCinemas(req: Request, res: Response) {
     try {
+      const { user_id } = req.query
+
       const cinemas = await getAll()
 
       const newCinemas: any = []
@@ -51,7 +62,9 @@ class HallsController {
       for (const cinema of cinemas.rows) {
         const halls = await getAllByCinemaId(cinema.id)
 
-        newCinemas.push(cinema)
+        const favoriteCinema = await getFavoriteCinemaByUserAndCinemaId(user_id, cinema.id).then((r: any) => r.rows[0])
+
+        newCinemas.push(Object.assign(cinema, { is_favorite: !!favoriteCinema }))
 
         cinema.halls = halls.rows
       }
@@ -132,6 +145,44 @@ class HallsController {
       })
 
       return res.status(200).setHeader('Content-Type', 'application/json').json(result)
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async getFavoriteMoviesList(req: Request, res: Response) {
+    try {
+      const { user_id } = req.query
+
+      const favoriteHalls = await getFavoriteCinemas(user_id).then((r: any) => r.rows)
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json(favoriteHalls)
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async addMoviesToFavorite(req: Request, res: Response) {
+    try {
+      const { cinema_id, user_id } = req.body
+
+      const candidate = await getFavoriteCinemaByUserAndCinemaId(user_id, cinema_id).then((r: any) => r.rows)
+
+      if (candidate.length) {
+        await removeFromFavorite(cinema_id, user_id)
+      } else {
+        await addToFavorite(cinema_id, user_id)
+      }
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json({
+        message: 'Success',
+      })
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
