@@ -3,6 +3,9 @@
     <div class="d-flex mb-16">
       <div class="cinema-card__image">
         <img :src="props.cinema.preview" alt="image" />
+        <el-button type="primary" class="cinema-card__favorite-button" @click="handleToFavoriteAdd">
+          <icon-template :class="isActive" name="star" width="18" height="18" stroke-color="black" />
+        </el-button>
       </div>
       <div class="cinema-card__info">
         <div>
@@ -19,10 +22,39 @@
 </template>
 
 <script lang="ts" setup>
+import cinemasApi from '@/api/cinemas/cinemas.api'
+import { useUserStore } from '@/stores/user.store'
+import { computed } from 'vue'
+
 interface IProps {
   cinema: any
 }
+
+interface IEmits {
+  (e: 'update'): void
+}
+
 const props = defineProps<IProps>()
+const emit = defineEmits<IEmits>()
+
+const isActive = computed(() => (props.cinema.is_favorite ? 'active' : ''))
+
+const useUser = useUserStore()
+
+const updateCinemaList = (): void => {
+  emit('update')
+}
+
+const handleToFavoriteAdd = async (): Promise<void> => {
+  const [error] = await cinemasApi.addCinemaToFavorite({
+    cinema_id: props.cinema.id,
+    user_id: useUser.user.id,
+  })
+
+  if (!error) {
+    updateCinemaList()
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -38,6 +70,7 @@ const props = defineProps<IProps>()
   &__image {
     width: 250px;
     height: 250px;
+    position: relative;
     margin-right: 16px;
 
     img {
@@ -66,6 +99,12 @@ const props = defineProps<IProps>()
 
   &__description {
     font-size: $size--12;
+  }
+
+  &__favorite-button {
+    top: 10px;
+    right: 10px;
+    position: absolute;
   }
 
   &:not(:last-child) {

@@ -1,15 +1,19 @@
 import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
+import { SuccessResponseMessageType } from '@/types/common.types'
 
 class CinemasApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
     super(config)
   }
 
-  async getCinemas() {
+  async getCinemas(userId: number) {
     return this.axiosCall({
       method: 'get',
       url: '',
+      params: {
+        user_id: userId,
+      },
     })
   }
 
@@ -29,6 +33,14 @@ class CinemasApi extends AxiosService {
     return this.axiosCall({
       method: 'get',
       url: `/${id}`,
+    })
+  }
+
+  public addCinemaToFavorite(data: any) {
+    return this.axiosCall<SuccessResponseMessageType>({
+      method: 'patch',
+      url: '/favorite',
+      data,
     })
   }
 }
