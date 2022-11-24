@@ -6,4 +6,11 @@ module.exports = {
   createOne: async (street, location) =>
     await db.query('INSERT INTO cinema (street, location) VALUES ($1, $2) RETURNING *', [street, location]),
   deleteOne: async (id) => db.query('DELETE FROM cinema WHERE id=$1 RETURNING *', [id]),
+  getFavoriteCinemas: async (userId) => db.query('SELECT * FROM cinema_favorite WHERE userId=$1', [userId]),
+  getFavoriteCinemaByUserAndCinemaId: async (userId, cinemaId) =>
+    db.query('SELECT * FROM cinema_favorite WHERE user_id=$1 AND cinema_id=$2', [userId, cinemaId]),
+  addToFavorite: async (cinemaId, userId) =>
+    db.query('INSERT INTO cinema_favorite (user_id, cinema_id) VALUES ($1, $2)', [cinemaId, userId]),
+  removeFromFavorite: async (cinemaId, userId) =>
+    db.query('DELETE FROM cinema_favorite WHERE cinema_id=$1 AND user_id=$2', [cinemaId, userId]),
 }

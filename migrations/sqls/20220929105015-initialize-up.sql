@@ -33,10 +33,20 @@ CREATE TABLE IF NOT EXISTS cinema
 CREATE TABLE IF NOT EXISTS cinema_image
 (
     id              SERIAL PRIMARY KEY NOT NULL,
-    cinema_id		SERIAL,
+    cinema_id		INT,
     image           TEXT,
 
     CONSTRAINT      fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS cinema_favorite
+(
+    id              SERIAL PRIMARY KEY NOT NULL,
+    user_id         INT,
+    cinema_id       INT,
+
+    CONSTRAINT      fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT      fk_user  FOREIGN KEY(user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS movie
@@ -57,6 +67,16 @@ CREATE TABLE IF NOT EXISTS movie
     movie_link          TEXT
 );
 
+CREATE TABLE IF NOT EXISTS movie_visit
+(
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    user_id             INT,
+    movie_id            INT,
+
+    CONSTRAINT      fk_movie  FOREIGN KEY(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT      fk_user  FOREIGN KEY(user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS employee
 (
     id              SERIAL PRIMARY KEY NOT NULL,
@@ -69,7 +89,7 @@ CREATE TABLE IF NOT EXISTS employee
     register_date   TIMESTAMP NOT NULL DEFAULT NOW(),
     birthdate	    DATE,
     phone           TEXT,
-    cinema_id		SERIAL,
+    cinema_id		INT,
     avatar          TEXT,
     password        TEXT NOT NULL,
 
@@ -80,7 +100,7 @@ CREATE TABLE IF NOT EXISTS hall
 (
     id                  SERIAL PRIMARY KEY NOT NULL,
     title               INT NOT NULL CHECK ( title > 0 ),
-    cinema_id           SERIAL,
+    cinema_id           INT,
 
     CONSTRAINT          fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -91,8 +111,8 @@ CREATE TABLE IF NOT EXISTS session
     date            DATE NOT NULL,
     time            TIME,
     price           INT NOT NULL DEFAULT 0,
-    hall_id         SERIAL,
-    movie_id        SERIAL,
+    hall_id         INT,
+    movie_id        INT,
 
     CONSTRAINT      fk_hall FOREIGN KEY(hall_id) REFERENCES hall(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT      fk_movie FOREIGN KEY(movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
@@ -120,9 +140,9 @@ CREATE TABLE IF NOT EXISTS ticket
     seat			INT,
     price			INT,
     buy_date		TIMESTAMP NOT NULL DEFAULT now(),
-    session_id		SERIAL,
-    seller_id		SERIAL,
-    user_id		    SERIAL,
+    session_id		INT,
+    seller_id		INT,
+    user_id		    INT,
 
     CONSTRAINT      fk_session FOREIGN KEY (session_id) REFERENCES session(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT      fk_user FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE ON UPDATE CASCADE,

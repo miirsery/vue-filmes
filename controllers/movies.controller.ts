@@ -2,15 +2,7 @@ import { Request, Response } from 'express'
 
 const moment = require('moment')
 
-const {
-  findOne,
-  findAll,
-  updateOne,
-  getMostPopularMovie,
-  createOne,
-  addToFavorite, 
-  getFavoriteMoves
-  } = require('../repositories/movies.repository.ts')
+const { findOne, findAll, updateOne, getMostPopularMovie, createOne } = require('../repositories/movies.repository.ts')
 
 class MoviesController {
   async addMovie(req: Request, res: Response, path = '') {
@@ -113,33 +105,6 @@ class MoviesController {
       return res.status(200).setHeader('Content-Type', 'application/json').json({
         message: 'Успешно',
       })
-    } catch (error: any) {
-      console.log(error)
-      return res.status(500).setHeader('Content-Type', 'application/json').json({
-        message: error.detail,
-      })
-    }
-  }
-
-  async getFavoriteMoviesList(req: Request, res: Response) {
-    try {
-      const favoriteHalls = await getFavoriteMoves().then((r: any) => r.rows)
-
-      return res.status(200).setHeader('Content-Type', 'application/json').json(favoriteHalls)
-    }  catch (error: any) {
-      console.log(error)
-      return res.status(500).setHeader('Content-Type', 'application/json').json({
-        message: error.detail,
-      })
-    }
-  }
-
-  async addMoviesToFavorite(req: Request, res: Response) {
-    try {
-      const { movie_id, user_id } = req.body
-
-      await addToFavorite(movie_id, user_id)
-      
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
