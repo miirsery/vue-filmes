@@ -5,33 +5,35 @@
       <cinemas-map :cinemas="cinemas" />
     </div>
     <div class="cinemas-page__content">
-      <cinema-card v-for="cinema in cinemas" :key="cinema.id" :cinema="cinema" />
+      <cinema-card v-for="cinema in cinemas" :key="cinema.id" :cinema="cinema" @update="getCinemas" />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { computed, ref, watchEffect } from 'vue'
 import cinemasApi from '@/api/cinemas/cinemas.api'
+import { useUserStore } from '@/stores/user.store'
 
-const cinemas = ref<any>([
-  {
-    id: 1,
-    preview:
-      'https://avatars.dzeninfra.ru/get-zen_doc/3986710/pub_5f541a1bc84c033ffd42ea0a_5f541a46019fb065e71a5b1a/scale_1200',
-    title: 'cinema #1',
-    phone: '79239999999',
-    description: 'Lorem Lorem',
-    age_restriction: 'NC-17',
-  },
-])
+const useUser = useUserStore()
 
-onMounted(async () => {
-  await getCinemas()
+const userId = ref(0)
+const cinemas = ref<any>()
+
+const user = computed(() => useUser.user)
+
+watchEffect(async () => {
+  const localUser = user.value
+
+  if (localUser) {
+    userId.value = localUser.id
+
+    await getCinemas()
+  }
 })
 
 const getCinemas = async (): Promise<void> => {
-  const [error, data] = await cinemasApi.getCinemas()
+  const [error, data] = await cinemasApi.getCinemas(userId.value)
 
   if (!error && data) {
     cinemas.value = data

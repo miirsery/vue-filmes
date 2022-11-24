@@ -52,6 +52,21 @@
     }
   }
 
+  &.cinema-card__favorite-button {
+    height: 18px;
+    border: none !important;
+    background: none !important;
+    padding: 0;
+
+    .active {
+      color: #f90;
+    }
+
+    &:focus {
+      border: none !important;
+    }
+  }
+
   &--primary {
     background-color: $color--primary !important;
   }
