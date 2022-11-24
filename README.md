@@ -43,3 +43,8 @@ npm run build
 ```sh
 npm run lint
 ```
+
+For telegram bot
+```
+ngrok http 5173
+```
