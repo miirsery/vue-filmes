@@ -2,6 +2,7 @@ import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
 import { RegistrationFormType } from '@/pages/TheAuthorization/TheRegistration/theRegistration.types'
 import { SuccessResponseMessageType } from '@/types/common.types'
+import { TelegramUserType } from '@/types/user.types'
 
 class UsersApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -13,6 +14,14 @@ class UsersApi extends AxiosService {
       method: 'post',
       url: '',
       data: { ...payload },
+    })
+  }
+
+  async connectWithTelegram(data: TelegramUserType & { user_id: number }) {
+    return this.axiosCall({
+      method: 'post',
+      url: '/telegram',
+      data,
     })
   }
 }

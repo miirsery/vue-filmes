@@ -18,6 +18,7 @@ export const useUserStore = defineStore('user', () => {
     role: 'user',
     surname: '',
     tickets: [],
+    telegram_username: '',
   })
 
   const getSelf = async (): Promise<void> => {
