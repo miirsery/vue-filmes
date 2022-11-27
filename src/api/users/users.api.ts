@@ -2,7 +2,7 @@ import { AxiosService } from '@/api/AxiosService/axiosSerive'
 import { AxiosRequestConfig } from 'axios'
 import { RegistrationFormType } from '@/pages/TheAuthorization/TheRegistration/theRegistration.types'
 import { SuccessResponseMessageType } from '@/types/common.types'
-import { TelegramUserType } from '@/types/user.types'
+import { TelegramDisconnectUserType, TelegramUserType } from '@/types/user.types'
 
 class UsersApi extends AxiosService {
   constructor(config?: AxiosRequestConfig) {
@@ -17,10 +17,18 @@ class UsersApi extends AxiosService {
     })
   }
 
-  async connectWithTelegram(data: TelegramUserType & { user_id: number }) {
-    return this.axiosCall({
+  async connectWithTelegram(data: TelegramUserType) {
+    return this.axiosCall<SuccessResponseMessageType>({
       method: 'post',
       url: '/telegram',
+      data,
+    })
+  }
+
+  async disconnectWithTelegram(data: TelegramDisconnectUserType) {
+    return this.axiosCall<SuccessResponseMessageType>({
+      method: 'post',
+      url: '/telegram/disconnect',
       data,
     })
   }

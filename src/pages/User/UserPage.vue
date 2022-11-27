@@ -14,7 +14,7 @@
             @callback="handleWithTelegramConnect"
           />
         </div>
-        <el-button v-else type="primary">Unlink</el-button>
+        <el-button v-else type="primary" @click="handleWithTelegramDisconnect">Unlink</el-button>
       </div>
       <aside>
         <nav>
@@ -55,13 +55,23 @@ const isTelegramLoaded = (): void => {
 }
 
 const handleWithTelegramConnect = async (user: TelegramUserType): Promise<void> => {
-  const [error, data] = await usersApi.connectWithTelegram(
+  const [error] = await usersApi.connectWithTelegram(
     Object.assign(user, {
       user_id: userId.value,
     })
   )
 
-  if (!error && data) {
+  if (!error) {
+    await getSelf()
+  }
+}
+
+const handleWithTelegramDisconnect = async (): Promise<void> => {
+  const [error] = await usersApi.disconnectWithTelegram({
+    user_id: userId.value,
+  })
+
+  if (!error) {
     await getSelf()
   }
 }
