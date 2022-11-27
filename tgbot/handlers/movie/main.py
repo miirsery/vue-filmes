@@ -29,8 +29,9 @@ async def hello_movie(message: Message, state: FSMContext):
 async def send_notification(request: Request):
     data = await request.json()
     print(data)
+    # TODO: На данный момент будет отправляться только одному пользователю.
     await send_success_message(
         829559384,
-        f'the movie {data["movie"]["title"]} has been successfully added'
+        f'The cinema: {data["movie"]["title"]} added the movie: {data["movie"]["title"]} has been successfully added'
     )
     return json_response({"ok": True})

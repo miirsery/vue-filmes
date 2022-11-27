@@ -6,5 +6,4 @@ movie_router = Router()
 
 @movie_router.message(Command(commands=["start"]))
 async def command_start_handler(message: types.Message) -> None:
-    print(message.chat.id)
     await message.answer('Hello')
