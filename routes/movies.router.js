@@ -26,12 +26,13 @@ const upload = multer({ storage })
 
 router.get('/', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovies)
 router.get('/:id', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovie)
-router.post(
-  '/',
-  (req, res, next) => checkRole(req, res, next, ['admin']),
-  upload.any(),
-  (req, res) => movieController.addMovie(req, res, pathToFile)
-)
+// router.post(
+//   '/',
+//   (req, res, next) => checkRole(req, res, next, ['admin']),
+//   upload.any(),
+//   (req, res) => movieController.addMovie(req, res, pathToFile)
+// )
+router.post('/', upload.any(), (req, res) => movieController.addMovie(req, res, pathToFile))
 router.patch(
   '/',
   (req, res, next) => checkRole(req, res, next, ['admin']),

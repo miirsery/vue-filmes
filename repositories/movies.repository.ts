@@ -30,4 +30,5 @@ module.exports = {
         ' GROUP BY movie.id' +
         ' LIMIT 1'
     ),
+  getLatestAddedMovie: async () => db.query('SELECT * FROM movie WHERE id = (SELECT COUNT(*) FROM movie)'),
 }

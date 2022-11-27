@@ -3,19 +3,21 @@ BEGIN;
 
 CREATE TABLE IF NOT EXISTS person
 (
-    id                SERIAL PRIMARY KEY NOT NULL,
-    name              TEXT,
-    surname           TEXT,
-    patronymic        TEXT,
-    role              TEXT NOT NULL DEFAULT 'user',
-    email             TEXT UNIQUE NOT NULL,
-    login             TEXT UNIQUE NOT NULL,
-    register_date     TIMESTAMP NOT NULL DEFAULT NOW(),
-    birthdate         DATE,
-    discount          INT DEFAULT 0 CHECK ( discount >= 0 ),
-    phone             TEXT,
-    avatar            TEXT,
-    password          TEXT NOT NULL
+    id                  SERIAL PRIMARY KEY NOT NULL,
+    telegram_id         INT,
+    telegram_username   TEXT,
+    name                TEXT,
+    surname             TEXT,
+    patronymic          TEXT,
+    role                TEXT NOT NULL DEFAULT 'user',
+    email               TEXT UNIQUE NOT NULL,
+    login               TEXT UNIQUE NOT NULL,
+    register_date       TIMESTAMP NOT NULL DEFAULT NOW(),
+    birthdate           DATE,
+    discount            INT DEFAULT 0 CHECK ( discount >= 0 ),
+    phone               TEXT,
+    avatar              TEXT,
+    password            TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cinema
