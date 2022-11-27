@@ -230,6 +230,23 @@ class UserController {
       })
     }
   }
+
+  async unlinkWithTelegram(req: Request, res: Response) {
+    try {
+      const { user_id } = req.body
+
+      await updateUserTelegramId(null, null, user_id)
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json({
+        message: 'Success',
+      })
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
 }
 
 module.exports = new UserController()
