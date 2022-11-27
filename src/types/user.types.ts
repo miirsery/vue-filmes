@@ -14,6 +14,7 @@ export type UserSelfType = {
   discount: number
   phone: string
   avatar: string
+  telegram_id?: number
   tickets: TicketType[]
 }
 
@@ -25,4 +26,9 @@ export type TelegramUserType = {
   last_name: string
   photo_url: string
   username: string
+  user_id?: number
+}
+
+export type TelegramDisconnectUserType = {
+  user_id: number
 }
