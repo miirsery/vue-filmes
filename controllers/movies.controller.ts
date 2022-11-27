@@ -3,7 +3,7 @@ const axios = require('axios').default
 
 const moment = require('moment')
 
-const { findOne, findAll, updateOne, getMostPopularMovie, createOne } = require('../repositories/movies.repository.ts')
+const { findOne, findAll, updateOne, getMostPopularMovie, createOne, updateVisit } = require('../repositories/movies.repository.ts')
 
 const { checkMovieInFavoriteCinemas } = require('../repositories/cinemas.repository.js')
 
@@ -94,8 +94,11 @@ class MoviesController {
 
   async getMovie(req: Request, res: Response) {
     try {
-      const id = req.params.id
-      const candidate = await findOne(id)
+      const { id } = req.params
+      const { user_id } = req.query
+      const candidate = await findOne(+id)
+
+      await updateVisit(user_id, id)
 
       return res.status(200).setHeader('Content-Type', 'application/json').send(candidate.rows[0])
     } catch (error: any) {
