@@ -18,9 +18,9 @@ async def send_success_message(chat_id: int, text: str):
 
 async def authorization(request: Request) -> None:
     data = await request.json()
-    print(data)
+
     await send_success_message(
-        829559384,
+        data["user"]["id"],
         f'Welcome to us, {data["user"]["username"]} '
     )
 
