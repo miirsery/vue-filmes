@@ -17,8 +17,8 @@ import { useUserStore } from '@/stores/user.store'
 
 const useUser = useUserStore()
 
-const userId = ref(0)
 const cinemas = ref<any>()
+const userId = ref(0)
 
 const user = computed(() => useUser.user)
 

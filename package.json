@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "prepare": "husky install",
-    "dev": "vite",
+    "dev": "vite --port 80",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
@@ -28,7 +28,8 @@
     "vite-plugin-stylelint": "^3.0.7",
     "vue": "^3.2.38",
     "vue-router": "^4.0.13",
-    "vue-yandex-maps": "^1.0.4"
+    "vue-yandex-maps": "^1.0.4",
+    "vue3-telegram-login": "0.0.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
