@@ -52,6 +52,12 @@ module.exports = {
         ')',
       [discount]
     ),
+  updateUserTelegramId: async (telegramUsername, telegramId, userId) =>
+    db.query('UPDATE person SET telegram_username = $1, telegram_id = $2 WHERE id = $3', [
+      telegramUsername,
+      telegramId,
+      userId,
+    ]),
   setOne: async (user) =>
     await db.query(
       'INSERT INTO person' +

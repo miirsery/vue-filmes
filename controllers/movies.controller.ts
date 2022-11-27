@@ -1,8 +1,16 @@
 import { Request, Response } from 'express'
+const axios = require('axios').default
 
 const moment = require('moment')
 
-const { findOne, findAll, updateOne, getMostPopularMovie, createOne } = require('../repositories/movies.repository.ts')
+const {
+  findOne,
+  findAll,
+  updateOne,
+  getMostPopularMovie,
+  createOne,
+  getLatestAddedMovie,
+} = require('../repositories/movies.repository.ts')
 
 class MoviesController {
   async addMovie(req: Request, res: Response, path = '') {
@@ -17,6 +25,13 @@ class MoviesController {
         description,
         release_date,
         pathToFile,
+      })
+
+      const latestMovie = await getLatestAddedMovie().then((r: any) => r.rows[0])
+      // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
+      await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
+        user_id: 1,
+        movie: latestMovie,
       })
 
       return res

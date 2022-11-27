@@ -2,7 +2,15 @@ import { Request, Response } from 'express'
 
 const bcrypt = require('bcryptjs')
 const moment = require('moment/moment')
-const { getAll, setDiscount, setOne, createOne, deleteOne } = require('../repositories/users.reposotory.js')
+const axios = require('axios').default
+const {
+  getAll,
+  setDiscount,
+  setOne,
+  createOne,
+  deleteOne,
+  updateUserTelegramId,
+} = require('../repositories/users.reposotory.js')
 
 const { excelToData } = require('../utils/excel-to-data.js')
 const { transporter } = require('../utils/mailer.js')
@@ -37,7 +45,7 @@ class UserController {
 
       if (password.length < 6) {
         return res.status(500).setHeader('Content-Type', 'application/json').json({
-          message: 'Пароль должен содеражть больше 6-ти символов',
+          message: 'Пароль должен содержать больше 6-ти символов',
         })
       }
 
@@ -185,6 +193,35 @@ class UserController {
         .json({
           message: `We send email on ${process.env.MAILER_EMAIL}`,
         })
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async loginWithTelegram(req: Request, res: Response) {
+    try {
+      // TODO: Добавить проверку через hash
+      // https://gist.github.com/anonymous/6516521b1fb3b464534fbc30ea3573c2
+      const { user_id, first_name, hash, id, last_name, photo_url, username, auth_date } = req.body
+
+      await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/authorization', {
+        user: {
+          username,
+        },
+        _auth: {
+          auth_date,
+          hash,
+        },
+      })
+
+      await updateUserTelegramId(username, id, user_id)
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json({
+        message: 'Success',
+      })
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({

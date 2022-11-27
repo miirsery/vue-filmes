@@ -131,6 +131,7 @@ router.get('/example-file', userController.getExampleFile)
  */
 router.post('/group', upload.any(), (req, res) => userController.createGroupUsers(req, res, changedFilename))
 router.post('/discount', userController.setUserDiscount)
+router.post('/telegram', userController.loginWithTelegram)
 router.post('/', userController.registerUser)
 
 router.delete('/:id', userController.deleteUser)
