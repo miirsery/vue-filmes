@@ -2,7 +2,7 @@
 
 <template>
   <div class="the-home">
-    Home
+    <polular-movies />
     <latest-movies />
   </div>
 </template>

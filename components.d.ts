@@ -37,6 +37,8 @@ declare module '@vue/runtime-core' {
     LatestMovie: typeof import('./src/components/home/LatestMovie/LatestMovie.vue')['default']
     LatestMovies: typeof import('./src/components/home/LatestMovies/LatestMovies.vue')['default']
     MapBalloon: typeof import('./src/components/common/Map/MapBalloon.vue')['default']
+    PolularMovies: typeof import('./src/components/home/PopularMovies/PolularMovies.vue')['default']
+    PopularMoviesSlider: typeof import('./src/components/home/PopularMovies/PopularMoviesSlider.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./src/components/layouts/DefaultLayout/TheFooter/TheFooter.vue')['default']
