@@ -66,7 +66,10 @@ CREATE TABLE IF NOT EXISTS movie
     age_restriction     TEXT,
     preview             TEXT,
     images              TEXT,
-    movie_link          TEXT
+    movie_link          TEXT,
+    cinema_id           INT,
+
+    CONSTRAINT          fk_cinema  FOREIGN KEY(cinema_id) REFERENCES cinema(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS movie_visit
