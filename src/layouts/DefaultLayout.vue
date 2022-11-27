@@ -18,19 +18,19 @@ import { onMounted } from 'vue'
 
 const useUser = useUserStore()
 
-onMounted(() => {
-  getSelf()
-})
-
 const isFeedbackDialogVisible = ref(false)
 
 const feedbackDialogVisibleChange = (): void => {
   isFeedbackDialogVisible.value = !isFeedbackDialogVisible.value
 }
 
-const getSelf = async (): Promise<void> => {
-  await useUser.getSelf()
-}
+// const getSelf = (): void => {
+//   useUser.getSelf()
+// }
+//
+// onMounted(() => {
+//   getSelf()
+// })
 </script>
 
 <style lang="scss" scoped>

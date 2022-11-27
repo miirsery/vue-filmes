@@ -13,6 +13,16 @@ class MoviesApi extends AxiosService {
       url: '',
     })
   }
+
+  public getMovie(id: string, userId: number) {
+    return this.axiosCall<any>({
+      method: 'get',
+      url: `/${id}`,
+      params: {
+        user_id: userId,
+      },
+    })
+  }
 }
 
 export default new MoviesApi({
