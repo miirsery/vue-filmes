@@ -13,4 +13,9 @@ module.exports = {
     db.query('INSERT INTO cinema_favorite (user_id, cinema_id) VALUES ($1, $2)', [cinemaId, userId]),
   removeFromFavorite: async (cinemaId, userId) =>
     db.query('DELETE FROM cinema_favorite WHERE cinema_id=$1 AND user_id=$2', [cinemaId, userId]),
+  checkMovieInFavoriteCinemas: async (movieId, cinemaId) =>
+    db.query(
+      'SELECT c.title FROM cinema AS c JOIN cinema_favorite AS c_f ON c_f.cinema_id = $1 AND c.id = $1 JOIN movie AS m ON m.id = $2;',
+      [cinemaId, movieId]
+    ),
 }

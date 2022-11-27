@@ -3,36 +3,38 @@ const axios = require('axios').default
 
 const moment = require('moment')
 
-const {
-  findOne,
-  findAll,
-  updateOne,
-  getMostPopularMovie,
-  createOne,
-  getLatestAddedMovie,
-} = require('../repositories/movies.repository.ts')
+const { findOne, findAll, updateOne, getMostPopularMovie, createOne } = require('../repositories/movies.repository.ts')
+
+const { checkMovieInFavoriteCinemas } = require('../repositories/cinemas.repository.js')
 
 class MoviesController {
   async addMovie(req: Request, res: Response, path = '') {
     try {
-      const { title, studio, genre, description, release_date } = req.body
+      const { title, studio, genre, description, release_date, cinema_id } = req.body
       const pathToFile = path.replace('/app', 'http://localhost:3030/')
 
-      await createOne({
+      const latestMovie = await createOne({
         title,
         studio,
         genre,
         description,
         release_date,
         pathToFile,
-      })
+        cinema_id,
+      }).then((r: any) => r.rows[0])
 
-      const latestMovie = await getLatestAddedMovie().then((r: any) => r.rows[0])
-      // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
-      await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
-        user_id: 1,
-        movie: latestMovie,
-      })
+      if (latestMovie) {
+        const cinemaTitle = await checkMovieInFavoriteCinemas(latestMovie.id, latestMovie.cinema_id).then(
+          (r: any) => r.rows[0]
+        )
+        if (cinemaTitle) {
+          // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
+          await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
+            movie: latestMovie,
+            cinema_title: cinemaTitle,
+          })
+        }
+      }
 
       return res
         .status(201)

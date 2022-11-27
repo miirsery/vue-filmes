@@ -9,12 +9,13 @@ module.exports = {
         ' studio,' +
         ' genre,' +
         ' release_date,' +
-        ' preview' +
-        ') VALUES ($1, $2, $3, $4, $5, $6)',
-      [movie.title, movie.description, movie.studio, movie.genre, movie.release_date, movie.pathToFile]
+        ' preview,' +
+        ' cinema_id' +
+        ') VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
+      [movie.title, movie.description, movie.studio, movie.genre, movie.release_date, movie.pathToFile, movie.cinema_id]
     ),
   findOne: async (id: number) => db.query('SELECT * FROM movie WHERE id=$1', [id]),
-  getOneByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
+  getByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
   findAll: async () => db.query('SELECT * FROM movie'),
   getMovieByTicket: async (sessionId: any) =>
     db.query('SELECT * FROM movie, session WHERE session.id = $1 AND movie.id = session.movie_id', [sessionId]),
@@ -30,5 +31,4 @@ module.exports = {
         ' GROUP BY movie.id' +
         ' LIMIT 1'
     ),
-  getLatestAddedMovie: async () => db.query('SELECT * FROM movie WHERE id = (SELECT COUNT(*) FROM movie)'),
 }

@@ -210,6 +210,7 @@ class UserController {
       await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/authorization', {
         user: {
           username,
+          id,
         },
         _auth: {
           auth_date,
