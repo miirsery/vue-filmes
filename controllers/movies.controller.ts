@@ -24,15 +24,20 @@ class MoviesController {
       }).then((r: any) => r.rows[0])
 
       if (latestMovie) {
-        const cinemaTitle = await checkMovieInFavoriteCinemas(latestMovie.id, latestMovie.cinema_id).then(
-          (r: any) => r.rows[0]
-        )
-        if (cinemaTitle) {
-          // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
-          await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
-            movie: latestMovie,
-            cinema_title: cinemaTitle,
-          })
+        const cinemaTitleAndTelegramUserId = await checkMovieInFavoriteCinemas(
+          latestMovie.id,
+          latestMovie.cinema_id
+        ).then((r: any) => r.rows)
+
+        if (cinemaTitleAndTelegramUserId) {
+          for (const data of cinemaTitleAndTelegramUserId) {
+            // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
+            await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
+              movie: latestMovie,
+              cinema_title: data.title,
+              telegram_id: data.telegram_id,
+            })
+          }
         }
       }
 

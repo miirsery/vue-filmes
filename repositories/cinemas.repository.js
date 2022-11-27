@@ -15,7 +15,7 @@ module.exports = {
     db.query('DELETE FROM cinema_favorite WHERE cinema_id=$1 AND user_id=$2', [cinemaId, userId]),
   checkMovieInFavoriteCinemas: async (movieId, cinemaId) =>
     db.query(
-      'SELECT c.title FROM cinema AS c JOIN cinema_favorite AS c_f ON c_f.cinema_id = $1 AND c.id = $1 JOIN movie AS m ON m.id = $2;',
+      'SELECT c.title, p.telegram_id FROM cinema AS c JOIN cinema_favorite AS c_f ON c_f.cinema_id = $1 AND c.id = $1 JOIN person AS p ON p.id = c_f.user_id JOIN movie AS m ON m.id = $2;',
       [cinemaId, movieId]
     ),
 }
