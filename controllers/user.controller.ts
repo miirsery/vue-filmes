@@ -207,7 +207,7 @@ class UserController {
       // https://gist.github.com/anonymous/6516521b1fb3b464534fbc30ea3573c2
       const { user_id, first_name, hash, id, last_name, photo_url, username, auth_date } = req.body
 
-      await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/authorization', {
+      await axios.post('https://931e-176-51-109-142.eu.ngrok.io/api/v1/authorization', {
         user: {
           username,
           id,

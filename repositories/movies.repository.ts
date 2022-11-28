@@ -24,13 +24,25 @@ module.exports = {
   getMovieBySession: async (sessionId: number) => db.query('SELECT * FROM movie WHERE id=$1', [sessionId]),
   updateOne: async (args: any) =>
     db.query('UPDATE movie SET title=$1, preview=$2 WHERE id=$3', [args.title, args.preview, args.id]),
-  getMostPopularMovie: () =>
-    db.query(
+  getMostPopularMovie: async () =>
+    await db.query(
       'SELECT *, MAX((SELECT CAST(COUNT(*) as INTEGER)' +
         ' FROM ticket' +
         ' WHERE ticket.movie_id = public.movie.id)) AS sales_count' +
         ' FROM movie' +
         ' GROUP BY movie.id' +
         ' LIMIT 1'
+    ),
+  getPopularMovies: async () =>
+    await db.query(
+      'SELECT * FROM movie' +
+        ' GROUP BY movie.id ' +
+        ' ORDER BY (' +
+        ' MAX(' +
+        ' (SELECT CAST(COUNT(*) as INTEGER)' +
+        ' FROM movie_visit WHERE movie_visit.movie_id = public.movie.id))' +
+        ' )' +
+        ' DESC' +
+        ' LIMIT 10;'
     ),
 }

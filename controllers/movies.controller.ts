@@ -3,7 +3,15 @@ const axios = require('axios').default
 
 const moment = require('moment')
 
-const { findOne, findAll, updateOne, getMostPopularMovie, createOne, updateVisit } = require('../repositories/movies.repository.ts')
+const {
+  findOne,
+  findAll,
+  updateOne,
+  getMostPopularMovie,
+  createOne,
+  updateVisit,
+  getPopularMovies,
+} = require('../repositories/movies.repository.ts')
 
 const { checkMovieInFavoriteCinemas } = require('../repositories/cinemas.repository.js')
 
@@ -32,7 +40,7 @@ class MoviesController {
         if (cinemaTitleAndTelegramUserId) {
           for (const data of cinemaTitleAndTelegramUserId) {
             // TODO: Проверка на то, есть ли кинотеатр у пользователя в избранном, если есть, то мы отправляем фильм, сессию в бота
-            await axios.post('https://9925-176-51-109-142.eu.ngrok.io/api/v1/movies', {
+            await axios.post('https://931e-176-51-109-142.eu.ngrok.io/api/v1/movies', {
               movie: latestMovie,
               cinema_title: data.title,
               telegram_id: data.telegram_id,
@@ -83,7 +91,20 @@ class MoviesController {
         })
       })
 
-      return res.status(200).setHeader('Content-Type', 'application/json').send(moviesData)
+      return res.status(200).setHeader('Content-Type', 'application/json').json(moviesData)
+    } catch (error: any) {
+      console.log(error)
+      return res.status(500).setHeader('Content-Type', 'application/json').json({
+        message: error.detail,
+      })
+    }
+  }
+
+  async getTopPopularMovies(req: Request, res: Response) {
+    try {
+      const popularMovies = await getPopularMovies().then((r: any) => r.rows)
+
+      return res.status(200).setHeader('Content-Type', 'application/json').json(popularMovies)
     } catch (error: any) {
       console.log(error)
       return res.status(500).setHeader('Content-Type', 'application/json').json({
