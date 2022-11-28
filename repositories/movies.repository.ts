@@ -18,7 +18,7 @@ module.exports = {
   getByCinemaId: async (cinemaId: number) => db.query('SELECT * FROM movie WHERE id = $1', [cinemaId]),
   updateVisit: async (userId: number, movieId: number) =>
     db.query('INSERT INTO movie_visit (user_id, movie_id) VALUES ($1, $2)', [userId, movieId]),
-  findAll: async () => db.query('SELECT * FROM movie'),
+  findAll: async () => db.query('SELECT * FROM movie ORDER BY movie.id DESC'),
   getMovieByTicket: async (sessionId: any) =>
     db.query('SELECT * FROM movie, session WHERE session.id = $1 AND movie.id = session.movie_id', [sessionId]),
   getMovieBySession: async (sessionId: number) => db.query('SELECT * FROM movie WHERE id=$1', [sessionId]),
