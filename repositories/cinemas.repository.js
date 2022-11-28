@@ -18,4 +18,6 @@ module.exports = {
       'SELECT c.title, p.telegram_id FROM cinema AS c JOIN cinema_favorite AS c_f ON c_f.cinema_id = $1 AND c.id = $1 JOIN person AS p ON p.id = c_f.user_id JOIN movie AS m ON m.id = $2;',
       [cinemaId, movieId]
     ),
+  updateVisit: async (userId, movieId) =>
+    db.query('INSERT INTO cinema_visit (user_id, movie_id) VALUES ($1, $2)', [userId, movieId]),
 }

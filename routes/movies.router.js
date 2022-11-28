@@ -24,6 +24,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
+router.get('/popular', movieController.getTopPopularMovies)
 router.get('/', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovies)
 router.get('/:id', (req, res, next) => checkRole(req, res, next, ['user', 'admin']), movieController.getMovie)
 // router.post(
