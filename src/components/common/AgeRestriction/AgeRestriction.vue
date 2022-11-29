@@ -9,7 +9,9 @@ interface IProps {
   ageRestriction: string
 }
 
-const props = defineProps<IProps>()
+const props = withDefaults(defineProps<IProps>(), {
+  ageRestriction: '',
+})
 
 const ageRestrictionStatuses = {
   'NC-17': '18+',

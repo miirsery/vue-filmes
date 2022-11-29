@@ -1,6 +1,8 @@
-@use 'resources/variables' as *;
+@import 'resources/variables';
+@import 'resources/mixins';
 
 body {
+  font-family: 'Rursus Compact Mono', sans-serif;
   font-size: 16px;
   color: $color--text;
   background-color: $color--bg;
@@ -21,6 +23,21 @@ a {
   color: $color--text;
 }
 
+h1 {
+  font-family: 'Leto Text Sans Defect', sans-serif;
+  font-weight: 600;
+  font-size: $size--36;
+  line-height: 40px;
+}
+
+h2 {
+  font-family: 'Leto Text Sans Defect', sans-serif;
+  font-weight: 600;
+  font-size: $size--28;
+  line-height: 32px;
+  margin-bottom: $size--16;
+}
+
 .link {
   border: 1px solid $color--border;
   border-radius: 4px;
@@ -35,3 +52,21 @@ a {
   font-size: 18px;
   padding: 4px 6px;
 }
+
+// Colors
+@each $_class-name,
+$_color
+in (
+    ('primary', $color--primary),
+) {
+  // @sample
+  // .bg-primary
+  // .color-primary
+  @include color($_class-name, $_color);
+}
+
+// Margins | Paddings
+@include sizes-classes;
+
+// Global classes
+@include project-classes;

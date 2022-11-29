@@ -5,7 +5,7 @@
         <el-col :span="12">
           <ul class="d-flex ai-center">
             <li v-for="item in headerItems" :key="item.title" class="mr-50">
-              {{ item.title }}
+              <router-link :to="item.url">{{ item.title }}</router-link>
             </li>
           </ul>
         </el-col>
@@ -13,7 +13,7 @@
           <div class="logo">logo</div>
         </el-col>
         <el-col :span="5">
-          <the-search />
+          <the-search @search-value="handleMovieSearch" />
         </el-col>
         <el-col v-if="isAuth" :span="2">
           <icon-template class="mr-8" name="favorite" width="32" height="32" />
@@ -31,6 +31,7 @@
 import { headerItems } from '@/constants/header'
 import { ref } from 'vue'
 import { MovieType } from '@/types/movies.types'
+import moviesApi from '@/api/movies/movies.api'
 
 const movies = ref<MovieType[]>([
   {
@@ -43,12 +44,22 @@ const movies = ref<MovieType[]>([
 ])
 
 const isToken = localStorage.getItem('token')
-const isAuth = ref<boolean>(isToken ? true : false)
+const isAuth = ref<boolean>(!!isToken)
 
 const handleClickLogout = (): void => {
   localStorage.clear()
 
   location.reload()
+}
+
+const handleMovieSearch = async (value: string): Promise<void> => {
+  const [error, data] = await moviesApi.getMovies({
+    search_value: value,
+  })
+
+  if (!error && data) {
+    movies.value = data
+  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import authorizationApi from '@/api/authorization/authorization.api'
 import { UserSelfType } from '@/types/user.types'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<UserSelfType>({
@@ -28,6 +28,8 @@ export const useUserStore = defineStore('user', () => {
       user.value = data
     }
   }
+
+  onMounted(getSelf)
 
   return { user, getSelf }
 })

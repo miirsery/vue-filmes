@@ -11,6 +11,9 @@ import YmapPlugin from 'vue-yandex-maps'
 import App from './App.vue'
 import router from './router'
 
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import '@/styles/index.scss'
 
 const settings = {

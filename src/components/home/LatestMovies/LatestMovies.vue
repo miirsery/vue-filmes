@@ -1,6 +1,9 @@
 <template>
-  <div class="latest-movies d-flex">
-    <latest-movie v-for="movie in movies" :key="movie.id" :movie="movie" />
+  <div class="latest-movies">
+    <h2>Latest added movies</h2>
+    <div class="latest-movies__content">
+      <latest-movie v-for="movie in movies" :key="movie.id" :movie="movie" />
+    </div>
   </div>
 </template>
 
@@ -23,3 +26,10 @@ onMounted(() => {
   getMovies()
 })
 </script>
+
+<style lang="scss" scoped>
+.latest-movies__content {
+  display: flex;
+  flex-wrap: wrap;
+}
+</style>

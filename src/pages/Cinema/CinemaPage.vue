@@ -36,10 +36,6 @@ const cinema = reactive<any>({
 const movies = ref<any>([])
 const sessions = ref<any>([])
 
-onMounted(async () => {
-  await getCinema()
-})
-
 const getCinema = async (): Promise<void> => {
   const [error, data] = await cinemasApi.getCinema({
     id: cinemaId,
@@ -58,4 +54,8 @@ const getCinema = async (): Promise<void> => {
     sessions.value = data.sessions
   }
 }
+
+onMounted(async () => {
+  await getCinema()
+})
 </script>

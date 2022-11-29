@@ -22,6 +22,14 @@ const userId = ref(0)
 
 const user = computed(() => useUser.user)
 
+const getCinemas = async (): Promise<void> => {
+  const [error, data] = await cinemasApi.getCinemas(userId.value)
+
+  if (!error && data) {
+    cinemas.value = data
+  }
+}
+
 watchEffect(async () => {
   const localUser = user.value
 
@@ -31,14 +39,6 @@ watchEffect(async () => {
     await getCinemas()
   }
 })
-
-const getCinemas = async (): Promise<void> => {
-  const [error, data] = await cinemasApi.getCinemas(userId.value)
-
-  if (!error && data) {
-    cinemas.value = data
-  }
-}
 </script>
 
 <style lang="scss" scoped>

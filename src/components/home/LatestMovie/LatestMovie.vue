@@ -1,16 +1,18 @@
 <template>
   <div class="latest-movie d-flex fd-column">
-    <div class="latest-movie__image">
-      <img :src="movie.preview" :alt="movie.title" />
-    </div>
-    <div class="latest-movie__info">
-      <div class="latest-movie__title">
-        {{ movie.title }}
+    <router-link :to="`/movie/${props.movie.id}`">
+      <div class="latest-movie__image">
+        <img :src="movie.preview" :alt="movie.title" />
       </div>
-      <div class="latest-movie__release-date">
-        {{ movie.release_date }}
+      <div class="latest-movie__info">
+        <div class="latest-movie__title">
+          {{ movie.title }}
+        </div>
+        <div class="latest-movie__release-date">
+          {{ movie.release_date }}
+        </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -21,7 +23,7 @@ interface IMovieProps {
   movie: MovieType
 }
 
-defineProps<IMovieProps>()
+const props = defineProps<IMovieProps>()
 </script>
 
 <style lang="scss" scoped>
