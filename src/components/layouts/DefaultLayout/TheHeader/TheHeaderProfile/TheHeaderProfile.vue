@@ -1,6 +1,5 @@
 <template>
   <div class="the-header-profile d-flex ai-center">
-    <icon-template class="mr-8" name="favorite" width="32" height="32" />
     <el-popover popper-class="the-header__popper" :show-arrow="false">
       <template #reference>
         <el-button type="primary" class="the-header-profile__button">
