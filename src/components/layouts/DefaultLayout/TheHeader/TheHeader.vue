@@ -26,9 +26,9 @@
             <the-search-movie v-for="movie in movies" :key="movie.id" :movie="movie" />
           </el-popover>
         </el-col>
-        <el-col v-if="isAuth" :span="2">
+        <el-col v-if="isAuth" :span="2" class="d-flex">
           <icon-template class="mr-8" name="favorite" width="32" height="32" />
-          <icon-template name="user" width="32" height="32" @click="handleClickLogout" />
+          <the-header-profile />
         </el-col>
         <el-col v-else :span="2">
           <router-link class="the-header__login" to="/authorization/login"> Вход </router-link>
