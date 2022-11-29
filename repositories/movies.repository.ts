@@ -45,4 +45,6 @@ module.exports = {
         ' DESC' +
         ' LIMIT 10;'
     ),
+  searchMovies: async (searchValue: string) =>
+    await db.query('SELECT * FROM movie WHERE title LIKE $1 ORDER BY title;', [searchValue]),
 }
