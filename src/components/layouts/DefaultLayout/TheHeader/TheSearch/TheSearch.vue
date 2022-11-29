@@ -7,19 +7,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+interface IProps {
+  searchedValue: string
+}
 
 interface IEmits {
   (e: 'search-value', value: string): void
 }
 
+const props = withDefaults(defineProps<IProps>(), {
+  searchedValue: '',
+})
+
 const emit = defineEmits<IEmits>()
+
+watch(
+  () => props.searchedValue,
+  (value: string) => {
+    if (value === '') {
+      searchValue.value = ''
+    }
+  }
+)
 
 const searchValue = ref('')
 
 const handleMovieSearch = async (value: string): Promise<void> => {
-  console.log(value)
-
   emit('search-value', value)
 }
 </script>

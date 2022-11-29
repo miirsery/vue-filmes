@@ -13,7 +13,18 @@
           <div class="logo">logo</div>
         </el-col>
         <el-col :span="5">
-          <the-search @search-value="handleMovieSearch" />
+          <el-popover
+            ref="popoverRef"
+            :visible="isSearchedMoviesVisible"
+            :show-arrow="false"
+            width="300px"
+            placement="bottom-end"
+          >
+            <template #reference>
+              <the-search :searched-value="currentSearchValue" @search-value="handleMovieSearch" />
+            </template>
+            <the-search-movie v-for="movie in movies" :key="movie.id" :movie="movie" />
+          </el-popover>
         </el-col>
         <el-col v-if="isAuth" :span="2">
           <icon-template class="mr-8" name="favorite" width="32" height="32" />
@@ -29,22 +40,24 @@
 
 <script lang="ts" setup>
 import { headerItems } from '@/constants/header'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { MovieType } from '@/types/movies.types'
 import moviesApi from '@/api/movies/movies.api'
+import { onClickOutside } from '@vueuse/core'
 
-const movies = ref<MovieType[]>([
-  {
-    id: 0,
-    title: '',
-    description: '',
-    release_date: '',
-    preview: '',
-  },
-])
-
+const movies = ref<MovieType[] | null>(null)
 const isToken = localStorage.getItem('token')
 const isAuth = ref<boolean>(!!isToken)
+const popoverRef = ref<HTMLDivElement | null>(null)
+const currentSearchValue = ref('')
+
+const isSearchedMoviesVisible = computed(() => Boolean(movies.value && !!movies.value.length))
+
+onClickOutside(popoverRef, () => {
+  movies.value = []
+
+  currentSearchValue.value = ''
+})
 
 const handleClickLogout = (): void => {
   localStorage.clear()
@@ -53,12 +66,18 @@ const handleClickLogout = (): void => {
 }
 
 const handleMovieSearch = async (value: string): Promise<void> => {
+  currentSearchValue.value = value
+
   const [error, data] = await moviesApi.getMovies({
     search_value: value,
   })
 
   if (!error && data) {
     movies.value = data
+  }
+
+  if (value === '') {
+    movies.value = []
   }
 }
 </script>

@@ -50,6 +50,7 @@ declare module '@vue/runtime-core' {
     TheSearch: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearch/TheSearch.vue')['default']
     TheSearchDropdown: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearchDropdown/TheSearchDropdown.vue')['default']
     TheSearchDropdownItem: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearchDropdown/TheSearchDropdownItem.vue')['default']
+    TheSearchMovie: typeof import('./src/components/layouts/DefaultLayout/TheHeader/TheSearch/TheSearchMovie.vue')['default']
     TicketResult: typeof import('./src/components/Ticket/TicketResult.vue')['default']
     UserTickets: typeof import('./src/components/pages/User/UserTickets.vue')['default']
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
