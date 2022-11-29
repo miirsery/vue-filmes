@@ -7,10 +7,11 @@ class MoviesApi extends AxiosService {
     super(config)
   }
 
-  public getMovies() {
+  public getMovies(params?: any) {
     return this.axiosCall<MovieType[]>({
       method: 'get',
       url: '',
+      params,
     })
   }
 
@@ -21,6 +22,13 @@ class MoviesApi extends AxiosService {
       params: {
         user_id: userId,
       },
+    })
+  }
+
+  async getPopularMovies() {
+    return this.axiosCall({
+      method: 'get',
+      url: '/popular',
     })
   }
 }

@@ -10,7 +10,7 @@
   }
 
   &.is-disabled {
-    @include color('background-color', $color--bg, 10%, 1)
+    @include colorChange('background-color', $color--bg, 10%, 1)
   }
 
   &.the-registration__button {
@@ -35,7 +35,7 @@
     background: none !important;
 
     &:hover {
-      @include color('background-color', $color--border, 10%, 1);
+      @include colorChange('background-color', $color--border, 10%, 1);
     }
   }
 
@@ -44,7 +44,7 @@
     height: 40px;
 
     &:hover {
-      @include color('background-color', $color--border, 10%, 1)
+      @include colorChange('background-color', $color--border, 10%, 1)
     }
 
     &.el-button--primary {

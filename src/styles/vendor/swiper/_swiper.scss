@@ -1,0 +1,5 @@
+@use '@/styles/resources/variables' as *;
+
+.swiper-pagination-bullet {
+  background-color: $color--active;
+}
