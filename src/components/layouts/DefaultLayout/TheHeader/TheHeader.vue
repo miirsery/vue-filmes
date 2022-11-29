@@ -5,7 +5,7 @@
         <el-col :span="12">
           <ul class="d-flex ai-center">
             <li v-for="item in headerItems" :key="item.title" class="mr-50">
-              {{ item.title }}
+              <router-link :to="item.url">{{ item.title }}</router-link>
             </li>
           </ul>
         </el-col>
