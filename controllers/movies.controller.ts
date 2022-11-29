@@ -74,7 +74,15 @@ class MoviesController {
 
             delete movie.release_date
 
-            return Object.assign(movie, { release_date: releaseDate })
+            let result = {}
+
+            if (releaseDate !== 'Invalid date') {
+              result = Object.assign(movie, { release_date: releaseDate })
+            } else {
+              result = movie
+            }
+
+            return Object.assign(result)
           })
         })
 
@@ -87,7 +95,15 @@ class MoviesController {
 
           delete movie.release_date
 
-          return Object.assign(movie, { release_date: releaseDate })
+          let result = {}
+
+          if (releaseDate !== 'Invalid date') {
+            result = Object.assign(movie, { release_date: releaseDate })
+          } else {
+            result = movie
+          }
+
+          return Object.assign(result)
         })
       })
 
