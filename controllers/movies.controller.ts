@@ -11,6 +11,7 @@ const {
   createOne,
   updateVisit,
   getPopularMovies,
+  searchMovies,
 } = require('../repositories/movies.repository.ts')
 
 const { checkMovieInFavoriteCinemas } = require('../repositories/cinemas.repository.js')
@@ -65,7 +66,15 @@ class MoviesController {
 
   async getMovies(req: Request, res: Response) {
     try {
-      const mostPopular = req.query.most_popular
+      const { mostPopular, search_value } = req.query
+
+      if (search_value) {
+        const searchValue = `%${search_value}%`
+
+        const movies = await searchMovies(searchValue).then((r: any) => r.rows)
+
+        return res.status(200).setHeader('Content-Type', 'application/json').json(movies)
+      }
 
       if (mostPopular) {
         const data = await getMostPopularMovie().then((r: any) => {
