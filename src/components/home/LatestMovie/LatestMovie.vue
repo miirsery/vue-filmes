@@ -5,7 +5,7 @@
         <img :src="movie.preview" :alt="movie.title" />
       </div>
       <div class="latest-movie__info">
-        <div class="latest-movie__title">
+        <div class="latest-movie__title mb-8 mt-8">
           {{ movie.title }}
         </div>
         <div class="latest-movie__release-date">
@@ -33,7 +33,7 @@ const props = defineProps<IMovieProps>()
   margin-right: 16px;
 
   &__image {
-    height: 100%;
+    height: 310px;
 
     img {
       object-fit: cover;

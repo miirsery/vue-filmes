@@ -9,11 +9,9 @@
       </div>
       <div class="cinema-card__info">
         <div>
-          <div class="cinema-card__title"> {{ props.cinema.title }} </div>
+          <div class="cinema-card__title mb-8"> {{ props.cinema.title }} </div>
           <div class="cinema-card__phone mb-16"> {{ props.cinema.phone }} </div>
           <div class="cinema-card__description"> {{ props.cinema.description }} </div>
-          <div class="cinema-card__age"> {{ props.cinema.description }} </div>
-          <age-restriction :age-restriction="props.cinema.age_restriction" />
         </div>
         <router-link class="cinema-card__link link" :to="`/cinemas/${props.cinema.id}`">Check</router-link>
       </div>
