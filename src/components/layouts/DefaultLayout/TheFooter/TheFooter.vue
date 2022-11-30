@@ -4,7 +4,7 @@
       <el-col :span="12">
         <nav>
           <ul class="d-flex">
-            <li v-for="item in footerItems" :key="item.title">
+            <li v-for="item in footerItems" :key="item.title" class="mr-8">
               {{ item.title }}
             </li>
             <li>
